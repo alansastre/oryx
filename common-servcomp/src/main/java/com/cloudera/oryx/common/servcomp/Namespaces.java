@@ -44,15 +44,7 @@ public final class Namespaces {
   private final String prefix;
 
   private Namespaces() {
-    Config config = ConfigUtils.getDefaultConfig();
-    boolean localData;
-    if (config.hasPath("model.local")) {
-      log.warn("model.local is deprecated; use model.local-data");
-      localData = config.getBoolean("model.local");
-    } else {
-      localData = config.getBoolean("model.local-data");
-    }
-    if (localData) {
+    if (isLocalData()) {
       prefix = "file:";
     } else {
       URI defaultURI = FileSystem.getDefaultUri(OryxConfiguration.get());
@@ -79,6 +71,32 @@ public final class Namespaces {
 
   public String getPrefix() {
     return prefix;
+  }
+
+  /**
+   * @return {@code true} if configured to use local data
+   */
+  public static boolean isLocalData() {
+    Config config = ConfigUtils.getDefaultConfig();
+    if (config.hasPath("model.local")) {
+      log.warn("model.local is deprecated; use model.local-data");
+      return config.getBoolean("model.local");
+    } else {
+      return config.getBoolean("model.local-data");
+    }
+  }
+
+  /**
+   * @return {@code true} if configured to use local computation
+   */
+  public static boolean isLocalComputation() {
+    Config config = ConfigUtils.getDefaultConfig();
+    if (config.hasPath("model.local")) {
+      log.warn("model.local is deprecated; use model.local-computation");
+      return config.getBoolean("model.local");
+    } else {
+      return config.getBoolean("model.local-computation");
+    }
   }
 
   /**

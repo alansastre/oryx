@@ -61,15 +61,7 @@ public final class OryxConfiguration {
   }
 
   private static void configure(Configuration conf) {
-    Config config = ConfigUtils.getDefaultConfig();
-    boolean localComputation;
-    if (config.hasPath("model.local")) {
-      log.warn("model.local is deprecated; use model.local-computation");
-      localComputation = config.getBoolean("model.local");
-    } else {
-      localComputation = config.getBoolean("model.local-computation");
-    }
-    if (!localComputation) {
+    if (!Namespaces.isLocalComputation() || !Namespaces.isLocalData()) {
       File hadoopConfDir = findHadoopConfDir();
       addResource(hadoopConfDir, "core-site.xml", conf);
       addResource(hadoopConfDir, "hdfs-site.xml", conf);

@@ -30,7 +30,6 @@ import java.util.zip.ZipInputStream;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.typesafe.config.Config;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
@@ -42,7 +41,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cloudera.oryx.common.io.IOUtils;
-import com.cloudera.oryx.common.settings.ConfigUtils;
 
 /**
  * Interface to backing store -- for now, HDFS. This allows the Hadoop-compatible
@@ -59,17 +57,9 @@ public final class Store {
   private final FileSystem fs;
 
   private Store() {
-    Config config = ConfigUtils.getDefaultConfig();
-    boolean localData;
-    if (config.hasPath("model.local")) {
-      log.warn("model.local is deprecated; use model.local-data");
-      localData = config.getBoolean("model.local");
-    } else {
-      localData = config.getBoolean("model.local-data");
-    }
     try {
       Configuration conf = OryxConfiguration.get();
-      if (localData) {
+      if (Namespaces.isLocalData()) {
         fs = FileSystem.getLocal(conf);
       } else {
         UserGroupInformation.setConfiguration(conf);
