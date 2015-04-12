@@ -295,13 +295,13 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-math3</artifactId>
-        <version>3.3</version>
+        <version>3.4.1</version>
       </dependency>
 
       <dependency>
         <groupId>org.jpmml</groupId>
         <artifactId>pmml-model</artifactId>
-        <version>1.1.14</version>
+        <version>1.1.15</version>
         <exclusions>
           <exclusion>
             <artifactId>com.sun.xml.bind</artifactId>
@@ -374,10 +374,10 @@
     <java.version>1.6</java.version>
     <javadoc.version>1.7</javadoc.version>
     <slf4j.version>1.7.12</slf4j.version>
-    <tomcat.version>7.0.59</tomcat.version>
+    <tomcat.version>7.0.61</tomcat.version>
     <!-- Don't update to 1.7.5+ until Hadoop uses Jackson 1.9+ -->
-    <avro.version>1.7.4</avro.version>
-    <hadoop.version>2.5.2</hadoop.version>
+    <avro.version>1.7.7</avro.version>
+    <hadoop.version>2.6.0</hadoop.version>
     <crunch.version>0.11.0-hadoop2</crunch.version>
     <!-- our custom props -->
     <module.jspx.package>override-me</module.jspx.package>
@@ -436,7 +436,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.2</version>
+          <version>3.3</version>
           <configuration>
             <optimize>true</optimize>
             <showDeprecation>true</showDeprecation>
@@ -487,7 +487,7 @@
             <dependency>
               <groupId>org.apache.maven.scm</groupId>
               <artifactId>maven-scm-provider-gitexe</artifactId>
-              <version>1.9.2</version>
+              <version>1.9.4</version>
             </dependency>
           </dependencies>
           <configuration>
@@ -548,7 +548,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
-          <version>1.9.2</version>
+          <version>1.9.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -728,7 +728,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
