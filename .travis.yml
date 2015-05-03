@@ -1,12 +1,16 @@
 language: java
-before_install: sudo pip install codecov
-script: mvn -Pjacoco -Dmaven.javadoc.skip=true -q verify
-jdk:
-  - openjdk6
-  - oraclejdk8
+install: mvn -DskipTests=true -Dmaven.javadoc.skip=true -B -V install
+script: mvn ${JACOCO} -Dmaven.javadoc.skip=true -q -B verify
+matrix:
+ include:
+   # Covers Java 6, Open JDK, and code coverage
+   - jdk: openjdk6
+     env: JACOCO=-Pjacoco
+   # Covers Java 8, Oracle JDK
+   - jdk: oraclejdk8
 cache:
   directories:
     - $HOME/.m2
 git:
-  depth: 3
-after_success: codecov
+  depth: 5
+after_success: bash <(curl -s https://codecov.io/bash)

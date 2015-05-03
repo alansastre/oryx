@@ -370,6 +370,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <dependency.details.enabled>false</dependency.details.enabled>
+    <maven.version.min>3.2.1</maven.version.min>
     <!-- Dependency versions -->
     <java.version>1.6</java.version>
     <javadoc.version>1.7</javadoc.version>
@@ -420,7 +421,7 @@
                 <rules>
                   <dependencyConvergence />
                   <requireMavenVersion>
-                    <version>3.2.1</version>
+                    <version>${maven.version.min}</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
                     <version>${java.version}</version>
@@ -466,7 +467,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.2</version>
+          <version>2.10.3</version>
           <configuration>
             <javadocVersion>${javadoc.version}</javadocVersion>
           </configuration>
@@ -482,7 +483,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.5.1</version>
+          <version>2.5.2</version>
           <dependencies>
             <dependency>
               <groupId>org.apache.maven.scm</groupId>
@@ -525,7 +526,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>2.5.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -737,8 +738,13 @@
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
+          <artifactId>emma-maven-plugin</artifactId>
+          <version>1.0-alpha-3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.1</version>
+          <version>2.2</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -829,8 +835,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>2.10.2</version>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
@@ -844,8 +848,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>3.0.0</version>
         <configuration>
           <threshold>Normal</threshold>
           <effort>Max</effort>
@@ -857,8 +859,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>2.4</version>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
@@ -872,8 +872,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>emma-maven-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>1.0-alpha-3</version>
       </plugin>
     </plugins>
     <excludeDefaults>true</excludeDefaults>
@@ -924,7 +922,7 @@
   </scm>
   
   <prerequisites>
-    <maven>3.2.1</maven>
+    <maven>${maven.version.min}</maven>
   </prerequisites>
 
   <repositories>
