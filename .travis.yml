@@ -1,4 +1,5 @@
 language: java
+sudo: fA
 install: mvn -DskipTests=true -Dmaven.javadoc.skip=true -B -V install
 script: mvn ${JACOCO} -Dmaven.javadoc.skip=true -q -B verify
 matrix:
