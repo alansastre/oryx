@@ -52,17 +52,20 @@ final class ComputeMAP implements Callable<Object> {
 
     LongObjectMap<LongSet> testData = new LongObjectMap<LongSet>();
 
-    for (File file : testDir.listFiles(IOUtils.NOT_HIDDEN)) {
-      for (CharSequence line : new FileLineIterable(file)) {
-        String[] columns = DelimitedDataUtils.decode(line);
-        long userID = StringLongMapping.toLong(columns[0]);
-        long itemID = StringLongMapping.toLong(columns[1]);
-        LongSet itemIDs = testData.get(userID);
-        if (itemIDs == null) {
-          itemIDs = new LongSet();
-          testData.put(userID, itemIDs);
+    File[] files = testDir.listFiles(IOUtils.NOT_HIDDEN);
+    if (files != null) {
+      for (File file : files) {
+        for (CharSequence line : new FileLineIterable(file)) {
+          String[] columns = DelimitedDataUtils.decode(line);
+          long userID = StringLongMapping.toLong(columns[0]);
+          long itemID = StringLongMapping.toLong(columns[1]);
+          LongSet itemIDs = testData.get(userID);
+          if (itemIDs == null) {
+            itemIDs = new LongSet();
+            testData.put(userID, itemIDs);
+          }
+          itemIDs.add(itemID);
         }
-        itemIDs.add(itemID);
       }
     }
 

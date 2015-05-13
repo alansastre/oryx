@@ -23,6 +23,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.typesafe.config.Config;
@@ -53,7 +54,9 @@ public final class ExecutorUtils {
       if ("auto".equals(parallelismString)) {
         return Runtime.getRuntime().availableProcessors();
       } else {
-        return Integer.parseInt(parallelismString);
+        int parallelism = Integer.parseInt(parallelismString);
+        Preconditions.checkArgument(parallelism >= 1, "Parallelism must be >= 1");
+        return parallelism;
       }
     }
     return Runtime.getRuntime().availableProcessors();

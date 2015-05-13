@@ -271,7 +271,9 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
       double map;
       BufferedReader in = store.readFrom(mapKey);
       try {
-        map = Double.parseDouble(in.readLine());
+        String line = in.readLine();
+        Preconditions.checkNotNull(line);
+        map = Double.parseDouble(line);
       } finally {
         in.close();
       }

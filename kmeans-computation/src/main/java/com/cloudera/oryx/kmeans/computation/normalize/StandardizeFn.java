@@ -24,6 +24,8 @@ import com.cloudera.oryx.computation.common.records.Record;
 import com.cloudera.oryx.computation.common.records.vectors.VectorRecord;
 import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.computation.common.summary.SummaryStats;
+
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -84,6 +86,7 @@ final class StandardizeFn extends OryxDoFn<Record, RealVector> {
         } else {
           try {
             summary = JacksonUtils.getObjectMapper().readValue(store.readFrom(pieces.get(0)), Summary.class);
+            Preconditions.checkNotNull(summary);
           } catch (Exception e) {
             throw new CrunchRuntimeException(e);
           }
