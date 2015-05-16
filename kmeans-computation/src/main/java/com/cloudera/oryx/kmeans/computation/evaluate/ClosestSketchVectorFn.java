@@ -25,7 +25,8 @@ import org.apache.crunch.CrunchRuntimeException;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.Pair;
 
-public final class ClosestSketchVectorFn<V extends RealVector> extends OryxDoFn<Pair<Integer, V>, Pair<Integer, ClosestSketchVectorData>> {
+public final class ClosestSketchVectorFn<V extends RealVector>
+    extends OryxDoFn<Pair<Integer, V>, Pair<Integer, ClosestSketchVectorData>> {
 
   private KSketchIndex index;
   private final String indexKey;

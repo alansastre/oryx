@@ -27,7 +27,8 @@ import com.cloudera.oryx.common.collection.LongObjectMap;
 
 /**
  * Contains utility methods for dealing with matrices, which are here represented as
- * {@link com.cloudera.oryx.common.collection.LongObjectMap}s of {@link com.cloudera.oryx.common.collection.LongFloatMap}s, or of {@code float[]}.
+ * {@link com.cloudera.oryx.common.collection.LongObjectMap}s of
+ * {@link com.cloudera.oryx.common.collection.LongFloatMap}s, or of {@code float[]}.
  *
  * @author Sean Owen
  */

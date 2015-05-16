@@ -56,8 +56,10 @@ public final class MergeIDMappingStep extends ALSJobStep {
             Avros.tableOf(ALSTypes.LONGS, Avros.strings()));
 
     if (lastGenerationID >= 0) {
-      String idMappingPrefix = Namespaces.getInstanceGenerationPrefix(instanceDir, lastGenerationID) + "idMapping/";
-      Preconditions.checkState(Store.get().exists(idMappingPrefix, false), "Input path does not exist: %s", idMappingPrefix);
+      String idMappingPrefix =
+          Namespaces.getInstanceGenerationPrefix(instanceDir, lastGenerationID) + "idMapping/";
+      Preconditions.checkState(Store.get().exists(idMappingPrefix, false),
+                               "Input path does not exist: %s", idMappingPrefix);
       PTable<Long,String> joinBefore = p.read(textInput(idMappingPrefix))
           .parallelDo("lastGeneration", new ExistingMappingsMapFn(),
                       Avros.tableOf(ALSTypes.LONGS, Avros.strings()));

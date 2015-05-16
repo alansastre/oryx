@@ -32,7 +32,9 @@ import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
 
 /**
  * <p>Responds to a GET request to
- * {@code /recommendToMany/[userID1](/[userID2]/...)(?howMany=n)(&offset=o)(&considerKnownItems=true|false)(&rescorerParams=...)}
+ * {@code
+ * /recommendToMany/[userID1](/...)(?howMany=n)(&offset=o)(&considerKnownItems=true|false)(&rescorerParams=...)
+ * }
  * and in turn calls
  * {@link OryxRecommender#recommendToMany(String[], int, boolean, Rescorer)}.
  * If {@code considerKnownItems} is not specified, it is considered {@code false}.

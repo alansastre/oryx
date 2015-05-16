@@ -49,15 +49,19 @@ import com.cloudera.oryx.als.common.factorizer.MatrixFactorizer;
 
 /**
  * <p>Implements the Alternating Least Squares algorithm described in
- * <a href="http://www2.research.att.com/~yifanhu/PUB/cf.pdf">"Collaborative Filtering for Implicit Feedback Datasets"</a>
+ * <a href="http://www2.research.att.com/~yifanhu/PUB/cf.pdf">
+ * "Collaborative Filtering for Implicit Feedback Datasets"</a>
  * by Yifan Hu, Yehuda Koren, and Chris Volinsky.</p>
  *
  * <p>This implementation varies in some small details; it does not use the same mechanism for explaining ratings
  * for example and seeds the initial Y differently.</p>
  *
- * <p>Note that in this implementation, matrices are sparse and are implemented with a {@link com.cloudera.oryx.common.collection.LongObjectMap} of
- * {@link com.cloudera.oryx.common.collection.LongFloatMap} so as to be able to use {@code long} keys. In many cases, a tall, skinny matrix is
- * needed (sparse rows, dense columns). This is represented with {@link com.cloudera.oryx.common.collection.LongObjectMap} of {@code float[]}.</p>
+ * <p>Note that in this implementation, matrices are sparse and are implemented with a
+ * {@link com.cloudera.oryx.common.collection.LongObjectMap} of
+ * {@link com.cloudera.oryx.common.collection.LongFloatMap} so as to be able to use
+ * {@code long} keys. In many cases, a tall, skinny matrix is
+ * needed (sparse rows, dense columns). This is represented with
+ * {@link com.cloudera.oryx.common.collection.LongObjectMap} of {@code float[]}.</p>
  *
  * <p>This implementation implements essentially this function, expressed in Octave/Matlab:</p>
  *
@@ -264,7 +268,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
       int oldFeatureCount = previousY.entrySet().iterator().next().getValue().length;
       if (oldFeatureCount > features) {
         // Fewer features, use some dimensions from prior larger number of features as-is
-        log.info("Feature count has decreased to {}, projecting down previous generation's Y matrix", features);                
+        log.info("Feature count decreased to {}, projecting down previous Y matrix", features);
         randomY = new LongObjectMap<float[]>(previousY.size());
         for (LongObjectMap.MapEntry<float[]> entry : previousY.entrySet()) {
           float[] oldLargerVector = entry.getValue();
@@ -275,7 +279,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
         }
         
       } else if (oldFeatureCount < features) {
-        log.info("Feature count has increased to {}, using previous generation's Y matrix as subspace", features);        
+        log.info("Feature count increased to {}, using previous Y matrix as subspace", features);
         randomY = new LongObjectMap<float[]>(previousY.size());
         for (LongObjectMap.MapEntry<float[]> entry : previousY.entrySet()) {
           float[] oldSmallerVector = entry.getValue();
@@ -502,7 +506,9 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
     }
 
     /**
-     * Like {@link MatrixUtils#transposeTimesSelf(com.cloudera.oryx.common.collection.LongObjectMap)}, but instead of computing MT * M,
+     * Like
+     * {@link MatrixUtils#transposeTimesSelf(com.cloudera.oryx.common.collection.LongObjectMap)},
+     * but instead of computing MT * M,
      * it computes MT * C * M, where C is a diagonal matrix of 1s and 0s. This is like pretending some
      * rows of M are 0.
      * 

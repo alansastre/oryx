@@ -65,7 +65,8 @@ import com.cloudera.oryx.computation.web.status_jspx;
 
 /**
  * <p>This class will periodically run one generation of the Computation Layer using
- * {@link com.cloudera.oryx.computation.common.DistributedGenerationRunner}. It can run after a period of time has elapsed, or an amount of
+ * {@link com.cloudera.oryx.computation.common.DistributedGenerationRunner}.
+ * It can run after a period of time has elapsed, or an amount of
  * data has been written.</p>
  *
  * <p>Example:</p>

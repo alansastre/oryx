@@ -99,7 +99,7 @@ public final class DelimitedDataUtils {
     boolean quotesRequiredForSpecialChar = false;
     boolean skipNewline = false;
 
-    for( int i = 0; i <= lastCharIndex; i++ ) {
+    for (int i = 0; i <= lastCharIndex; i++) {
 
       char c = input.charAt(i);
 

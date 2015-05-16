@@ -204,7 +204,8 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(MergeNewOldStep.class, SplitTestStep.class));
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(ToUserVectorsStep.class, MergeNewOldStep.class));
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(ToItemVectorsStep.class, MergeNewOldStep.class));
-    preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(CollectKnownItemsStep.class, ToUserVectorsStep.class));
+    preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(CollectKnownItemsStep.class,
+                                                                   ToUserVectorsStep.class));
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(InitialYStep.class, ToItemVectorsStep.class));
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(PopularUserStep.class, ToUserVectorsStep.class));
     preDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(PopularItemStep.class, ToItemVectorsStep.class));
@@ -227,10 +228,12 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
     if (config.getBoolean("model.recommend.compute")) {
       postDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(RecommendStep.class,
                                                                       DistributeRecommendWorkStep.class));
-      postDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(CollectRecommendStep.class, RecommendStep.class));
+      postDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(CollectRecommendStep.class,
+                                                                      RecommendStep.class));
     }
     if (config.getBoolean("model.item-similarity.compute")) {
-      postDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(SimilarStep.class, DistributeSimilarWorkStep.class));
+      postDeps.add(DependsOn.<Class<? extends JobStep>>nextAfterFirst(SimilarStep.class,
+                                                                      DistributeSimilarWorkStep.class));
     }
     return postDeps;
   }

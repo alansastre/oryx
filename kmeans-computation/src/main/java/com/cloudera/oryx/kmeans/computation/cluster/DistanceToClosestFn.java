@@ -23,7 +23,9 @@ import org.apache.crunch.CrunchRuntimeException;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.Pair;
 
-public final class DistanceToClosestFn<V extends RealVector> extends OryxDoFn<Pair<Integer, V>, Pair<Integer, Pair<V, Double>>> {
+public final class DistanceToClosestFn<V extends RealVector>
+    extends OryxDoFn<Pair<Integer, V>, Pair<Integer, Pair<V, Double>>> {
+
   private String indexKey;
   private KSketchIndex index;
 

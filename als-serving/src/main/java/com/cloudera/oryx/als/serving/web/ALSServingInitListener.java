@@ -29,7 +29,6 @@ import org.apache.catalina.Wrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cloudera.oryx.als.common.OryxRecommender;
 import com.cloudera.oryx.als.common.rescorer.AbstractRescorerProvider;
 import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
 import com.cloudera.oryx.als.serving.ServerRecommender;
@@ -37,8 +36,10 @@ import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.cloudera.oryx.serving.web.AbstractOryxServingInitListener;
 
 /**
- * <p>This servlet lifecycle listener makes sure that the shared {@link OryxRecommender} instance
- * is initialized at startup, along with related objects, and shut down when the container is destroyed.</p>
+ * <p>This servlet lifecycle listener makes sure that the shared
+ * {@link com.cloudera.oryx.als.common.OryxRecommender} instance
+ * is initialized at startup, along with related objects, and shut down when the container
+ * is destroyed.</p>
  *
  * @author Sean Owen
  */
@@ -63,7 +64,8 @@ public final class ALSServingInitListener extends AbstractOryxServingInitListene
     Config config = ConfigUtils.getDefaultConfig();
     if (config.hasPath("serving-layer.rescorer-provider-class")) {
       String rescorerProviderClassNames = config.getString("serving-layer.rescorer-provider-class");
-      RescorerProvider rescorerProvider = AbstractRescorerProvider.loadRescorerProviders(rescorerProviderClassNames);
+      RescorerProvider rescorerProvider =
+          AbstractRescorerProvider.loadRescorerProviders(rescorerProviderClassNames);
       if (rescorerProvider != null) {
         context.setAttribute(AbstractALSServlet.RESCORER_PROVIDER_KEY, rescorerProvider);
       }

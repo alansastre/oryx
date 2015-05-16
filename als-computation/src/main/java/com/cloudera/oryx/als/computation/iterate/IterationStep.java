@@ -17,12 +17,12 @@ package com.cloudera.oryx.als.computation.iterate;
 
 import com.cloudera.oryx.als.computation.ALSJobStep;
 import com.cloudera.oryx.als.computation.ALSJobStepConfig;
-import com.cloudera.oryx.computation.common.JobStep;
 import com.cloudera.oryx.common.servcomp.Namespaces;
 import com.cloudera.oryx.computation.common.JobStepConfig;
 
 /**
- * Superclass of {@link JobStep}s that are run many times, iteratively
+ * Superclass of {@link com.cloudera.oryx.computation.common.JobStep}s that are run many times,
+ * iteratively.
  * 
  * @author Sean Owen
  */

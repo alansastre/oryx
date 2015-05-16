@@ -375,7 +375,7 @@
     <java.version>1.6</java.version>
     <javadoc.version>1.7</javadoc.version>
     <slf4j.version>1.7.12</slf4j.version>
-    <tomcat.version>7.0.61</tomcat.version>
+    <tomcat.version>7.0.62</tomcat.version>
     <!-- Don't update to 1.7.5+ until Hadoop uses Jackson 1.9+ -->
     <avro.version>1.7.7</avro.version>
     <hadoop.version>2.6.0</hadoop.version>
@@ -406,6 +406,14 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
     </plugins>
     <pluginManagement>
@@ -707,24 +715,64 @@
           </executions>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.15</version>
+          <configuration>
+            <configLocation>src/checkstyle/checkstyle.xml</configLocation>
+            <excludes>**/*_jspx.java,**/avro/*.java</excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <id>validate</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <version>0.11</version>
           <configuration>
             <excludes>
-              <exclude>.travis.yml</exclude>
               <exclude>**/*.conf</exclude>
               <exclude>**/*.iml</exclude>
               <exclude>**/*.md</exclude>
+              <exclude>**/*.properties</exclude>
               <exclude>**/*.txt</exclude>
-              <exclude>**/MANIFEST.in</exclude>
+              <exclude>**/*.fragment</exclude>
+              <exclude>**/*.csv</exclude>
               <exclude>**/gen/**</exclude>
-              <exclude>**/resources/**</exclude>
               <exclude>**/target/**</exclude>
               <exclude>**/dependency-reduced-pom.xml</exclude>
-              <excludeSubProjects>false</excludeSubProjects>
+              <exclude>.travis.yml</exclude>
             </excludes>
           </configuration>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <!-- workaround for Xerces warnings -->
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-core</artifactId>
+              <version>1.6</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>xerces</groupId>
+                  <artifactId>xercesImpl</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>

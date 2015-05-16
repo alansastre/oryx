@@ -33,7 +33,8 @@ import com.cloudera.oryx.common.ClassUtils;
 import com.cloudera.oryx.common.servcomp.OryxConfiguration;
 
 /**
- * A {@link DistributedGenerationRunner} completely manages execution of one generation's worth of computation on Hadoop.
+ * A {@link DistributedGenerationRunner} completely manages execution of one
+ * generation's worth of computation on Hadoop.
  * It is a template, overridden with details specific to particular types of jobs, like clustering.
  */
 public abstract class DistributedGenerationRunner extends GenerationRunner {
