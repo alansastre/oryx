@@ -32,7 +32,6 @@ import org.apache.crunch.impl.mr.MRPipelineExecution;
 import org.apache.crunch.io.From;
 import org.apache.crunch.io.To;
 import org.apache.crunch.types.PType;
-import org.apache.crunch.types.avro.AvroType;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.RawComparator;
