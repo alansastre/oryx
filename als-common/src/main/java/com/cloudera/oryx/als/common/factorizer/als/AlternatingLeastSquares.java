@@ -343,7 +343,8 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
       if (count >= LOG_INTERVAL) {
         total += count;
         JVMEnvironment env = new JVMEnvironment();
-        log.info("{} X/tag rows computed ({}MB heap)", total, env.getUsedMemoryMB());
+        log.info("{} X/tag rows computed ({}MB heap used of {}MB)",
+                 total, env.getUsedMemoryMB(), env.getMaxMemoryMB());
         if (env.getPercentUsedMemory() > 95) {
           log.warn("Memory is low. Increase heap size with -Xmx, decrease new generation size with larger " +
                    "-XX:NewRatio value, and/or use -XX:+UseCompressedOops");
@@ -370,7 +371,8 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
       if (count >= LOG_INTERVAL) {
         total += count;
         JVMEnvironment env = new JVMEnvironment();
-        log.info("{} Y/tag rows computed ({}MB heap)", total, env.getUsedMemoryMB());
+        log.info("{} Y/tag rows computed ({}MB heap used of {}MB)",
+                 total, env.getUsedMemoryMB(), env.getMaxMemoryMB());
         if (env.getPercentUsedMemory() > 95) {
           log.warn("Memory is low. Increase heap size with -Xmx, decrease new generation size with larger " +
                    "-XX:NewRatio value, and/or use -XX:+UseCompressedOops");
