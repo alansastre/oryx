@@ -1205,7 +1205,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
       try {
         for (LongObjectMap.MapEntry<LongSet> entry : knownItemIDs.entrySet()) {
           LongSet itemIDs = entry.getValue();
-          userCounts.add(new NumericIDValue(entry.getKey(), (float) itemIDs.size()));
+          userCounts.add(new NumericIDValue(entry.getKey(), itemIDs.size()));
         }
       } finally {
         xReadLock.unlock();

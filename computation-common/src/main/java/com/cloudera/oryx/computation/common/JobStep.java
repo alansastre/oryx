@@ -359,7 +359,7 @@ public abstract class JobStep extends Configured implements Tool, HasState {
   }
 
   protected final <T> Source<T> avroInput(String inputPathKey, PType<T> avroType) {
-    return From.avroFile(Namespaces.toPath(inputPathKey), (AvroType<T>) avroType);
+    return From.avroFile(Namespaces.toPath(inputPathKey), avroType);
   }
 
   protected final Source<String> textInput(String inputPathKey) {

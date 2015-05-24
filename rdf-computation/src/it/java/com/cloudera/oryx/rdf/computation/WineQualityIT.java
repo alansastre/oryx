@@ -16,7 +16,6 @@
 package com.cloudera.oryx.rdf.computation;
 
 import com.google.common.collect.Lists;
-import com.google.common.primitives.Doubles;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.junit.Test;
 import org.slf4j.Logger;
