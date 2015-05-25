@@ -18,7 +18,6 @@ package com.cloudera.oryx.kmeans.common.pmml;
 import com.cloudera.oryx.common.math.Vectors;
 import com.cloudera.oryx.kmeans.common.Centers;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.linear.RealVector;
 import org.dmg.pmml.Array;
 import org.dmg.pmml.Cluster;
@@ -38,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cloudera.oryx.common.io.IOUtils;
@@ -76,7 +76,7 @@ public final class KMeansPMML {
   public static Centers toCenters(ClusteringModel cm) {
     int dims = cm.getClusteringFields().size();
     boolean sparse = cm.getMiningSchema().getMiningFields().size() * 2 < dims;
-    List<RealVector> vecs = Lists.newArrayListWithExpectedSize(cm.getClusters().size());
+    List<RealVector> vecs = new ArrayList<>(cm.getClusters().size());
     for (Cluster c : cm.getClusters()) {
       vecs.add(createCenter(c.getArray(), sparse, dims));
     }

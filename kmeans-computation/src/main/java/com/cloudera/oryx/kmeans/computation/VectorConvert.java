@@ -16,6 +16,8 @@
 package com.cloudera.oryx.kmeans.computation;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,8 +30,6 @@ import com.cloudera.oryx.kmeans.common.WeightedRealVector;
 import com.cloudera.oryx.kmeans.computation.avro.MLVector;
 import com.cloudera.oryx.kmeans.computation.avro.MLWeightedVector;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.RealVectorFormat;
@@ -70,17 +70,17 @@ public final class VectorConvert {
   }
   
   public static MLVector fromVector(RealVector input) {
-    final List<Double> values = Lists.newArrayList();
+    final List<Double> values = new ArrayList<>();
     MLVector.Builder vb = MLVector.newBuilder()
         .setSize(input.getDimension())
         .setValues(values);
     if (input instanceof ArrayRealVector) {
-      vb.setIndices(ImmutableList.<Integer>of());
+      vb.setIndices(Collections.<Integer>emptyList());
       for (int i = 0; i < input.getDimension(); i++) {
         values.add(input.getEntry(i));
       }
     } else {
-      final List<Integer> indices = Lists.newArrayList();
+      final List<Integer> indices = new ArrayList<>();
       vb.setIndices(indices);
       input.walkInDefaultOrder(new AbstractRealVectorPreservingVisitor() {
         @Override

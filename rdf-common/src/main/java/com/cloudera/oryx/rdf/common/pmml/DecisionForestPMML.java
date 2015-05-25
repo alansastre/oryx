@@ -18,7 +18,6 @@ package com.cloudera.oryx.rdf.common.pmml;
 import com.cloudera.oryx.common.pmml.PMMLUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.util.Pair;
 import org.dmg.pmml.Array;
 import org.dmg.pmml.DataDictionary;
@@ -265,7 +264,7 @@ public final class DecisionForestPMML {
         CategoricalDecision categoricalDecision = (CategoricalDecision) decision;
         Map<Integer,String> categoryIDToName = columnToCategoryNameToIDMapping.get(columnNumber).inverse();
         BitSet includedCategoryIDs = categoricalDecision.getCategoryIDs();
-        List<String> categoryNames = Lists.newArrayList();
+        List<String> categoryNames = new ArrayList<>();
         int categoryID = -1;
         while ((categoryID = includedCategoryIDs.nextSetBit(categoryID + 1)) >= 0) {
           categoryNames.add(categoryIDToName.get(categoryID));

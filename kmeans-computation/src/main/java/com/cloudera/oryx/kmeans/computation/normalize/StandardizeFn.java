@@ -26,7 +26,6 @@ import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.computation.common.summary.SummaryStats;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.crunch.CrunchRuntimeException;
@@ -34,6 +33,7 @@ import org.apache.crunch.Emitter;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 final class StandardizeFn extends OryxDoFn<Record, RealVector> {
@@ -48,16 +48,25 @@ final class StandardizeFn extends OryxDoFn<Record, RealVector> {
   private boolean sparse;
 
   StandardizeFn() {
-    this(new NormalizeSettings(), ImmutableList.<Integer>of(), ImmutableList.<Integer>of(), "");
+    this(new NormalizeSettings(),
+         Collections.<Integer>emptyList(),
+         Collections.<Integer>emptyList(),
+         "");
   }
 
   StandardizeFn(Summary summary) {
-    this(new NormalizeSettings(), ImmutableList.<Integer>of(), ImmutableList.<Integer>of(), "");
+    this(new NormalizeSettings(),
+         Collections.<Integer>emptyList(),
+         Collections.<Integer>emptyList(),
+         "");
     this.summary = summary;
   }
 
   StandardizeFn(Summary summary, Transform defaultTransform) {
-    this(new NormalizeSettings(defaultTransform), ImmutableList.<Integer>of(), ImmutableList.<Integer>of(), "");
+    this(new NormalizeSettings(defaultTransform),
+         Collections.<Integer>emptyList(),
+         Collections.<Integer>emptyList(),
+         "");
     this.summary = summary;
   }
 

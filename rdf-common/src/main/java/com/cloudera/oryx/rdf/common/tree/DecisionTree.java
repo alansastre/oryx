@@ -16,7 +16,6 @@
 package com.cloudera.oryx.rdf.common.tree;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.util.FastMath;
@@ -24,6 +23,7 @@ import org.apache.commons.math3.util.Pair;
 
 import java.util.Collection;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -188,7 +188,7 @@ public final class DecisionTree implements TreeBasedClassifier {
                                                   int featuresToTry,
                                                   int numFeatures,
                                                   RandomGenerator random) {
-    Collection<Integer> features = Sets.newHashSetWithExpectedSize(featuresToTry);
+    Collection<Integer> features = new HashSet<>(featuresToTry);
     int max = FastMath.min(numFeatures, featuresToTry);
     int attempts = 0;
     while (features.size() < max && attempts < 2 * featuresToTry) {

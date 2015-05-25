@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.als.common.candidate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.junit.Test;
@@ -132,7 +132,7 @@ public final class LocationSensitiveHashIT extends OryxTest {
       double dot = SimpleVectorMath.dot(entry.getValue(), userVec);
       allScores.put(dot, entry.getKey());
     }
-    List<Long> topRecommendations = Lists.newArrayList();
+    List<Long> topRecommendations = new ArrayList<>();
     for (Map.Entry<Double,Long> entry : allScores.entrySet()) {
       topRecommendations.add(entry.getValue());
       if (topRecommendations.size() == NUM_RECS) {

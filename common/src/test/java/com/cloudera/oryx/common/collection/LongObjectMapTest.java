@@ -33,10 +33,10 @@
 package com.cloudera.oryx.common.collection;
 
 import com.cloudera.oryx.common.OryxTest;
-import com.google.common.collect.Maps;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.cloudera.oryx.common.random.RandomManager;
@@ -113,7 +113,7 @@ public final class LongObjectMapTest extends OryxTest {
   @Test
   public void testVersusHashMap() {
     LongObjectMap<String> actual = new LongObjectMap<>();
-    Map<Long, String> expected = Maps.newHashMap();
+    Map<Long, String> expected = new HashMap<>();
     RandomGenerator r = RandomManager.getRandom();
     for (int i = 0; i < 1000000; i++) {
       double d = r.nextDouble();

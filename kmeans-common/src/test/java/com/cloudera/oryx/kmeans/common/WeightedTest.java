@@ -15,14 +15,16 @@
 
 package com.cloudera.oryx.kmeans.common;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.Test;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import com.cloudera.oryx.common.OryxTest;
@@ -39,29 +41,29 @@ public final class WeightedTest extends OryxTest {
   
   @Test
   public void testBasic() throws Exception {
-    Collection<Weighted<Integer>> things = Lists.newArrayList();
+    Collection<Weighted<Integer>> things = new ArrayList<>();
     RandomGenerator rand = RandomManager.getRandom();
     for (int i = 0; i < 50; i++) {
       things.add(new Weighted<>(i, rand.nextDouble()));
     }
     List<Weighted<Integer>> s = Weighted.sample(things, 5, rand);
-    assertEquals(ImmutableList.of(31, 46, 49, 23, 14), Lists.transform(s, new ThingFn<Integer>()));
+    assertEquals(Arrays.asList(31, 46, 49, 23, 14), Lists.transform(s, new ThingFn<Integer>()));
   }
   
   @Test
   public void testEmpty() throws Exception {
     RandomGenerator rand = RandomManager.getRandom();
-    assertEquals(0, Weighted.sample(ImmutableList.<Weighted<Long>>of(), 10, rand).size());
+    assertEquals(0, Weighted.sample(Collections.<Weighted<Long>>emptyList(), 10, rand).size());
   }
   
   @Test
   public void testSmallerCollectionThanSize() throws Exception {
     RandomGenerator rand = RandomManager.getRandom();
-    Collection<Weighted<Integer>> things = Lists.newArrayList();
+    Collection<Weighted<Integer>> things = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
       things.add(new Weighted<>(i, rand.nextDouble()));
     }
     List<Weighted<Integer>> s = Weighted.sample(things, 10, rand);
-    assertEquals(ImmutableList.of(3, 4, 1, 0, 2), Lists.transform(s, new ThingFn<Integer>()));
+    assertEquals(Arrays.asList(3, 4, 1, 0, 2), Lists.transform(s, new ThingFn<Integer>()));
   }
 }

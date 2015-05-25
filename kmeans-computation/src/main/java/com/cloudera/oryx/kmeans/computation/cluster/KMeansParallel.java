@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.kmeans.computation.cluster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cloudera.oryx.kmeans.common.Distance;
@@ -31,8 +32,6 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.materialize.pobject.PObjectImpl;
 import org.apache.crunch.types.PTableType;
 import org.apache.crunch.types.PTypeFamily;
-
-import com.google.common.collect.Lists;
 
 public final class KMeansParallel {
 
@@ -112,7 +111,7 @@ public final class KMeansParallel {
 
     @Override
     protected List<Centers> process(Iterable<Pair<Pair<Integer, Integer>, Pair<V, Long>>> values) {
-      List<Centers> centers = Lists.newArrayListWithExpectedSize(numCenters);
+      List<Centers> centers = new ArrayList<>(numCenters);
       for (int i = 0; i < numCenters; i++) {
         centers.add(new Centers());
       }

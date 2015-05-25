@@ -16,13 +16,13 @@
 package com.cloudera.oryx.als.serving.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.util.Pair;
 
 import com.cloudera.oryx.als.common.rescorer.Rescorer;
@@ -103,7 +103,7 @@ public final class RecommendToAnonymousServlet extends AbstractALSServlet {
   }
   
   static Pair<String[],float[]> parseItemValuePairs(Iterator<String> pathComponents) {
-    List<Pair<String,Float>> itemValuePairs = Lists.newArrayListWithCapacity(1);
+    List<Pair<String,Float>> itemValuePairs = new ArrayList<>(1);
     while (pathComponents.hasNext()) {
       itemValuePairs.add(parseItemValue(pathComponents.next()));
     }

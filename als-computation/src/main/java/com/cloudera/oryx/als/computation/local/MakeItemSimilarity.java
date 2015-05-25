@@ -15,7 +15,6 @@
 
 package com.cloudera.oryx.als.computation.local;
 
-import com.google.common.collect.Lists;
 import com.typesafe.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -67,7 +67,7 @@ final class MakeItemSimilarity implements Callable<Object> {
     IOUtils.mkdirs(similarItemsDir);
 
     ExecutorService executor = ExecutorUtils.buildExecutor("ItemSimilarity");
-    Collection<Future<Object>> futures = Lists.newArrayList();
+    Collection<Future<Object>> futures = new ArrayList<>();
 
     try {
       int numThreads = ExecutorUtils.getParallelism();

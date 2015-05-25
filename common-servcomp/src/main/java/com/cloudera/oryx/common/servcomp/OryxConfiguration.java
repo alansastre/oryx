@@ -17,13 +17,12 @@ package com.cloudera.oryx.common.servcomp;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.slf4j.Logger;
@@ -107,10 +106,10 @@ public final class OryxConfiguration {
   private static void fixLzoCodecIssue(Configuration conf) {
     String codecsProperty = conf.get("io.compression.codecs");
     if (codecsProperty != null && codecsProperty.contains(".lzo.Lzo")) {
-      List<String> codecs = Lists.newArrayList(Splitter.on(',').split(codecsProperty));
-      for (Iterator<String> it = codecs.iterator(); it.hasNext();) {
-        if (it.next().contains(".lzo.Lzo")) {
-          it.remove();
+      List<String> codecs = new ArrayList<>();
+      for (String codec : Splitter.on(',').split(codecsProperty)) {
+        if (!codec.contains(".lzo.Lzo")) {
+          codecs.add(codec);
         }
       }
       conf.set("io.compression.codecs", Joiner.on(',').join(codecs));

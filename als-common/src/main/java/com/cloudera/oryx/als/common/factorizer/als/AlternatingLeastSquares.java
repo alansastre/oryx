@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.als.common.factorizer.als;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -23,7 +24,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
@@ -300,7 +300,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
       }
     }
     
-    List<float[]> recentVectors = Lists.newArrayList();
+    List<float[]> recentVectors = new ArrayList<>();
     for (LongObjectMap.MapEntry<float[]> entry : randomY.entrySet()) {
       if (recentVectors.size() >= MAX_FAR_FROM_VECTORS) {
         break;
@@ -332,7 +332,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
   private void iterateXFromY(ExecutorService executor) throws ExecutionException, InterruptedException {
 
     RealMatrix YTY = MatrixUtils.transposeTimesSelf(Y);
-    Collection<Future<?>> futures = Lists.newArrayList();
+    Collection<Future<?>> futures = new ArrayList<>();
     addWorkers(RbyRow, Y, YTY, X, executor, futures);
 
     int count = 0;
@@ -360,7 +360,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
   private void iterateYFromX(ExecutorService executor) throws ExecutionException, InterruptedException {
 
     RealMatrix XTX = MatrixUtils.transposeTimesSelf(X);
-    Collection<Future<?>> futures = Lists.newArrayList();
+    Collection<Future<?>> futures = new ArrayList<>();
     addWorkers(RbyColumn, X, XTX, Y, executor, futures);
 
     int count = 0;
@@ -389,12 +389,12 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
                           ExecutorService executor,                          
                           Collection<Future<?>> futures) {
     if (R != null) {
-      List<Pair<Long, LongFloatMap>> workUnit = Lists.newArrayListWithCapacity(WORK_UNIT_SIZE);
+      List<Pair<Long, LongFloatMap>> workUnit = new ArrayList<>(WORK_UNIT_SIZE);
       for (LongObjectMap.MapEntry<LongFloatMap> entry : R.entrySet()) {
         workUnit.add(new Pair<>(entry.getKey(), entry.getValue()));
         if (workUnit.size() == WORK_UNIT_SIZE) {
           futures.add(executor.submit(new Worker(features, M, MTM, MTags, workUnit)));
-          workUnit = Lists.newArrayListWithCapacity(WORK_UNIT_SIZE);
+          workUnit = new ArrayList<>(WORK_UNIT_SIZE);
         }
       }
       if (!workUnit.isEmpty()) {

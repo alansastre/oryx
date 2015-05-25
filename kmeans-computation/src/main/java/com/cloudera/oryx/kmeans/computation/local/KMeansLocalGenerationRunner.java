@@ -41,6 +41,7 @@ import org.dmg.pmml.Model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class KMeansLocalGenerationRunner extends LocalGenerationRunner {
@@ -80,7 +81,7 @@ public final class KMeansLocalGenerationRunner extends LocalGenerationRunner {
       }
       ClusteringModelBuilder b = new ClusteringModelBuilder(summary);
       DataDictionary dictionary = b.getDictionary();
-      List<Model> models = Lists.newArrayList();
+      List<Model> models = new ArrayList<>();
       if (stats.size() == 1) {
         ClusterValidityStatistics best = stats.get(0);
         for (KMeansEvaluationData data : evalData) {

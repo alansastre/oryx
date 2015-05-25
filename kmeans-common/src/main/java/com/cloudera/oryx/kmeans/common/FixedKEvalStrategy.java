@@ -17,6 +17,7 @@ package com.cloudera.oryx.kmeans.common;
 
 import com.google.common.collect.ImmutableList;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,6 @@ public final class FixedKEvalStrategy implements KMeansEvalStrategy {
         }
       }
     }
-    return best == null ? ImmutableList.<ClusterValidityStatistics>of() : ImmutableList.of(best);
+    return best == null ? Collections.<ClusterValidityStatistics>emptyList() : ImmutableList.of(best);
   }
 }

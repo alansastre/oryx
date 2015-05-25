@@ -14,9 +14,10 @@
  */
 package com.cloudera.oryx.kmeans.common;
 
+import java.util.Arrays;
+
 import com.cloudera.oryx.common.OryxTest;
 import com.cloudera.oryx.common.math.Vectors;
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.math3.linear.RealVector;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public final class ClusterValidityStatisticsTest extends OryxTest {
 
   @Test
   public void testSingleton() throws Exception {
-    Iterable<WeightedRealVector> pts = ImmutableList.of(
+    Iterable<WeightedRealVector> pts = Arrays.asList(
         new WeightedRealVector(a, 10.0),
         new WeightedRealVector(b, 20.0),
         new WeightedRealVector(c, 40.0));
@@ -40,7 +41,7 @@ public final class ClusterValidityStatisticsTest extends OryxTest {
 
   @Test
   public void testIdentical() throws Exception {
-    Iterable<WeightedRealVector> pts = ImmutableList.of(
+    Iterable<WeightedRealVector> pts = Arrays.asList(
         new WeightedRealVector(a, 10.0),
         new WeightedRealVector(b, 20.0),
         new WeightedRealVector(c, 40.0));
@@ -54,7 +55,7 @@ public final class ClusterValidityStatisticsTest extends OryxTest {
 
   @Test
   public void testReordered() throws Exception {
-    Iterable<WeightedRealVector> pts = ImmutableList.of(
+    Iterable<WeightedRealVector> pts = Arrays.asList(
         new WeightedRealVector(a, 10.0),
         new WeightedRealVector(b, 20.0),
         new WeightedRealVector(c, 40.0));
@@ -69,7 +70,7 @@ public final class ClusterValidityStatisticsTest extends OryxTest {
 
   @Test
   public void testDifferent() throws Exception {
-    Iterable<WeightedRealVector> pts = ImmutableList.of(
+    Iterable<WeightedRealVector> pts = Arrays.asList(
         new WeightedRealVector(a, 10.0),
         new WeightedRealVector(b, 20.0),
         new WeightedRealVector(c, 40.0));
@@ -84,7 +85,7 @@ public final class ClusterValidityStatisticsTest extends OryxTest {
 
   @Test
   public void testDifferentReweighted() throws Exception {
-    Iterable<WeightedRealVector> pts = ImmutableList.of(
+    Iterable<WeightedRealVector> pts = Arrays.asList(
         new WeightedRealVector(a, 19.0),
         new WeightedRealVector(b, 7.0),
         new WeightedRealVector(c, 11.0));

@@ -33,11 +33,11 @@
 package com.cloudera.oryx.common.math;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.exception.MathArithmeticException;
 import org.apache.commons.math3.exception.NotPositiveException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
@@ -827,7 +827,7 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
     private final Entry current;
 
     OpenMapSparseInOrderIterator() {
-      List<Integer> indices = Lists.newArrayListWithCapacity(entries.size());
+      List<Integer> indices = new ArrayList<>(entries.size());
       OpenIntToDoubleHashMap.Iterator it = entries.iterator();
       while (it.hasNext()) {
         it.advance();

@@ -15,6 +15,8 @@
 
 package com.cloudera.oryx.computation.common.sample;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.math3.random.RandomGenerator;
@@ -24,9 +26,7 @@ import org.apache.crunch.impl.mem.MemPipeline;
 import org.apache.crunch.types.writable.Writables;
 import org.junit.Test;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import com.cloudera.oryx.common.OryxTest;
 import com.cloudera.oryx.common.random.RandomManager;
@@ -40,15 +40,15 @@ public final class ReservoirSamplingTest extends OryxTest {
 
   private static final PCollection<Pair<String, Double>> VALUES = MemPipeline.typedCollectionOf(
       Writables.pairs(Writables.strings(), Writables.doubles()),
-      ImmutableList.of(
-        Pair.of("foo", 200.0),
-        Pair.of("bar", 400.0),
-        Pair.of("baz", 100.0),
-        Pair.of("biz", 100.0)));
+      Arrays.asList(
+          Pair.of("foo", 200.0),
+          Pair.of("bar", 400.0),
+          Pair.of("baz", 100.0),
+          Pair.of("biz", 100.0)));
   
   @Test
   public void testWRS() throws Exception {
-    Map<String, Integer> histogram = Maps.newHashMap();
+    Map<String, Integer> histogram = new HashMap<>();
 
     RandomGenerator r = RandomManager.getRandom();
     for (int i = 0; i < 100; i++) {

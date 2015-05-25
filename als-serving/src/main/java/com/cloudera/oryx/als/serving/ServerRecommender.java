@@ -33,7 +33,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
 import org.apache.commons.math3.util.FastMath;
@@ -202,7 +201,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     LongObjectMap<float[]> X = generation.getX();
 
     Lock xLock = generation.getXLock().readLock();
-    List<float[]> userFeatures = Lists.newArrayListWithCapacity(userIDs.length);
+    List<float[]> userFeatures = new ArrayList<>(userIDs.length);
     xLock.lock();
     try {
       for (String userID : userIDs) {
@@ -289,7 +288,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
       final Iterator<Iterator<LongObjectMap.MapEntry<float[]>>> candidateIteratorsIterator =
           candidateIterators.iterator();
 
-      Collection<Future<Object>> futures = Lists.newArrayList();
+      Collection<Future<Object>> futures = new ArrayList<>();
       for (int i = 0; i < numCores; i++) {
         futures.add(executorService.submit(new Callable<Object>() {
           @Override
@@ -336,7 +335,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
 
   private List<IDValue> translateToStringIDs(Collection<NumericIDValue> numericIDValues) throws NotReadyException {
     StringLongMapping mapping = getCurrentGeneration().getIDMapping();
-    List<IDValue> translated = Lists.newArrayListWithCapacity(numericIDValues.size());
+    List<IDValue> translated = new ArrayList<>(numericIDValues.size());
     for (NumericIDValue numericIDValue : numericIDValues) {
       translated.add(new IDValue(mapping.toString(numericIDValue.getID()), numericIDValue.getValue()));
     }
@@ -552,7 +551,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
       if (numFeatures == 0) {
         return Collections.emptyList();
       }
-      List<String> result = Lists.newArrayListWithCapacity(numFeatures);
+      List<String> result = new ArrayList<>(numFeatures);
       float[] unitVector = new float[numFeatures];
       float[][] unitVectorContainer = { unitVector };
       for (int f = 0; f < numFeatures; f++) {
@@ -982,7 +981,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     yLock.lock();
     try {
 
-      List<float[]> itemFeatures = Lists.newArrayListWithCapacity(itemIDs.length);
+      List<float[]> itemFeatures = new ArrayList<>(itemIDs.length);
       for (long longItemID : longItemIDs) {
         float[] features = Y.get(longItemID);
         if (features != null) {
@@ -1124,7 +1123,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     Lock yLock = generation.getYLock().readLock();
     yLock.lock();
     try {
-      List<String> itemIDs = Lists.newArrayListWithCapacity(Y.size());
+      List<String> itemIDs = new ArrayList<>(Y.size());
       LongPrimitiveIterator it = Y.keySetIterator();
       while (it.hasNext()) {
         itemIDs.add(mapping.toString(it.nextLong()));
@@ -1143,7 +1142,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     Lock xLock = generation.getXLock().readLock();
     xLock.lock();
     try {
-      List<String> userIDs = Lists.newArrayListWithCapacity(X.size());
+      List<String> userIDs = new ArrayList<>(X.size());
       LongPrimitiveIterator it = X.keySetIterator();
       while (it.hasNext()) {
         userIDs.add(mapping.toString(it.nextLong()));
@@ -1196,7 +1195,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
       throw new UnsupportedOperationException();
     }
 
-    List<NumericIDValue> userCounts = Lists.newArrayListWithCapacity(knownItemIDs.size());
+    List<NumericIDValue> userCounts = new ArrayList<>(knownItemIDs.size());
     Lock knownItemReadLock = generation.getKnownItemLock().readLock();
     knownItemReadLock.lock();
     try {

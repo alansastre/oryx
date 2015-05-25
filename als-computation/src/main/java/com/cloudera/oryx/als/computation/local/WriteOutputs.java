@@ -15,7 +15,6 @@
 
 package com.cloudera.oryx.als.computation.local;
 
-import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
@@ -117,7 +117,7 @@ final class WriteOutputs implements Callable<Object> {
         out.write(KEY_VALUE_DELIMITER);
         LongSet ids = entry.getValue();
         LongPrimitiveIterator it = ids.iterator();
-        Collection<String> keyStrings = Lists.newArrayListWithCapacity(ids.size());
+        Collection<String> keyStrings = new ArrayList<>(ids.size());
         while (it.hasNext()) {
           keyStrings.add(Long.toString(it.nextLong()));
         }

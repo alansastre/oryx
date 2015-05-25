@@ -18,8 +18,6 @@ package com.cloudera.oryx.computation.common;
 import com.cloudera.oryx.computation.common.json.JacksonUtils;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigRenderOptions;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -29,8 +27,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -89,7 +89,7 @@ public abstract class GenerationRunner implements Callable<Object> {
     if (generationID < 0) {
       return null;
     }
-    List<StepState> stepStates = Lists.newArrayList();
+    List<StepState> stepStates = new ArrayList<>();
     for (HasState state : stateSources) {
       stepStates.addAll(state.getStepStates());
     }
@@ -254,7 +254,7 @@ public abstract class GenerationRunner implements Callable<Object> {
 
   private void dumpStats() throws IOException {
     // First compute the base stats for all GenerationRunners
-    Map<String, Object> stats = Maps.newHashMap();
+    Map<String, Object> stats = new HashMap<>();
     stats.put("preRunBytes", startSize);
     stats.put("postRunBytes", endSize);
 

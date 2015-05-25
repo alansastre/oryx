@@ -34,7 +34,6 @@ package com.cloudera.oryx.common.collection;
 
 import com.cloudera.oryx.common.OryxTest;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.Test;
 
@@ -154,7 +153,7 @@ public final class LongSetTest extends OryxTest {
   @Test
   public void testVersusHashSet() {
     LongSet actual = new LongSet(1);
-    Collection<Integer> expected = Sets.newHashSet();
+    Collection<Integer> expected = new HashSet();
     RandomGenerator r = RandomManager.getRandom();
     for (int i = 0; i < 1000000; i++) {
       double d = r.nextDouble();

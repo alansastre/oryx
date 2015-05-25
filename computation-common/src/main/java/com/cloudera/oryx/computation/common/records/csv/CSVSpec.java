@@ -15,15 +15,15 @@
 
 package com.cloudera.oryx.computation.common.records.csv;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cloudera.oryx.computation.common.records.DataType;
 import com.cloudera.oryx.computation.common.records.Spec;
 import com.cloudera.oryx.computation.common.records.FieldSpec;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public final class CSVSpec implements Spec {
 
@@ -32,12 +32,12 @@ public final class CSVSpec implements Spec {
   
   public CSVSpec(DataType dataType) {
     this.dataType = dataType;
-    this.fields = ImmutableMap.of();
+    this.fields = Collections.emptyMap();
   }
   
   public CSVSpec(DataType dataType, String name, DataType type, Object... others) {
     this.dataType = dataType;
-    this.fields = Maps.newLinkedHashMap();
+    this.fields = new LinkedHashMap<>();
     this.fields.put(name, new CSVFieldSpec(name, 0, type));
     for (int i = 0; i < others.length; i += 2) {
       String n = (String) others[i];
@@ -58,7 +58,7 @@ public final class CSVSpec implements Spec {
 
   @Override
   public List<String> getFieldNames() {
-    return Lists.newArrayList(fields.keySet());
+    return new ArrayList<>(fields.keySet());
   }
 
   @Override

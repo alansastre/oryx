@@ -23,7 +23,6 @@ import com.cloudera.oryx.computation.common.summary.SummaryStats;
 import com.cloudera.oryx.kmeans.common.Centers;
 import com.cloudera.oryx.kmeans.computation.normalize.NormalizeSettings;
 import com.cloudera.oryx.kmeans.computation.normalize.Transform;
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.linear.RealVector;
 import org.dmg.pmml.Apply;
 import org.dmg.pmml.Array;
@@ -92,7 +91,7 @@ public final class ClusteringModelBuilder {
 
   private void buildSummaryInfo(Summary summary, InboundSettings settings) {
     this.transforms = new LocalTransformations();
-    this.clusteringFields = Lists.newArrayList();
+    this.clusteringFields = new ArrayList<>();
     NormalizeSettings normalize = NormalizeSettings.create(ConfigUtils.getDefaultConfig());
     List<String> columnNames = settings.getColumnNames();
     for (int i = 0; i < columnNames.size(); i++) {

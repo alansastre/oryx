@@ -19,7 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -27,8 +29,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
@@ -67,8 +67,8 @@ public final class LoadRunner implements Callable<Object> {
     Preconditions.checkArgument(steps > 0);  
     
     log.info("Reading IDs...");    
-    Set<String> userIDsSet = Sets.newHashSet();
-    Set<String> itemIDsSet = Sets.newHashSet();
+    Set<String> userIDsSet = new HashSet<>();
+    Set<String> itemIDsSet = new HashSet<>();
     for (File f : dataDirectory.listFiles(IOUtils.NOT_HIDDEN)) {
       if (!f.getName().contains("oryx-append")) {
         for (CharSequence line : new FileLineIterable(f)) {
@@ -112,7 +112,7 @@ public final class LoadRunner implements Callable<Object> {
 
     int numCores = Runtime.getRuntime().availableProcessors();
     final int stepsPerWorker = steps / numCores;
-    Collection<Callable<Object>> workers = Lists.newArrayListWithCapacity(numCores);
+    Collection<Callable<Object>> workers = new ArrayList<>(numCores);
     for (int i = 0; i < numCores; i++) {
       workers.add(new Callable<Object>() {
         @Override

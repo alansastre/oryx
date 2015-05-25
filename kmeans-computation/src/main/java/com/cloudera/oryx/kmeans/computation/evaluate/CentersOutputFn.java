@@ -24,7 +24,6 @@ import com.cloudera.oryx.kmeans.computation.pmml.ClusteringModelBuilder;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import org.apache.crunch.CrunchRuntimeException;
 import org.apache.crunch.Emitter;
 import org.dmg.pmml.Model;
@@ -32,6 +31,7 @@ import org.dmg.pmml.Model;
 import javax.xml.bind.JAXBException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class CentersOutputFn extends OryxDoFn<KMeansEvaluationData, String> {
@@ -65,7 +65,7 @@ public final class CentersOutputFn extends OryxDoFn<KMeansEvaluationData, String
       throw new CrunchRuntimeException(e);
     }
     Preconditions.checkNotNull(summary);
-    models = Lists.newArrayList();
+    models = new ArrayList<>();
     builder = new ClusteringModelBuilder(summary);
   }
 

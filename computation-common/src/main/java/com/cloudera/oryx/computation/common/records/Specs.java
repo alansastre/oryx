@@ -15,10 +15,11 @@
 
 package com.cloudera.oryx.computation.common.records;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 /**
  * Utility functions for working with header files and {@code Spec} data.
@@ -40,9 +41,9 @@ public final class Specs {
 
   public static List<Integer> getFieldIds(Spec spec, List<String> values) {
     if (values.isEmpty()) {
-      return ImmutableList.of();
+      return Collections.emptyList();
     }
-    List<Integer> fieldIds = Lists.newArrayListWithExpectedSize(values.size());
+    List<Integer> fieldIds = new ArrayList<>(values.size());
     if (spec == null || spec.getField(values.get(0)) == null) {
       for (String value : values) {
         try {

@@ -16,7 +16,6 @@
 package com.cloudera.oryx.als.common.pmml;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 import org.dmg.pmml.Extension;
 import org.dmg.pmml.PMML;
 import org.jpmml.model.ImportFilter;
@@ -31,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +43,7 @@ import com.cloudera.oryx.common.io.IOUtils;
  */
 public final class ALSModelDescription {
 
-  private final Map<String,String> pathByKey = Maps.newHashMap();
+  private final Map<String,String> pathByKey = new HashMap<>();
 
   private Map<String,String> getPathByKey() {
     return pathByKey;
@@ -103,10 +103,8 @@ public final class ALSModelDescription {
   public static ALSModelDescription read(File f) throws IOException {
     try (InputStream in = IOUtils.openMaybeDecompressing(f)) {
       return read(in);
-    } catch (JAXBException jaxbe) {
-      throw new IOException(jaxbe);
-    } catch (SAXException saxe) {
-      throw new IOException(saxe);
+    } catch (JAXBException | SAXException e) {
+      throw new IOException(e);
     }
   }
 

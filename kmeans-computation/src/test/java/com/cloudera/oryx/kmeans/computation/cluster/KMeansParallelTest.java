@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.kmeans.computation.cluster;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.cloudera.oryx.common.OryxTest;
@@ -29,7 +30,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cloudera.oryx.common.math.Vectors;
-import com.google.common.collect.ImmutableList;
 
 public final class KMeansParallelTest extends OryxTest {
   
@@ -63,14 +63,14 @@ public final class KMeansParallelTest extends OryxTest {
   
   @Test
   public void testLloyds() throws Exception {
-    List<Centers> centers = ImmutableList.of(
-        new Centers(ImmutableList.of(Vectors.of(1.0, 1.0), Vectors.of(5.0, 4.0))));
+    List<Centers> centers = Arrays.asList(
+        new Centers(Arrays.asList(Vectors.of(1.0, 1.0), Vectors.of(5.0, 4.0))));
     List<Centers> res = kmp.lloydsAlgorithm(VECS, centers, 0, false);
     assertEquals(centers, res);
     
     res = kmp.lloydsAlgorithm(VECS, res, 1, false);
-    List<Centers> expected = ImmutableList.of(
-        new Centers(ImmutableList.of(Vectors.of(1.5, 1.0), Vectors.of(4.5, 3.5))));
+    List<Centers> expected = Arrays.asList(
+        new Centers(Arrays.asList(Vectors.of(1.5, 1.0), Vectors.of(4.5, 3.5))));
     assertEquals(expected, res);
     
     res = kmp.lloydsAlgorithm(VECS, res, 1, false);

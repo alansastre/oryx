@@ -15,7 +15,6 @@
 
 package com.cloudera.oryx.rdf.computation;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -23,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -83,7 +83,7 @@ public final class WineQualityIT extends AbstractComputationIT {
   }
 
   private static List<Example> readWineQualityExamples() throws IOException {
-    List<Example> allExamples = Lists.newArrayList();
+    List<Example> allExamples = new ArrayList<>();
     Pattern delimiter = Pattern.compile(";");
     File dataFile = new File(TEST_TEMP_INBOUND_DIR, "winequality-white.csv");
     for (CharSequence line : new FileLineIterable(dataFile)) {

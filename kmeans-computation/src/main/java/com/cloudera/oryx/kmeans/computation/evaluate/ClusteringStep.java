@@ -30,7 +30,6 @@ import com.cloudera.oryx.kmeans.computation.MLAvros;
 import com.cloudera.oryx.kmeans.common.WeightedRealVector;
 import com.cloudera.oryx.kmeans.computation.types.KMeansTypes;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.typesafe.config.Config;
 import org.apache.crunch.PCollection;
 import org.apache.crunch.Pair;
@@ -48,6 +47,7 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ClusteringStep extends KMeansJobStep {
@@ -118,7 +118,7 @@ public final class ClusteringStep extends KMeansJobStep {
   private static List<ClusterValidityStatistics> findBest(String replicaStatsKey) throws IOException {
     KMeansEvalStrategy evalStrategy = EvaluationSettings.create(ConfigUtils.getDefaultConfig()).getEvalStrategy();
     Store store = Store.get();
-    List<ClusterValidityStatistics> stats = Lists.newArrayList();
+    List<ClusterValidityStatistics> stats = new ArrayList<>();
     for (String statsKey : store.list(replicaStatsKey, true)) {
       for (String line : new FileLineIterable(store.readFrom(statsKey))) {
         ClusterValidityStatistics cvs = ClusterValidityStatistics.parse(line);
@@ -133,7 +133,7 @@ public final class ClusteringStep extends KMeansJobStep {
                                     String replicaCentersKey,
                                     List<ClusterValidityStatistics> bestStats) throws IOException {
     Store store = Store.get();
-    List<Model> models = Lists.newArrayList();
+    List<Model> models = new ArrayList<>();
     String bestName = null;
     if (bestStats.size() == 1) {
       ClusterValidityStatistics cvs = bestStats.get(0);

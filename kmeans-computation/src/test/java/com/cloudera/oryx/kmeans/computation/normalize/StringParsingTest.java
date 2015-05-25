@@ -15,6 +15,8 @@
 
 package com.cloudera.oryx.kmeans.computation.normalize;
 
+import java.util.Arrays;
+
 import com.cloudera.oryx.common.OryxTest;
 import com.cloudera.oryx.computation.common.fn.StringSplitFn;
 import com.cloudera.oryx.computation.common.records.Record;
@@ -30,7 +32,6 @@ import org.junit.Test;
 import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.common.math.Vectors;
 import com.cloudera.oryx.computation.common.summary.Summarizer;
-import com.google.common.collect.ImmutableList;
 
 public final class StringParsingTest extends OryxTest {
 
@@ -43,8 +44,8 @@ public final class StringParsingTest extends OryxTest {
         "3.2,17.0,29.0");
     PCollection<Record> elems = StringSplitFn.apply(input);
     PCollection<RealVector> vecs = elems.parallelDo(new StandardizeFn(), MLAvros.vector());
-    assertEquals(ImmutableList.of(Vectors.of(1, 2, 3), Vectors.of(0.4, 2, 1),
-        Vectors.of(3.2, 17, 29)), vecs.materialize());
+    assertEquals(Arrays.asList(Vectors.of(1, 2, 3), Vectors.of(0.4, 2, 1),
+                               Vectors.of(3.2, 17, 29)), vecs.materialize());
   }
   
   @Test
@@ -72,7 +73,7 @@ public final class StringParsingTest extends OryxTest {
       .categoricalColumns(1, 3)
       .build(elems).getValue();
     PCollection<RealVector> vecs = elems.parallelDo(new StandardizeFn(s), MLAvros.vector());
-    assertEquals(ImmutableList.of(
+    assertEquals(Arrays.asList(
         Vectors.of(1.0, 1, 0, 0, 3.0, 0.0, 1.0, 0.0),
         Vectors.of(0.4, 0, 1, 0, 1.0, 1.0, 0.0, 0.0),
         Vectors.of(3.2, 0, 0, 1, 29.0, 0, 0, 1)),

@@ -15,10 +15,10 @@
 
 package com.cloudera.oryx.kmeans.common;
 
-import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.cloudera.oryx.common.OryxTest;
@@ -35,7 +35,7 @@ public final class KMeansEvalStrategyTest extends OryxTest {
   public void setUp() throws Exception {
     super.setUp();
     // k,replica,testCost,trainCost,varInfo,vanDongen
-    stats = ImmutableList.of(
+    stats = Arrays.asList(
         ClusterValidityStatistics.parse("1,0,10,20,0.5,0.2"),
         ClusterValidityStatistics.parse("2,0,5,17,0.4,0.4"),
         ClusterValidityStatistics.parse("2,1,7,21,0.2,0.5"),

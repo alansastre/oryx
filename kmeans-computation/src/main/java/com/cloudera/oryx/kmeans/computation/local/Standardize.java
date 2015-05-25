@@ -27,7 +27,6 @@ import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.computation.common.summary.SummaryStats;
 import com.cloudera.oryx.kmeans.computation.normalize.NormalizeSettings;
 import com.cloudera.oryx.kmeans.computation.normalize.Transform;
-import com.google.common.collect.Lists;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.random.RandomGenerator;
@@ -36,7 +35,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -74,9 +75,9 @@ public final class Standardize implements Callable<List<List<RealVector>>> {
     boolean sparse = settings.getSparse() != null ? settings.getSparse() :
         expansion > 2 * (summary.getFieldCount() - ignoredColumns.size());
 
-    List<List<RealVector>> ret = Lists.newArrayList();
+    List<List<RealVector>> ret = new ArrayList<>();
     for (int i = 0; i < crossfold.getNumFolds(); i++) {
-      ret.add(Lists.<RealVector>newLinkedList());
+      ret.add(new LinkedList<RealVector>());
     }
     for (File inputFile : inputFiles) {
       log.info("Standardizing input from {}", inputFile.getName());

@@ -23,12 +23,12 @@ import com.cloudera.oryx.common.settings.InboundSettings;
 import com.cloudera.oryx.computation.common.summary.InternalStats;
 import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.computation.common.summary.SummaryStats;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -53,7 +53,7 @@ public final class Summarize implements Callable<Summary> {
 
     InboundSettings inboundSettings = InboundSettings.create(ConfigUtils.getDefaultConfig());
     int numFeatures = inboundSettings.getColumnNames().size();
-    List<InternalStats> internalStats = Lists.newArrayListWithExpectedSize(numFeatures);
+    List<InternalStats> internalStats = new ArrayList<>(numFeatures);
     for (int col = 0; col < numFeatures; col++) {
       if (inboundSettings.isCategorical(col) || inboundSettings.isNumeric(col)) {
         internalStats.add(new InternalStats());
@@ -83,7 +83,7 @@ public final class Summarize implements Callable<Summary> {
       }
     }
 
-    List<SummaryStats> stats = Lists.newArrayListWithExpectedSize(numFeatures);
+    List<SummaryStats> stats = new ArrayList<>(numFeatures);
     for (int col = 0; col < numFeatures; col++) {
       InternalStats internal = internalStats.get(col);
       if (internal != null) {

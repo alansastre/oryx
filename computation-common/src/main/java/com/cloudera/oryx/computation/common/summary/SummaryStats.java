@@ -16,15 +16,14 @@
 package com.cloudera.oryx.computation.common.summary;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public final class SummaryStats implements Serializable {
 
@@ -51,7 +50,7 @@ public final class SummaryStats implements Serializable {
   public SummaryStats(String name, Map<String, Entry> histogram, boolean trimmed) {
     this.name = name;
     this.numeric = null;
-    this.histogram = Maps.newTreeMap();
+    this.histogram = new TreeMap<>();
     if (histogram != null) {
       this.histogram.putAll(histogram);
     }
@@ -102,9 +101,9 @@ public final class SummaryStats implements Serializable {
   
   public List<String> getLevels() {
     if (histogram == null) {
-      return ImmutableList.of();
+      return Collections.emptyList();
     }
-    List<String> levels = Lists.newArrayList(histogram.keySet());
+    List<String> levels = new ArrayList<>(histogram.keySet());
     Collections.sort(levels);
     return levels;
   }

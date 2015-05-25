@@ -39,7 +39,6 @@ import com.cloudera.oryx.computation.common.summary.Summary;
 import com.cloudera.oryx.common.math.Vectors;
 import com.cloudera.oryx.computation.common.summary.Summarizer;
 import com.cloudera.oryx.computation.common.types.MLRecords;
-import com.google.common.collect.ImmutableList;
 
 public final class SummaryTest extends OryxTest {
 
@@ -61,7 +60,7 @@ public final class SummaryTest extends OryxTest {
     Summarizer sr = new Summarizer();
     Summary s = sr.build(elems).getValue();
     StandardizeFn fn = new StandardizeFn(s, Transform.Z);
-    assertEquals(ImmutableList.of(Vectors.of(-1, 1),
+    assertEquals(Arrays.asList(Vectors.of(-1, 1),
         Vectors.of(-1, -1), Vectors.of(1, -1),
         Vectors.of(1, 1)), elems.parallelDo(fn, MLAvros.vector()).materialize());
   }

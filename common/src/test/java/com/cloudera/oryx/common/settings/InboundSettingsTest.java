@@ -21,6 +21,8 @@ import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -38,7 +40,7 @@ public final class InboundSettingsTest extends OryxTest {
   @Test
   public void testDefaults() throws Exception {
     Map<String, Object> mb = ImmutableMap.<String, Object>builder()
-        .put("inbound.categorical-columns", ImmutableList.of())
+        .put("inbound.categorical-columns", Collections.emptyList())
         .build();
     Config conf = overlayConfigOnDefault(mb);
     InboundSettings settings = InboundSettings.create(conf);
@@ -60,17 +62,17 @@ public final class InboundSettingsTest extends OryxTest {
   @Test
   public void testCategoricalSettings() throws Exception {
     Map<String, Object> mb = ImmutableMap.<String, Object>builder()
-        .put("inbound.column-names", ImmutableList.of("a", "b", "c", "d", "e"))
-        .put("inbound.id-columns", ImmutableList.of("a"))
-        .put("inbound.categorical-columns", ImmutableList.of(1, "e"))
-        .put("inbound.ignored-columns", ImmutableList.of("c"))
+        .put("inbound.column-names", Arrays.asList("a", "b", "c", "d", "e"))
+        .put("inbound.id-columns", Arrays.asList("a"))
+        .put("inbound.categorical-columns", Arrays.asList(1, "e"))
+        .put("inbound.ignored-columns", Arrays.asList("c"))
         .build();
     Config conf = overlayConfigOnDefault(mb);
     InboundSettings settings = InboundSettings.create(conf);
-    assertEquals(ImmutableList.of(0), ImmutableList.copyOf(settings.getIdColumns()));
-    assertEquals(ImmutableList.of(1, 4), ImmutableList.copyOf(settings.getCategoricalColumns()));
-    assertEquals(ImmutableList.of(3), ImmutableList.copyOf(settings.getNumericColumns()));
-    assertEquals(ImmutableList.of(2), ImmutableList.copyOf(settings.getIgnoredColumns()));
+    assertEquals(Arrays.asList(0), ImmutableList.copyOf(settings.getIdColumns()));
+    assertEquals(Arrays.asList(1, 4), ImmutableList.copyOf(settings.getCategoricalColumns()));
+    assertEquals(Arrays.asList(3), ImmutableList.copyOf(settings.getNumericColumns()));
+    assertEquals(Arrays.asList(2), ImmutableList.copyOf(settings.getIgnoredColumns()));
     assertNull(settings.getTargetColumn());
 
     /*
@@ -85,17 +87,17 @@ public final class InboundSettingsTest extends OryxTest {
   @Test
   public void testContinuousSettings() throws Exception {
     Map<String, Object> mb = ImmutableMap.<String, Object>builder()
-        .put("inbound.column-names", ImmutableList.of("a", "b", "c", "d", "e"))
-        .put("inbound.id-columns", ImmutableList.of("a"))
-        .put("inbound.numeric-columns", ImmutableList.of(1, "e"))
-        .put("inbound.ignored-columns", ImmutableList.of("c"))
+        .put("inbound.column-names", Arrays.asList("a", "b", "c", "d", "e"))
+        .put("inbound.id-columns", Arrays.asList("a"))
+        .put("inbound.numeric-columns", Arrays.asList(1, "e"))
+        .put("inbound.ignored-columns", Arrays.asList("c"))
         .build();
     Config conf = overlayConfigOnDefault(mb);
     InboundSettings settings = InboundSettings.create(conf);
-    assertEquals(ImmutableList.of(0), ImmutableList.copyOf(settings.getIdColumns()));
-    assertEquals(ImmutableList.of(3), ImmutableList.copyOf(settings.getCategoricalColumns()));
-    assertEquals(ImmutableList.of(1, 4), ImmutableList.copyOf(settings.getNumericColumns()));
-    assertEquals(ImmutableList.of(2), ImmutableList.copyOf(settings.getIgnoredColumns()));
+    assertEquals(Arrays.asList(0), ImmutableList.copyOf(settings.getIdColumns()));
+    assertEquals(Arrays.asList(3), ImmutableList.copyOf(settings.getCategoricalColumns()));
+    assertEquals(Arrays.asList(1, 4), ImmutableList.copyOf(settings.getNumericColumns()));
+    assertEquals(Arrays.asList(2), ImmutableList.copyOf(settings.getIgnoredColumns()));
     assertNull(settings.getTargetColumn());
 
     /*
@@ -110,8 +112,8 @@ public final class InboundSettingsTest extends OryxTest {
   @Test
   public void testTarget() throws Exception {
     Map<String, Object> mb = ImmutableMap.<String, Object>builder()
-        .put("inbound.column-names", ImmutableList.of("a", "e", "c"))
-        .put("inbound.categorical-columns", ImmutableList.of("a", "c"))
+        .put("inbound.column-names", Arrays.asList("a", "e", "c"))
+        .put("inbound.categorical-columns", Arrays.asList("a", "c"))
         .put("inbound.target-column", "c")
         .build();
     Config conf = overlayConfigOnDefault(mb);
@@ -124,7 +126,7 @@ public final class InboundSettingsTest extends OryxTest {
   public void testNumColumns() throws Exception {
     Map<String, Object> mb = ImmutableMap.<String, Object>builder()
         .put("inbound.num-columns", "3")
-        .put("inbound.categorical-columns", ImmutableList.of())
+        .put("inbound.categorical-columns", Arrays.asList())
         .put("inbound.target-column", "0")
         .build();
     Config conf = overlayConfigOnDefault(mb);

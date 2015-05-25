@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.common.parallel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +25,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.typesafe.config.Config;
 import org.slf4j.Logger;
@@ -94,7 +94,7 @@ public final class ExecutorUtils {
    * @throws IllegalStateException if any generated an exception
    */
   public static <T> List<T> getResults(Iterable<Future<T>> futures) {
-    List<T> results = Lists.newArrayList();
+    List<T> results = new ArrayList<>();
     for (Future<T> future : futures) {
       try {
         results.add(future.get());

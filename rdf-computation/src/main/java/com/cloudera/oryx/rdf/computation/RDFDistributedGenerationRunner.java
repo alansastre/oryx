@@ -16,7 +16,6 @@
 package com.cloudera.oryx.rdf.computation;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.dmg.pmml.DataDictionary;
 import org.dmg.pmml.MiningField;
@@ -48,6 +47,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +107,7 @@ public final class RDFDistributedGenerationRunner extends DistributedGenerationR
     // TODO This is still loading all trees into memory, which can be quite large.
     // To do better we would have to manage XML output more directly.
 
-    Map<String,Mean> columnNameToMeanImportance = Maps.newHashMap();
+    Map<String,Mean> columnNameToMeanImportance = new HashMap<>();
 
     for (String treePrefix : store.list(outputPathKey, true)) {
       log.info("Reading trees from file {}", treePrefix);

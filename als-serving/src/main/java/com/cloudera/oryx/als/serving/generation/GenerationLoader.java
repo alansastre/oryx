@@ -17,6 +17,7 @@ package com.cloudera.oryx.als.serving.generation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +25,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.locks.Lock;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +78,7 @@ final class GenerationLoader {
     ALSModelDescription modelDescription = ALSModelDescription.read(modelPMMLFile);
     IOUtils.delete(modelPMMLFile);
 
-    Collection<Future<Object>> futures = Lists.newArrayList();
+    Collection<Future<Object>> futures = new ArrayList<>();
     // Limit this fairly sharply to 2 so as to not saturate the network link
     ExecutorService executor = ExecutorUtils.buildExecutor("LoadModel", 2);
 

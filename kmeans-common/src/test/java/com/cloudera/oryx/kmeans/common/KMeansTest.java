@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.kmeans.common;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.cloudera.oryx.common.OryxTest;
@@ -25,7 +26,6 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.Test;
 
 import com.cloudera.oryx.common.math.Vectors;
-import com.google.common.collect.ImmutableList;
 
 public final class KMeansTest extends OryxTest {
 
@@ -33,8 +33,8 @@ public final class KMeansTest extends OryxTest {
   private final Weighted<RealVector> b = wpoint(5.0, 4.0);
   private final Weighted<RealVector> c = wpoint(4.0, 3.0);
   private final Weighted<RealVector> d = wpoint(2.0, 1.0);
-  private final List<Weighted<RealVector>> points = ImmutableList.of(a, b, c, d);
-  private final List<Weighted<RealVector>> degeneratePoints = ImmutableList.of(a, a, a, a);
+  private final List<Weighted<RealVector>> points = Arrays.asList(a, b, c, d);
+  private final List<Weighted<RealVector>> degeneratePoints = Arrays.asList(a, a, a, a);
   private final KMeansUpdateStrategy lloyds = new LloydsUpdateStrategy(10);
   
   private static Weighted<RealVector> wpoint(double... values) {
@@ -43,9 +43,9 @@ public final class KMeansTest extends OryxTest {
 
   @Test
   public void testCentroids() throws Exception {
-    assertEquals(Vectors.of(3.0, 2.5), LloydsUpdateStrategy.centroid(ImmutableList.of(a, b)));
-    assertEquals(Vectors.of(3.0, 2.0), LloydsUpdateStrategy.centroid(ImmutableList.of(c, d)));
-    assertEquals(Vectors.of(1.0, 1.0), LloydsUpdateStrategy.centroid(ImmutableList.of(a)));
+    assertEquals(Vectors.of(3.0, 2.5), LloydsUpdateStrategy.centroid(Arrays.asList(a, b)));
+    assertEquals(Vectors.of(3.0, 2.0), LloydsUpdateStrategy.centroid(Arrays.asList(c, d)));
+    assertEquals(Vectors.of(1.0, 1.0), LloydsUpdateStrategy.centroid(Arrays.asList(a)));
   }
   
   @Test

@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
@@ -29,7 +30,6 @@ import java.util.zip.ZipInputStream;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
@@ -419,7 +419,7 @@ public final class Store {
     FileStatus[] statuses = fs.listStatus(path, new FilesOrDirsPathFilter(fs, files));
     String prefixString = Namespaces.get().getPrefix();
 
-    List<String> result = Lists.newArrayListWithCapacity(statuses.length);
+    List<String> result = new ArrayList<>(statuses.length);
     for (FileStatus fileStatus : statuses) {
       String listPath = fileStatus.getPath().toString();
       Preconditions.checkState(listPath.startsWith(prefixString),

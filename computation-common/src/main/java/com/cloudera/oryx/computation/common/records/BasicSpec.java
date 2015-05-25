@@ -16,10 +16,10 @@
 package com.cloudera.oryx.computation.common.records;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 
 public final class BasicSpec implements Spec {
 
@@ -41,7 +41,7 @@ public final class BasicSpec implements Spec {
       }
       this.fieldNames = Arrays.asList(n);
     } else {
-      this.fieldNames = ImmutableList.of();
+      this.fieldNames = Collections.emptyList();
     }
   }
   
