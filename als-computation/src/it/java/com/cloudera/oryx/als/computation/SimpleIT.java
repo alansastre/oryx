@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ import com.cloudera.oryx.als.serving.ServerRecommender;
  *
  * @author Sean Owen
  */
+@Ignore
 public final class SimpleIT extends AbstractComputationIT {
 
   private static final Logger log = LoggerFactory.getLogger(SimpleIT.class);
