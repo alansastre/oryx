@@ -80,8 +80,8 @@ public final class ALSLocalGenerationRunner extends LocalGenerationRunner {
 
       boolean noKnownItems = config.getBoolean("model.no-known-items");
       LongObjectMap<LongSet> knownItemIDs = noKnownItems ? null : new LongObjectMap<LongSet>();
-      LongObjectMap<LongFloatMap> RbyRow = new LongObjectMap<LongFloatMap>();
-      LongObjectMap<LongFloatMap> RbyColumn = new LongObjectMap<LongFloatMap>();
+      LongObjectMap<LongFloatMap> RbyRow = new LongObjectMap<>();
+      LongObjectMap<LongFloatMap> RbyColumn = new LongObjectMap<>();
       StringLongMapping idMapping = new StringLongMapping();
 
       if (lastGenerationID >= 0) {

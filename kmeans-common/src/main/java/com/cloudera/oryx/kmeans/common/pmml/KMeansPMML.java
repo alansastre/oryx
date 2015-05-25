@@ -54,15 +54,10 @@ public final class KMeansPMML {
   }
 
   public static PMML read(File f) throws IOException {
-    InputStream in = IOUtils.openMaybeDecompressing(f);
-    try {
+    try (InputStream in = IOUtils.openMaybeDecompressing(f)) {
       return read(in);
-    } catch (JAXBException jaxbe) {
-      throw new IOException(jaxbe);
-    } catch (SAXException saxe) {
-      throw new IOException(saxe);
-    } finally {
-      in.close();
+    } catch (JAXBException | SAXException e) {
+      throw new IOException(e);
     }
   }
 
@@ -71,13 +66,10 @@ public final class KMeansPMML {
   }
 
   public static void write(File f, DataDictionary dictionary, List<? extends Model> models) throws IOException {
-    OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(f));
-    try {
+    try (OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(f))) {
       write(out, dictionary, models);
     } catch (JAXBException jaxbe) {
       throw new IOException(jaxbe);
-    } finally {
-      out.close();
     }
   }
 

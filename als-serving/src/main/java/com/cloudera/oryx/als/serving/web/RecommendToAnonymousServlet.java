@@ -118,15 +118,15 @@ public final class RecommendToAnonymousServlet extends AbstractALSServlet {
       values[i] = value == null ? 1.0f : value;
     }
     
-    return new Pair<String[],float[]>(itemIDs, values);
+    return new Pair<>(itemIDs, values);
   }
 
   private static Pair<String,Float> parseItemValue(String s) {
     int equals = s.indexOf('=');
     if (equals < 0) {
-      return new Pair<String,Float>(s, null);
+      return new Pair<>(s, null);
     }
-    return new Pair<String,Float>(s.substring(0, equals), LangUtils.parseFloat(s.substring(equals + 1)));
+    return new Pair<>(s.substring(0, equals), LangUtils.parseFloat(s.substring(equals + 1)));
   }
 
 }

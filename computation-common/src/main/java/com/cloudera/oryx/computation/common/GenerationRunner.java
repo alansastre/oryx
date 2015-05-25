@@ -62,7 +62,7 @@ public abstract class GenerationRunner implements Callable<Object> {
     instanceDir = ConfigUtils.getDefaultConfig().getString("model.instance-dir");
     generationID = -1;
     lastGenerationID = -1;
-    stateSources = new CopyOnWriteArrayList<HasState>();
+    stateSources = new CopyOnWriteArrayList<>();
   }
 
   protected final String getInstanceDir() {
@@ -247,12 +247,9 @@ public abstract class GenerationRunner implements Callable<Object> {
     private void storeConfig(Config config) throws IOException {
     String outputKey = Namespaces.getInstanceGenerationPrefix(instanceDir, generationID) + "computation.conf";
     String configString = config.root().render(ConfigRenderOptions.concise());
-    Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8);
-    try {
-      writer.write(configString);
-    } finally {
-      writer.close();
-    }
+      try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8)) {
+        writer.write(configString);
+      }
   }
 
   private void dumpStats() throws IOException {
@@ -271,11 +268,8 @@ public abstract class GenerationRunner implements Callable<Object> {
     ObjectMapper mapper = JacksonUtils.getObjectMapper();
     String statsString = mapper.writeValueAsString(stats);
     String outputKey = Namespaces.getInstanceGenerationPrefix(instanceDir, generationID) + "stats.json";
-    Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8);
-    try {
+    try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8)) {
       writer.write(statsString);
-    } finally {
-      writer.close();
     }
   }
 

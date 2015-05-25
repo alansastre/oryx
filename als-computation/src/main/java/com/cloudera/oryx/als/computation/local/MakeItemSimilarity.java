@@ -76,8 +76,7 @@ final class MakeItemSimilarity implements Callable<Object> {
         futures.add(executor.submit(new Callable<Object>() {
           @Override
           public Void call() throws IOException {
-            Writer out = IOUtils.buildGZIPWriter(new File(similarItemsDir, workerNumber + ".csv.gz"));
-            try {
+            try (Writer out = IOUtils.buildGZIPWriter(new File(similarItemsDir, workerNumber + ".csv.gz"))) {
               while (true) {
                 long itemID;
                 synchronized (it) {
@@ -98,8 +97,6 @@ final class MakeItemSimilarity implements Callable<Object> {
                   out.write('\n');
                 }
               }
-            } finally {
-              out.close();
             }
           }
         }));

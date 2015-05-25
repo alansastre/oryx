@@ -85,8 +85,7 @@ final class MakeRecommendations implements Callable<Object> {
         futures.add(executor.submit(new Callable<Object>() {
           @Override
           public Void call() throws IOException {
-            Writer out = IOUtils.buildGZIPWriter(new File(recommendDir, workerNumber + ".csv.gz"));
-            try {
+            try (Writer out = IOUtils.buildGZIPWriter(new File(recommendDir, workerNumber + ".csv.gz"))) {
               while (true) {
                 long userID;
                 synchronized (it) {
@@ -109,8 +108,6 @@ final class MakeRecommendations implements Callable<Object> {
                   out.write('\n');
                 }
               }
-            } finally {
-              out.close();
             }
           }
         }));

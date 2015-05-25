@@ -49,7 +49,7 @@ public final class LongObjectMapTest extends OryxTest {
 
   @Test
   public void testPutAndGet() {
-    LongObjectMap<Long> map = new LongObjectMap<Long>();
+    LongObjectMap<Long> map = new LongObjectMap<>();
     assertNull(map.get(500000L));
     map.put(500000L, 2L);
     assertEquals(2L, (long) map.get(500000L));
@@ -57,7 +57,7 @@ public final class LongObjectMapTest extends OryxTest {
   
   @Test
   public void testRemove() {
-    LongObjectMap<Long> map = new LongObjectMap<Long>();
+    LongObjectMap<Long> map = new LongObjectMap<>();
     map.put(500000L, 2L);
     map.remove(500000L);
     assertEquals(0, map.size());
@@ -67,7 +67,7 @@ public final class LongObjectMapTest extends OryxTest {
   
   @Test
   public void testClear() {
-    LongObjectMap<Long> map = new LongObjectMap<Long>();
+    LongObjectMap<Long> map = new LongObjectMap<>();
     map.put(500000L, 2L);
     map.clear();
     assertEquals(0, map.size());
@@ -77,7 +77,7 @@ public final class LongObjectMapTest extends OryxTest {
   
   @Test
   public void testSizeEmpty() {
-    LongObjectMap<Long> map = new LongObjectMap<Long>();
+    LongObjectMap<Long> map = new LongObjectMap<>();
     assertEquals(0, map.size());
     assertTrue(map.isEmpty());
     map.put(500000L, 2L);
@@ -112,7 +112,7 @@ public final class LongObjectMapTest extends OryxTest {
    
   @Test
   public void testVersusHashMap() {
-    LongObjectMap<String> actual = new LongObjectMap<String>();
+    LongObjectMap<String> actual = new LongObjectMap<>();
     Map<Long, String> expected = Maps.newHashMap();
     RandomGenerator r = RandomManager.getRandom();
     for (int i = 0; i < 1000000; i++) {
@@ -134,7 +134,7 @@ public final class LongObjectMapTest extends OryxTest {
   
   @Test
   public void testMaxSize() {
-    LongObjectMap<String> map = new LongObjectMap<String>();
+    LongObjectMap<String> map = new LongObjectMap<>();
     map.put(4, "bang");
     assertEquals(1, map.size());
     map.put(47L, "bang");
@@ -147,7 +147,7 @@ public final class LongObjectMapTest extends OryxTest {
   
   
   private static LongObjectMap<String> buildTestFastMap() {
-    LongObjectMap<String> map = new LongObjectMap<String>();
+    LongObjectMap<String> map = new LongObjectMap<>();
     map.put(500000L, "alpha");
     map.put(47L, "bang");
     map.put(2L, "beta");

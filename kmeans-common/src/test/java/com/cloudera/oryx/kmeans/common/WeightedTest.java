@@ -42,7 +42,7 @@ public final class WeightedTest extends OryxTest {
     Collection<Weighted<Integer>> things = Lists.newArrayList();
     RandomGenerator rand = RandomManager.getRandom();
     for (int i = 0; i < 50; i++) {
-      things.add(new Weighted<Integer>(i, rand.nextDouble()));
+      things.add(new Weighted<>(i, rand.nextDouble()));
     }
     List<Weighted<Integer>> s = Weighted.sample(things, 5, rand);
     assertEquals(ImmutableList.of(31, 46, 49, 23, 14), Lists.transform(s, new ThingFn<Integer>()));
@@ -59,7 +59,7 @@ public final class WeightedTest extends OryxTest {
     RandomGenerator rand = RandomManager.getRandom();
     Collection<Weighted<Integer>> things = Lists.newArrayList();
     for (int i = 0; i < 5; i++) {
-      things.add(new Weighted<Integer>(i, rand.nextDouble()));
+      things.add(new Weighted<>(i, rand.nextDouble()));
     }
     List<Weighted<Integer>> s = Weighted.sample(things, 10, rand);
     assertEquals(ImmutableList.of(3, 4, 1, 0, 2), Lists.transform(s, new ThingFn<Integer>()));

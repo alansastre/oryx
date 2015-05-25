@@ -96,11 +96,8 @@ public final class IngestServlet extends AbstractALSServlet {
 
     try {
       recommender.ingest(reader);
-    } catch (IllegalArgumentException iae) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, iae.toString());
-      return;
-    } catch (NoSuchElementException nsee) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, nsee.toString());
+    } catch (IllegalArgumentException | NoSuchElementException e) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.toString());
       return;
     }
 

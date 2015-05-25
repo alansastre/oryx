@@ -107,13 +107,13 @@ public final class PeriodicRunner implements Runnable, Closeable {
     running = false;
 
     //this.allGenerationRunners = Lists.newCopyOnWriteArrayList();
-    this.allGenerationRunners = new CopyOnWriteArrayList<GenerationRunner>();
+    this.allGenerationRunners = new CopyOnWriteArrayList<>();
 
     executor = Executors.newSingleThreadScheduledExecutor(
         new ThreadFactoryBuilder().setNameFormat("PeriodicRunner-%d").build());
     future = executor.scheduleWithFixedDelay(this, 0L, CHECK_INTERVAL_MINS, TimeUnit.MINUTES);
 
-    this.cachedState = new ReloadingReference<PeriodicRunnerState>(new Callable<PeriodicRunnerState>() {
+    this.cachedState = new ReloadingReference<>(new Callable<PeriodicRunnerState>() {
       @Override
       public PeriodicRunnerState call() throws IOException, InterruptedException {
         return doGetState();
@@ -223,10 +223,8 @@ public final class PeriodicRunner implements Runnable, Closeable {
 
     } catch (InterruptedException ignored) {
       log.warn("Interrupted");
-    } catch (IOException ioe) {
-      log.warn("Unexpected error in execution", ioe);
-    } catch (JobException je) {
-      log.warn("Unexpected error in execution", je);
+    } catch (IOException | JobException e) {
+      log.warn("Unexpected error in execution", e);
     } catch (Throwable t) {
       log.error("Unexpected error in execution", t);
     } finally {

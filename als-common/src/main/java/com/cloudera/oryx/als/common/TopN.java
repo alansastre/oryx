@@ -57,7 +57,7 @@ public final class TopN {
    * @return Initialized {@link Queue} suitable for use in this class
    */
   public static Queue<NumericIDValue> initialQueue(int n) {
-    return new PriorityQueue<NumericIDValue>(n + 2, ByValueAscComparator.INSTANCE);
+    return new PriorityQueue<>(n + 2, ByValueAscComparator.INSTANCE);
   }
 
   /**

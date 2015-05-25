@@ -62,11 +62,8 @@ public final class IrisIT extends AbstractComputationIT {
     new RDFLocalGenerationRunner().call();
     File pmmlFile = new File(TEST_TEMP_BASE_DIR, "00000/model.pmml.gz");
 
-    Reader pmmlReader = IOUtils.openReaderMaybeDecompressing(pmmlFile);
-    try {
+    try (Reader pmmlReader = IOUtils.openReaderMaybeDecompressing(pmmlFile)) {
       log.info("PMML:\n{}", CharStreams.toString(pmmlReader));
-    } finally {
-      pmmlReader.close();
     }
 
     Pair<DecisionForest,Map<Integer,BiMap<String,Integer>>> forestAndMapping = DecisionForestPMML.read(pmmlFile);

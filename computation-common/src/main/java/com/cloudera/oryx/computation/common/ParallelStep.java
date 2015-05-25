@@ -48,7 +48,7 @@ public final class ParallelStep extends Configured implements Tool, HasState {
 
   public ParallelStep() {
     // steps = Lists.newCopyOnWriteArrayList();
-    steps = new CopyOnWriteArrayList<JobStep>();
+    steps = new CopyOnWriteArrayList<>();
   }
 
   /**

@@ -69,8 +69,8 @@ public final class ClusteringModelBuilder {
   }
 
   public ClusteringModel build(String modelName, Centers centers) {
-    List<ClusteringField> clusteringFields = new ArrayList<ClusteringField>(this.clusteringFields);
-    List<Cluster> clusters = new ArrayList<Cluster>();
+    List<ClusteringField> clusteringFields = new ArrayList<>(this.clusteringFields);
+    List<Cluster> clusters = new ArrayList<>();
     for (int i = 0; i < centers.size(); i++) {
       clusters.add(toCluster(centers.get(i), i));
     }

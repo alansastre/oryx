@@ -83,7 +83,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     Preconditions.checkNotNull(localInputDir, "No local dir");
 
     numCores = ExecutorUtils.getParallelism();
-    executor = new ReloadingReference<ExecutorService>(new Callable<ExecutorService>() {
+    executor = new ReloadingReference<>(new Callable<ExecutorService>() {
       @Override
       public ExecutorService call() {
         return ExecutorUtils.buildExecutor("ServerRecommender", 2 * numCores);
@@ -1098,7 +1098,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
       }
       LongObjectMap<float[]> toFeatures;
       synchronized (userKnownItemIDs) {
-        toFeatures = new LongObjectMap<float[]>(userKnownItemIDs.size());
+        toFeatures = new LongObjectMap<>(userKnownItemIDs.size());
         LongPrimitiveIterator it = userKnownItemIDs.iterator();
         while (it.hasNext()) {
           long fromItemID = it.nextLong();
@@ -1176,7 +1176,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     }
 
     StringLongMapping mapping = generation.getIDMapping();
-    Collection<String> userIDStrings = new ArrayList<String>();
+    Collection<String> userIDStrings = new ArrayList<>();
     if (usersKnownItemIDs != null) {
       LongPrimitiveIterator it = usersKnownItemIDs.iterator();
       while (it.hasNext()) {

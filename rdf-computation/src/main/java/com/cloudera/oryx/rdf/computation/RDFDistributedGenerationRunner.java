@@ -116,9 +116,7 @@ public final class RDFDistributedGenerationRunner extends DistributedGenerationR
         try {
           nextPMML = JAXBUtil.unmarshalPMML(
               ImportFilter.apply(new InputSource(new StringReader(treePMMLAsLine))));
-        } catch (JAXBException e) {
-          throw new IOException(e);
-        } catch (SAXException e) {
+        } catch (JAXBException | SAXException e) {
           throw new IOException(e);
         }
 
@@ -215,13 +213,10 @@ public final class RDFDistributedGenerationRunner extends DistributedGenerationR
     log.info("Writing combined model file");
     File tempJoinedForestFile = File.createTempFile("model-", ".pmml.gz");
     tempJoinedForestFile.deleteOnExit();
-    OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(tempJoinedForestFile));
-    try {
+    try (OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(tempJoinedForestFile))) {
       JAXBUtil.marshalPMML(joinedPMML, new StreamResult(out));
     } catch (JAXBException e) {
       throw new IOException(e);
-    } finally {
-      out.close();
     }
 
     log.info("Uploading combined model file");
@@ -251,7 +246,7 @@ public final class RDFDistributedGenerationRunner extends DistributedGenerationR
       if (newValues != null && !newValues.isEmpty()) {
         for (TypeDefinitionField existingField : existingDict.getDataFields()) {
           if (existingField.getName().equals(newField.getName())) {
-            Set<String> existingStrings = new HashSet<String>(existingField.getValues().size());
+            Set<String> existingStrings = new HashSet<>(existingField.getValues().size());
             for (Value existingValue : existingField.getValues()) {
               existingStrings.add(existingValue.getValue());
             }

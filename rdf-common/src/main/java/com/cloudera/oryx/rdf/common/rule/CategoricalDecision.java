@@ -181,7 +181,7 @@ public final class CategoricalDecision extends Decision {
     for (int featureCategory = 0; featureCategory < averageTargetForCategory.length; featureCategory++) {
       StorelessUnivariateStatistic mean = averageTargetForCategory[featureCategory];
       if (mean != null) {
-        byScore.add(new Pair<Double,Integer>(mean.getResult(), featureCategory));
+        byScore.add(new Pair<>(mean.getResult(), featureCategory));
       }
     }
     return sortAndGetDecisionsOverSubset(featureNumber,
@@ -224,7 +224,7 @@ public final class CategoricalDecision extends Decision {
     List<Pair<Double,Integer>> byScore = Lists.newArrayListWithCapacity(target0CountsForFeature.length);
     for (int featureCategory = 0; featureCategory < target0CountsForFeature.length; featureCategory++) {
       double ratio = (double) target0CountsForFeature[featureCategory] / countsForFeature[featureCategory];
-      byScore.add(new Pair<Double,Integer>(ratio, featureCategory));
+      byScore.add(new Pair<>(ratio, featureCategory));
     }
 
     return sortAndGetDecisionsOverSubset(featureNumber,
@@ -263,7 +263,7 @@ public final class CategoricalDecision extends Decision {
       int[] targetCategoryCounts = targetCountsForFeature[featureCategory];
       if (targetCategoryCounts != null) {
         double entropy = Information.entropy(targetCategoryCounts);
-        byScore.add(new Pair<Double,Integer>(entropy, featureCategory));
+        byScore.add(new Pair<>(entropy, featureCategory));
       }
     }
 

@@ -45,10 +45,8 @@ public final class MostActiveUsersServlet extends AbstractALSServlet {
       outputALSResult(request, response, recommender.getMostActiveUsers(getNumResultsToFetch(request)));
     } catch (NotReadyException nre) {
       response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, nre.toString());
-    } catch (IllegalArgumentException iae) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, iae.toString());
-    } catch (UnsupportedOperationException uoe) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, uoe.toString());
+    } catch (IllegalArgumentException | UnsupportedOperationException e) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.toString());
     }
   }
 

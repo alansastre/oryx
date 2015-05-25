@@ -75,7 +75,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
    * @return {@link Iterator} over array's values
    */
   public static <T> ArrayIterator<T> forArray(T... values) {
-    return new ArrayIterator<T>(values);
+    return new ArrayIterator<>(values);
   }
 
 }

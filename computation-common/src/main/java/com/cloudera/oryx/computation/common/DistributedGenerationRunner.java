@@ -91,7 +91,7 @@ public abstract class DistributedGenerationRunner extends GenerationRunner {
 
     doPre();
 
-    DependenciesScheduler<Class<? extends JobStep>> scheduler = new DependenciesScheduler<Class<? extends JobStep>>();
+    DependenciesScheduler<Class<? extends JobStep>> scheduler = new DependenciesScheduler<>();
 
     for (Collection<Class<? extends JobStep>> preStepClasses : scheduler.schedule(getPreDependencies())) {
       runSchedule(preStepClasses, buildConfig(0));

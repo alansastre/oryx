@@ -180,7 +180,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
   @Override
   public Void call() throws ExecutionException, InterruptedException {
 
-    X = new LongObjectMap<float[]>(RbyRow.size());
+    X = new LongObjectMap<>(RbyRow.size());
 
     boolean randomY = previousY == null || previousY.isEmpty();
     Y = constructInitialY(previousY);
@@ -261,7 +261,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
     if (previousY == null || previousY.isEmpty()) {
       // Common case: have to start from scratch
       log.info("Starting from new, random Y matrix");      
-      randomY = new LongObjectMap<float[]>(RbyColumn.size());
+      randomY = new LongObjectMap<>(RbyColumn.size());
       
     } else {
       
@@ -269,7 +269,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
       if (oldFeatureCount > features) {
         // Fewer features, use some dimensions from prior larger number of features as-is
         log.info("Feature count decreased to {}, projecting down previous Y matrix", features);
-        randomY = new LongObjectMap<float[]>(previousY.size());
+        randomY = new LongObjectMap<>(previousY.size());
         for (LongObjectMap.MapEntry<float[]> entry : previousY.entrySet()) {
           float[] oldLargerVector = entry.getValue();
           float[] newSmallerVector = new float[features];
@@ -280,7 +280,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
         
       } else if (oldFeatureCount < features) {
         log.info("Feature count increased to {}, using previous Y matrix as subspace", features);
-        randomY = new LongObjectMap<float[]>(previousY.size());
+        randomY = new LongObjectMap<>(previousY.size());
         for (LongObjectMap.MapEntry<float[]> entry : previousY.entrySet()) {
           float[] oldSmallerVector = entry.getValue();
           float[] newLargerVector = new float[features];
@@ -391,7 +391,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
     if (R != null) {
       List<Pair<Long, LongFloatMap>> workUnit = Lists.newArrayListWithCapacity(WORK_UNIT_SIZE);
       for (LongObjectMap.MapEntry<LongFloatMap> entry : R.entrySet()) {
-        workUnit.add(new Pair<Long,LongFloatMap>(entry.getKey(), entry.getValue()));
+        workUnit.add(new Pair<>(entry.getKey(), entry.getValue()));
         if (workUnit.size() == WORK_UNIT_SIZE) {
           futures.add(executor.submit(new Worker(features, M, MTM, MTags, workUnit)));
           workUnit = Lists.newArrayListWithCapacity(WORK_UNIT_SIZE);

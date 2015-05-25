@@ -272,13 +272,10 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
     String mapKey = iterationsPrefix + iterationNumber + "/MAP";
     if (store.exists(mapKey, true)) {
       double map;
-      BufferedReader in = store.readFrom(mapKey);
-      try {
+      try (BufferedReader in = store.readFrom(mapKey)) {
         String line = in.readLine();
         Preconditions.checkNotNull(line);
         map = Double.parseDouble(line);
-      } finally {
-        in.close();
       }
       log.info("Mean average precision estimate: {}", map);
     }
@@ -359,7 +356,7 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
   private static LongObjectMap<LongFloatMap> readUserItemEstimates(String convergenceSamplePrefix)
       throws IOException {
     log.info("Reading estimates from {}", convergenceSamplePrefix);
-    LongObjectMap<LongFloatMap> userItemEstimate = new LongObjectMap<LongFloatMap>();
+    LongObjectMap<LongFloatMap> userItemEstimate = new LongObjectMap<>();
     Store store = Store.get();
     for (String prefix : store.list(convergenceSamplePrefix, true)) {
       for (CharSequence line : new FileLineIterable(store.readFrom(prefix))) {

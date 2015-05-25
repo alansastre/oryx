@@ -101,15 +101,12 @@ public final class ALSModelDescription {
   }
 
   public static ALSModelDescription read(File f) throws IOException {
-    InputStream in = IOUtils.openMaybeDecompressing(f);
-    try {
+    try (InputStream in = IOUtils.openMaybeDecompressing(f)) {
       return read(in);
     } catch (JAXBException jaxbe) {
       throw new IOException(jaxbe);
     } catch (SAXException saxe) {
       throw new IOException(saxe);
-    } finally {
-      in.close();
     }
   }
 
@@ -137,13 +134,10 @@ public final class ALSModelDescription {
   }
 
   public static void write(File f, ALSModelDescription model) throws IOException {
-    OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(f));
-    try {
+    try (OutputStream out = IOUtils.buildGZIPOutputStream(new FileOutputStream(f))) {
       write(out, model);
     } catch (JAXBException jaxbe) {
       throw new IOException(jaxbe);
-    } finally {
-      out.close();
     }
   }
 

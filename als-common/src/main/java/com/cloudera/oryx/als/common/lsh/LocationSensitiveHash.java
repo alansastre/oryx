@@ -113,7 +113,7 @@ public final class LocationSensitiveHash {
 
     meanVector = findMean(Y, features);
 
-    buckets = new LongObjectMap<long[]>();
+    buckets = new LongObjectMap<>();
     int count = 0;
     int maxBucketSize = 0;
     for (LongObjectMap.MapEntry<float[]> entry : Y.entrySet()) {

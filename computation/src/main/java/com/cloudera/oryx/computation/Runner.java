@@ -178,18 +178,15 @@ public final class Runner implements Callable<Object>, Closeable {
   }
 
   public static void main(String[] args) throws Exception {
-    final Runner runner = new Runner();
-    SignalManager.register(new Runnable() {
-      @Override
-      public void run() {
-        runner.close();
-      }
-    }, SignalType.INT, SignalType.TERM);
-    try {
+    try (Runner runner = new Runner()) {
+      SignalManager.register(new Runnable() {
+        @Override
+        public void run() {
+          runner.close();
+        }
+      }, SignalType.INT, SignalType.TERM);
       runner.call();
       runner.await();
-    } finally {
-      runner.close();
     }
   }
 

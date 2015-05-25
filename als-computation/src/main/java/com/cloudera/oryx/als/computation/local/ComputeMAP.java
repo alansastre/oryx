@@ -50,7 +50,7 @@ final class ComputeMAP implements Callable<Object> {
   @Override
   public Object call() throws IOException {
 
-    LongObjectMap<LongSet> testData = new LongObjectMap<LongSet>();
+    LongObjectMap<LongSet> testData = new LongObjectMap<>();
 
     File[] files = testDir.listFiles(IOUtils.NOT_HIDDEN);
     if (files != null) {

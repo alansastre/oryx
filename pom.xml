@@ -368,11 +368,9 @@
     <!-- Maven settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <dependency.locations.enabled>false</dependency.locations.enabled>
-    <dependency.details.enabled>false</dependency.details.enabled>
     <maven.version.min>3.2.1</maven.version.min>
     <!-- Dependency versions -->
-    <java.version>1.6</java.version>
+    <java.version>1.7</java.version>
     <javadoc.version>1.7</javadoc.version>
     <slf4j.version>1.7.12</slf4j.version>
     <tomcat.version>7.0.62</tomcat.version>

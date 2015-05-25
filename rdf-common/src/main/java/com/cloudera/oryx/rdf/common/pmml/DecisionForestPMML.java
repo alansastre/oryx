@@ -96,11 +96,8 @@ public final class DecisionForestPMML {
   public static void write(File pmmlFile,
                            DecisionForest forest,
                            Map<Integer,BiMap<String,Integer>> columnToCategoryNameToIDMapping) throws IOException {
-    Writer pmmlOut = IOUtils.buildGZIPWriter(pmmlFile);
-    try {
+    try (Writer pmmlOut = IOUtils.buildGZIPWriter(pmmlFile)) {
       write(pmmlOut, forest, columnToCategoryNameToIDMapping);
-    } finally {
-      pmmlOut.close();
     }
   }
 
@@ -132,7 +129,7 @@ public final class DecisionForestPMML {
           MultipleModelMethodType.WEIGHTED_MAJORITY_VOTE :
           MultipleModelMethodType.WEIGHTED_AVERAGE;
 
-      List<Segment> segments = new ArrayList<Segment>();
+      List<Segment> segments = new ArrayList<>();
       int treeID = 0;
       for (DecisionTree tree : forest) {
         TreeModel treeModel = buildTreeModel(columnToCategoryNameToIDMapping,
@@ -175,10 +172,10 @@ public final class DecisionForestPMML {
     root.setId("r");
 
     // Queue<Node> modelNodes = Queues.newArrayDeque();
-    Queue<Node> modelNodes = new ArrayDeque<Node>();
+    Queue<Node> modelNodes = new ArrayDeque<>();
     modelNodes.add(root);
 
-    Queue<Pair<TreeNode, Decision>> treeNodes = new ArrayDeque<Pair<TreeNode, Decision>>();
+    Queue<Pair<TreeNode, Decision>> treeNodes = new ArrayDeque<>();
     treeNodes.add(new Pair<TreeNode,Decision>(tree.getRoot(), null));
 
     while (!treeNodes.isEmpty()) {
@@ -239,7 +236,7 @@ public final class DecisionForestPMML {
             decision.getDefaultDecision() ? positiveModelNode.getId() : negativeModelNode.getId());
         modelNodes.add(positiveModelNode);
         modelNodes.add(negativeModelNode);
-        treeNodes.add(new Pair<TreeNode,Decision>(decisionNode.getRight(), decision));
+        treeNodes.add(new Pair<>(decisionNode.getRight(), decision));
         treeNodes.add(new Pair<TreeNode,Decision>(decisionNode.getLeft(), null));
 
       }
@@ -296,15 +293,10 @@ public final class DecisionForestPMML {
   public static Pair<DecisionForest, Map<Integer,BiMap<String,Integer>>> read(File pmmlFile) throws IOException {
 
     PMML pmml;
-    InputStream in = IOUtils.openMaybeDecompressing(pmmlFile);
-    try {
+    try (InputStream in = IOUtils.openMaybeDecompressing(pmmlFile)) {
       pmml = JAXBUtil.unmarshalPMML(ImportFilter.apply(new InputSource(in)));
-    } catch (JAXBException e) {
+    } catch (JAXBException | SAXException e) {
       throw new IOException(e);
-    } catch (SAXException e) {
-      throw new IOException(e);
-    } finally {
-      in.close();
     }
 
     InboundSettings settings = InboundSettings.create(ConfigUtils.getDefaultConfig());
@@ -347,7 +339,7 @@ public final class DecisionForestPMML {
       }
     }
 
-    return new Pair<DecisionForest, Map<Integer, BiMap<String, Integer>>>(
+    return new Pair<>(
         new DecisionForest(trees, weights, featureImportances),
         columnToCategoryNameToIDMapping);
   }

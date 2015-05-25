@@ -68,13 +68,13 @@ public final class KMeansParallel {
     PTypeFamily tf = points.getTypeFamily();
     PTableType<Pair<Integer, Integer>, Pair<V, Long>> ptt = tf.tableOf(tf.pairs(tf.ints(), tf.ints()),
         tf.pairs(points.getPType(), tf.longs()));
-    Aggregator<Pair<V, Long>> agg = new SumVectorsAggregator<V>();
+    Aggregator<Pair<V, Long>> agg = new SumVectorsAggregator<>();
     for (int i = 0; i < numIterations; i++) {
       KSketchIndex index = new KSketchIndex(centers, projectionBits, projectionSamples, seed);
-      LloydsMapFn<V> mapFn = new LloydsMapFn<V>(index, approx);
-      centers = new LloydsCenters<V>(points.parallelDo("lloyds-" + i, mapFn, ptt)
-          .groupByKey()
-          .combineValues(agg), centers.size()).getValue();
+      LloydsMapFn<V> mapFn = new LloydsMapFn<>(index, approx);
+      centers = new LloydsCenters<>(points.parallelDo("lloyds-" + i, mapFn, ptt)
+                                    .groupByKey()
+                                    .combineValues(agg), centers.size()).getValue();
     }
     return centers;
   }

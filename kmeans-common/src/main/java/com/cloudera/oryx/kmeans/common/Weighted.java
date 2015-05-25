@@ -40,7 +40,7 @@ public class Weighted<T> {
   private static final class WeightFunction<T> implements Function<T, Weighted<T>> {
     @Override
     public Weighted<T> apply(T input) {
-      return new Weighted<T>(input);
+      return new Weighted<>(input);
     }
   }
   

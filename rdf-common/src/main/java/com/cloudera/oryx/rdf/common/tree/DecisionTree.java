@@ -109,7 +109,7 @@ public final class DecisionTree implements TreeBasedClassifier {
    * @return count of nodes in the tree
    */
   public int countNodes() {
-    LinkedList<TreeNode> nodes = new LinkedList<TreeNode>();
+    LinkedList<TreeNode> nodes = new LinkedList<>();
     nodes.add(root);
     int count = 0;
     while (!nodes.isEmpty()) {
@@ -262,8 +262,8 @@ public final class DecisionTree implements TreeBasedClassifier {
   public String toString() {
     StringBuilder result = new StringBuilder();
     if (root != null) {
-      Deque<Pair<TreeNode,TreePath>> toPrint = new LinkedList<Pair<TreeNode,TreePath>>();
-      toPrint.push(new Pair<TreeNode,TreePath>(root, TreePath.EMPTY));
+      Deque<Pair<TreeNode,TreePath>> toPrint = new LinkedList<>();
+      toPrint.push(new Pair<>(root, TreePath.EMPTY));
       while (!toPrint.isEmpty()) {
         Pair<TreeNode,TreePath> entry = toPrint.pop();
         TreeNode node = entry.getFirst();
@@ -279,8 +279,8 @@ public final class DecisionTree implements TreeBasedClassifier {
         result.append(node).append('\n');
         if (node != null && !node.isTerminal()) {
           DecisionNode decisionNode = (DecisionNode) node;
-          toPrint.push(new Pair<TreeNode,TreePath>(decisionNode.getRight(), path.extendRight()));
-          toPrint.push(new Pair<TreeNode,TreePath>(decisionNode.getLeft(), path.extendLeft()));
+          toPrint.push(new Pair<>(decisionNode.getRight(), path.extendRight()));
+          toPrint.push(new Pair<>(decisionNode.getLeft(), path.extendLeft()));
         }
       }
     }

@@ -26,7 +26,7 @@ final class DummyVisitor extends AbstractRealVectorPreservingVisitor {
 
   @Override
   public void visit(int index, double value) {
-    seenValues.add(new Pair<Integer, Double>(index, value));
+    seenValues.add(new Pair<>(index, value));
   }
 
   List<Pair<Integer,Double>> getSeenValues() {

@@ -38,7 +38,7 @@ public final class MiniBatchUpdateStrategy implements KMeansUpdateStrategy {
   @Override
   public <W extends Weighted<RealVector>> Centers update(List<W> points, Centers centers) {
     int[] perCenterStepCounts = new int[centers.size()];
-    WeightedSampler<RealVector, W> sampler = new WeightedSampler<RealVector, W>(points, random);
+    WeightedSampler<RealVector, W> sampler = new WeightedSampler<>(points, random);
     for (int iter = 0; iter < numIterations; iter++) {
       // Compute closest cent for each mini-batch
       List<List<RealVector>> centerAssignments = Lists.newArrayList();

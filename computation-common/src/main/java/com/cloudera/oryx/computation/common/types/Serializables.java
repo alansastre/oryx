@@ -52,18 +52,13 @@ public final class Serializables {
           public T map(ByteBuffer input) {
             ByteArrayInputStream bais = new ByteArrayInputStream(input.array(), input.position(), input.limit());
             try {
-              ObjectInputStream ois = new ObjectInputStream(bais);
-              try {
+              try (ObjectInputStream ois = new ObjectInputStream(bais)) {
                 @SuppressWarnings("unchecked")
                 T ret = (T) ois.readObject();
                 return ret;
-              } finally {
-                ois.close();
               }
-            } catch (ClassNotFoundException cnfe) {
-              throw new CrunchRuntimeException(cnfe);
-            } catch (IOException ioe) {
-              throw new CrunchRuntimeException(ioe);
+            } catch (ClassNotFoundException | IOException e) {
+              throw new CrunchRuntimeException(e);
             }
           }
         },
@@ -72,11 +67,8 @@ public final class Serializables {
           public ByteBuffer map(T input) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
-              ObjectOutputStream oos = new ObjectOutputStream(baos);
-              try {
+              try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
                 oos.writeObject(input);
-              } finally {
-                oos.close();
               }
             } catch (IOException ioe) {
               throw new CrunchRuntimeException(ioe);

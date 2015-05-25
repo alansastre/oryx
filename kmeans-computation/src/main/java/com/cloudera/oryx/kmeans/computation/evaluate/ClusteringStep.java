@@ -145,11 +145,8 @@ public final class ClusteringStep extends KMeansJobStep {
     for (String modelKey : store.list(replicaCentersKey, true)) {
       try {
         PMML pmml;
-        InputStream in = store.streamFrom(modelKey);
-        try {
+        try (InputStream in = store.streamFrom(modelKey)) {
           pmml = KMeansPMML.read(in);
-        } finally {
-          in.close();
         }
         log.info("Read {} from key = {}", pmml.getModels().size(), modelKey);
         if (dictionary == null) {
@@ -165,9 +162,7 @@ public final class ClusteringStep extends KMeansJobStep {
             }
           }
         }
-      } catch (JAXBException e) {
-        log.error("Serialization error", e);
-      } catch (SAXException e) {
+      } catch (JAXBException | SAXException e) {
         log.error("Serialization error", e);
       }
     }

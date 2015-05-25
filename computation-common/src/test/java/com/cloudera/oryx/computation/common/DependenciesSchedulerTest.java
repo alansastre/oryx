@@ -35,23 +35,23 @@ public final class DependenciesSchedulerTest extends OryxTest {
 
   @Test
   public void testEmpty() {
-    DependenciesScheduler<String> scheduler = new DependenciesScheduler<String>();
+    DependenciesScheduler<String> scheduler = new DependenciesScheduler<>();
     Collection<Collection<String>> schedule = scheduler.schedule(Collections.<DependsOn<String>>emptySet());
     assertTrue(schedule.isEmpty());
   }
 
   @Test
   public void testOne() {
-    DependenciesScheduler<String> scheduler = new DependenciesScheduler<String>();
-    List<Collection<String>> schedule = scheduler.schedule(Collections.singleton(new DependsOn<String>("foo")));
+    DependenciesScheduler<String> scheduler = new DependenciesScheduler<>();
+    List<Collection<String>> schedule = scheduler.schedule(Collections.singleton(new DependsOn<>("foo")));
     assertEquals(1, schedule.size());
     assertEquals(Sets.newHashSet(Collections.singleton("foo")), Sets.newHashSet(schedule.get(0)));
   }
 
   @Test
   public void testSequence() {
-    DependenciesScheduler<String> scheduler = new DependenciesScheduler<String>();
-    List<Collection<String>> schedule = scheduler.schedule(Collections.singleton(new DependsOn<String>("foo", "bar")));
+    DependenciesScheduler<String> scheduler = new DependenciesScheduler<>();
+    List<Collection<String>> schedule = scheduler.schedule(Collections.singleton(new DependsOn<>("foo", "bar")));
     assertEquals(2, schedule.size());
     assertEquals(Sets.newHashSet(Collections.singleton("bar")), Sets.newHashSet(schedule.get(0)));
     assertEquals(Sets.newHashSet(Collections.singleton("foo")), Sets.newHashSet(schedule.get(1)));
@@ -60,9 +60,9 @@ public final class DependenciesSchedulerTest extends OryxTest {
   @Test
   public void testParallel() {
     Collection<DependsOn<String>> dependencies = Lists.newArrayListWithCapacity(2);
-    dependencies.add(new DependsOn<String>("foo"));
-    dependencies.add(new DependsOn<String>("bar"));
-    DependenciesScheduler<String> scheduler = new DependenciesScheduler<String>();
+    dependencies.add(new DependsOn<>("foo"));
+    dependencies.add(new DependsOn<>("bar"));
+    DependenciesScheduler<String> scheduler = new DependenciesScheduler<>();
     List<Collection<String>> schedule = scheduler.schedule(dependencies);
     assertEquals(1, schedule.size());
     assertEquals(Sets.newHashSet(Arrays.asList("foo", "bar")), Sets.newHashSet(schedule.get(0)));
@@ -71,11 +71,11 @@ public final class DependenciesSchedulerTest extends OryxTest {
   @Test
   public void testComplex() {
     Collection<DependsOn<String>> dependencies = Lists.newArrayListWithCapacity(4);
-    dependencies.add(new DependsOn<String>("foo", "bar"));
-    dependencies.add(new DependsOn<String>("foo", "buzz"));
-    dependencies.add(new DependsOn<String>("bing", "foo"));
-    dependencies.add(new DependsOn<String>("bong", "foo"));
-    DependenciesScheduler<String> scheduler = new DependenciesScheduler<String>();
+    dependencies.add(new DependsOn<>("foo", "bar"));
+    dependencies.add(new DependsOn<>("foo", "buzz"));
+    dependencies.add(new DependsOn<>("bing", "foo"));
+    dependencies.add(new DependsOn<>("bong", "foo"));
+    DependenciesScheduler<String> scheduler = new DependenciesScheduler<>();
     List<Collection<String>> schedule = scheduler.schedule(dependencies);
     assertEquals(3, schedule.size());
     assertEquals(Sets.newHashSet(Arrays.asList("bar", "buzz")), Sets.newHashSet(schedule.get(0)));

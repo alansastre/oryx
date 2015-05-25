@@ -140,7 +140,7 @@ public final class LongSetTest extends OryxTest {
   @Test
   public void testIterator() {
     LongSet set = buildTestFastSet();
-    Collection<Long> expected = new HashSet<Long>(3);
+    Collection<Long> expected = new HashSet<>(3);
     expected.add(1L);
     expected.add(2L);
     expected.add(3L);

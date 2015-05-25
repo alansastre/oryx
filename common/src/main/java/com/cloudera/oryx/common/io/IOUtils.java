@@ -65,7 +65,7 @@ public final class IOUtils {
     if (dir == null || !dir.exists()) {
       return;
     }
-    Deque<File> stack = new ArrayDeque<File>();
+    Deque<File> stack = new ArrayDeque<>();
     stack.push(dir);
     while (!stack.isEmpty()) {
       File topElement = stack.peek();
@@ -120,7 +120,7 @@ public final class IOUtils {
    * @param file file, possibly compressed, to open
    * @return {@link Reader} on uncompressed contents
    * @throws IOException if the stream can't be opened or is invalid or can't be read
-   * @see #openMaybeDecompressing(File) 
+   * @see #openMaybeDecompressing(File)
    */
   public static Reader openReaderMaybeDecompressing(File file) throws IOException {
     return new InputStreamReader(openMaybeDecompressing(file), Charsets.UTF_8);
@@ -132,11 +132,8 @@ public final class IOUtils {
    * @throws IOException if the stream can't be read or the file can't be written
    */
   public static void copyStreamToFile(InputStream in, File file) throws IOException {
-    FileOutputStream out = new FileOutputStream(file);
-    try {
+    try (FileOutputStream out = new FileOutputStream(file)) {
       ByteStreams.copy(in, out);
-    } finally {
-      out.close();
     }
   }
 
@@ -146,11 +143,8 @@ public final class IOUtils {
    * @throws IOException if the URL can't be read or the file can't be written
    */
   public static void copyURLToFile(URL url, File file) throws IOException {
-    InputStream in = url.openStream();
-    try {
+    try (InputStream in = url.openStream()) {
       copyStreamToFile(in, file);
-    } finally {
-      in.close();
     }
   }
 
@@ -212,11 +206,8 @@ public final class IOUtils {
    * @throws IOException if the file is not a gzip file or can't be read
    */
   public static boolean isGZIPFileEmpty(File f) throws IOException {
-    InputStream in = new GZIPInputStream(new FileInputStream(f));
-    try {
+    try (InputStream in = new GZIPInputStream(new FileInputStream(f))) {
       return in.read() == -1;
-    } finally {
-      in.close();
     }
   }
 
