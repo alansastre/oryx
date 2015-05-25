@@ -96,25 +96,25 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          RealVector v = sparse ? Vectors.sparse(tokens.length + expansion) : Vectors.dense(tokens.length + expansion);
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">int</strong> offset = 0;
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; numFeatures; i++) {
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>            <strong class="jxr_keyword">if</strong> (inboundSettings.isIgnored(i)) {
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>              <em class="jxr_comment">// Do nothing</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>            } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (inboundSettings.isNumeric(i)) {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>              <a href="../../../../../../com/cloudera/oryx/computation/common/summary/SummaryStats.html">SummaryStats</a> ss = summary.getStats(i);
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>              <a href="../../../../../../com/cloudera/oryx/kmeans/computation/normalize/Transform.html">Transform</a> t = settings.getTransform(i);
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>              <strong class="jxr_keyword">double</strong> raw = asDouble(tokens[i]);
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>              <strong class="jxr_keyword">if</strong> (!Double.isNaN(raw)) {
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>                <strong class="jxr_keyword">double</strong> n = t.apply(raw, ss) * settings.getScale(i);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>                v.setEntry(offset, n);
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>             }
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>             offset++;
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>           } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (inboundSettings.isCategorical(i)) {
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             <a href="../../../../../../com/cloudera/oryx/computation/common/summary/SummaryStats.html">SummaryStats</a> ss = summary.getStats(i);
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>             <strong class="jxr_keyword">int</strong> index = ss.index(tokens[i]);
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>             <strong class="jxr_keyword">if</strong> (index &gt;= 0) {
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>               v.setEntry(offset + index, settings.getScale(i));
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>               offset += ss.numLevels();
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>               log.warn(<span class="jxr_string">"Unrecognized value for category {}: {}"</span>, i, tokens[i]);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>            <strong class="jxr_keyword">if</strong> (!inboundSettings.isIgnored(i)) {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>              <strong class="jxr_keyword">if</strong> (inboundSettings.isNumeric(i)) {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                <a href="../../../../../../com/cloudera/oryx/computation/common/summary/SummaryStats.html">SummaryStats</a> ss = summary.getStats(i);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>                <a href="../../../../../../com/cloudera/oryx/kmeans/computation/normalize/Transform.html">Transform</a> t = settings.getTransform(i);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                <strong class="jxr_keyword">double</strong> raw = asDouble(tokens[i]);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>                <strong class="jxr_keyword">if</strong> (!Double.isNaN(raw)) {
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  <strong class="jxr_keyword">double</strong> n = t.apply(raw, ss) * settings.getScale(i);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>                  v.setEntry(offset, n);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                }
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>               offset++;
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (inboundSettings.isCategorical(i)) {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>               <a href="../../../../../../com/cloudera/oryx/computation/common/summary/SummaryStats.html">SummaryStats</a> ss = summary.getStats(i);
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>               <strong class="jxr_keyword">int</strong> index = ss.index(tokens[i]);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>               <strong class="jxr_keyword">if</strong> (index &gt;= 0) {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 v.setEntry(offset + index, settings.getScale(i));
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>                 offset += ss.numLevels();
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>               } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>                 log.warn(<span class="jxr_string">"Unrecognized value for category {}: {}"</span>, i, tokens[i]);
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>               }
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>             }
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>           }
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         }
@@ -132,7 +132,7 @@
 <a class="jxr_linenumber" name="L124" href="#L124">124</a> 
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>   <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">double</strong> asDouble(String token) {
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>       <strong class="jxr_keyword">return</strong> Double.valueOf(token);
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>       <strong class="jxr_keyword">return</strong> Double.parseDouble(token);
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>     } <strong class="jxr_keyword">catch</strong> (NumberFormatException e) {
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>       log.warn(<span class="jxr_string">"Invalid numeric token: {}"</span>, token);
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>       <strong class="jxr_keyword">return</strong> Double.NaN;

@@ -1,2 +1,2 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<BugCollection version='3.0.0' threshold='' effort='max'><Error></Error><Project><SrcDir>/Users/srowen/Documents/Cloudera/Oryx/oryx/als-common/src/main/java</SrcDir><SrcDir>/Users/srowen/Documents/Cloudera/Oryx/oryx/als-common/src/test/java</SrcDir></Project></BugCollection>
+<?xml version='1.0' encoding='UTF-8'?>
+<BugCollection version='3.0.1' threshold='' effort='max'><file classname='com.cloudera.oryx.als.common.ByValueAscComparator'><BugInstance type='CO_COMPARETO_INCORRECT_FLOATING' priority='Normal' category='BAD_PRACTICE' message='com.cloudera.oryx.als.common.ByValueAscComparator.compare(NumericIDValue, NumericIDValue) incorrectly handles float value' lineNumber='41'/></file><Error></Error><Project><SrcDir>/Users/srowen/Documents/Cloudera/Oryx/oryx/als-common/src/main/java</SrcDir><SrcDir>/Users/srowen/Documents/Cloudera/Oryx/oryx/als-common/src/test/java</SrcDir></Project></BugCollection>

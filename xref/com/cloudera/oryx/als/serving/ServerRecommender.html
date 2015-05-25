@@ -1213,7 +1213,7 @@
 <a class="jxr_linenumber" name="L1205" href="#L1205">1205</a>       <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L1206" href="#L1206">1206</a>         <strong class="jxr_keyword">for</strong> (LongObjectMap.MapEntry&lt;LongSet&gt; entry : knownItemIDs.entrySet()) {
 <a class="jxr_linenumber" name="L1207" href="#L1207">1207</a>           <a href="../../../../../com/cloudera/oryx/common/collection/LongSet.html">LongSet</a> itemIDs = entry.getValue();
-<a class="jxr_linenumber" name="L1208" href="#L1208">1208</a>           userCounts.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../com/cloudera/oryx/als/common/NumericIDValue.html">NumericIDValue</a>(entry.getKey(), (<strong class="jxr_keyword">float</strong>) itemIDs.size()));
+<a class="jxr_linenumber" name="L1208" href="#L1208">1208</a>           userCounts.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../com/cloudera/oryx/als/common/NumericIDValue.html">NumericIDValue</a>(entry.getKey(), itemIDs.size()));
 <a class="jxr_linenumber" name="L1209" href="#L1209">1209</a>         }
 <a class="jxr_linenumber" name="L1210" href="#L1210">1210</a>       } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="L1211" href="#L1211">1211</a>         xReadLock.unlock();

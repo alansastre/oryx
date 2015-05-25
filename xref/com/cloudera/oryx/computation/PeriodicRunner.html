@@ -276,20 +276,12 @@
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>     Preconditions.checkNotNull(localDistributed,
 <a class="jxr_linenumber" name="L269" href="#L269">269</a>                                <span class="jxr_string">"Unspecified or unsupported model type: %s"</span>,
 <a class="jxr_linenumber" name="L270" href="#L270">270</a>                                config.getString(<span class="jxr_string">"model.type"</span>));
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>     Config config = ConfigUtils.getDefaultConfig();
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>     <strong class="jxr_keyword">boolean</strong> localComputation;
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>     <strong class="jxr_keyword">if</strong> (config.hasPath(<span class="jxr_string">"model.local"</span>)) {
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>       log.warn(<span class="jxr_string">"model.local is deprecated; use model.local-computation"</span>);
-<a class="jxr_linenumber" name="L275" href="#L275">275</a>       localComputation = config.getBoolean(<span class="jxr_string">"model.local"</span>);
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>     } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L277" href="#L277">277</a>       localComputation = config.getBoolean(<span class="jxr_string">"model.local-computation"</span>);
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>     }
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>     Class&lt;? <strong class="jxr_keyword">extends</strong> GenerationRunner&gt; runnerClass =
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>         localComputation ? localDistributed.get(0) : localDistributed.get(1);
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>     <strong class="jxr_keyword">return</strong> ClassUtils.loadInstanceOf(runnerClass);
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>   }
-<a class="jxr_linenumber" name="L283" href="#L283">283</a> 
-<a class="jxr_linenumber" name="L284" href="#L284">284</a> }
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>     Class&lt;? <strong class="jxr_keyword">extends</strong> GenerationRunner&gt; runnerClass =
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>         Namespaces.isLocalComputation() ? localDistributed.get(0) : localDistributed.get(1);
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>     <strong class="jxr_keyword">return</strong> ClassUtils.loadInstanceOf(runnerClass);
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>   }
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> 
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

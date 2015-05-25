@@ -25,38 +25,38 @@
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.common.NotReadyException;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.common.OryxRecommender;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.common.rescorer.Rescorer;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.common.rescorer.RescorerProvider;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> javax.servlet.http.HttpServletRequest;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> javax.servlet.http.HttpServletResponse;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Responds to a GET request to {@code /mostActiveUsers(?howMany=n)(&amp;offset=o)}</em>
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> * and in turn calls {@link OryxRecommender#getMostActiveUsers(int)}.</em>
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * {@code offset} is an offset into the entire list of results; {@code howMany} is the desired</em>
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * number of results to return from there. For example, {@code offset=30} and {@code howMany=5}</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * will cause the implementation to retrieve 35 results internally and output the last 5.</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * If {@code howMany} is not specified, defaults to {@link AbstractALSServlet#DEFAULT_HOW_MANY}.</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * {@code offset} defaults to 0.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Output is as in {@link RecommendServlet}.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;CSV output contains one user per line, and each line is of the form {@code userID, strength},</em>
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * like {@code oryx, 2.0}. Strength is the number of items the user has interacted with.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/cloudera/oryx/als/serving/web/MostActiveUsersServlet.html">MostActiveUsersServlet</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../../com/cloudera/oryx/als/serving/web/AbstractALSServlet.html">AbstractALSServlet</a> {
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>    @Override
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>    <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> doGet(HttpServletRequest request, HttpServletResponse response) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <a href="../../../../../../com/cloudera/oryx/als/common/OryxRecommender.html">OryxRecommender</a> recommender = getRecommender();
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>        outputALSResult(request, response, recommender.getMostActiveUsers(getNumResultsToFetch(request)));
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      } <strong class="jxr_keyword">catch</strong> (NotReadyException nre) {
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>        response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, nre.toString());
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException iae) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>        response.sendError(HttpServletResponse.SC_BAD_REQUEST, iae.toString());
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> javax.servlet.http.HttpServletRequest;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> javax.servlet.http.HttpServletResponse;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Responds to a GET request to {@code /mostActiveUsers(?howMany=n)(&amp;offset=o)}</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * and in turn calls {@link OryxRecommender#getMostActiveUsers(int)}.</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * {@code offset} is an offset into the entire list of results; {@code howMany} is the desired</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> * number of results to return from there. For example, {@code offset=30} and {@code howMany=5}</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * will cause the implementation to retrieve 35 results internally and output the last 5.</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * If {@code howMany} is not specified, defaults to {@link AbstractALSServlet#DEFAULT_HOW_MANY}.</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * {@code offset} defaults to 0.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Output is as in {@link RecommendServlet}.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;CSV output contains one user per line, and each line is of the form {@code userID, strength},</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * like {@code oryx, 2.0}. Strength is the number of items the user has interacted with.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/cloudera/oryx/als/serving/web/MostActiveUsersServlet.html">MostActiveUsersServlet</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../../com/cloudera/oryx/als/serving/web/AbstractALSServlet.html">AbstractALSServlet</a> {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>    @Override
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>    <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> doGet(HttpServletRequest request, HttpServletResponse response) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <a href="../../../../../../com/cloudera/oryx/als/common/OryxRecommender.html">OryxRecommender</a> recommender = getRecommender();
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>        outputALSResult(request, response, recommender.getMostActiveUsers(getNumResultsToFetch(request)));
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      } <strong class="jxr_keyword">catch</strong> (NotReadyException nre) {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>        response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, nre.toString());
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException iae) {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>        response.sendError(HttpServletResponse.SC_BAD_REQUEST, iae.toString());
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      } <strong class="jxr_keyword">catch</strong> (UnsupportedOperationException uoe) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>        response.sendError(HttpServletResponse.SC_BAD_REQUEST, uoe.toString());
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>    }
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  

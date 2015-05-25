@@ -54,10 +54,10 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log = LoggerFactory.getLogger(LocationSensitiveHashIT.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NUM_FEATURES = 30;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NUM_ITEMS = 1000000;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NUM_FEATURES = 18;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NUM_ITEMS = 100000;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NUM_RECS = 10;
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> ITERATIONS = 10;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> ITERATIONS = 5;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> LN2 = Math.log(2.0);
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>    @Test
@@ -95,9 +95,9 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>      log.info(<span class="jxr_string">"{}"</span>, avgNDCG.getResult());
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>      log.info(<span class="jxr_string">"{}"</span>, avgPercentAllItemsConsidered.getResult());
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>  
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      assertTrue(avgPercentTopRecsConsidered.getResult() &gt; 0.8);
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>      assertTrue(avgNDCG.getResult() &gt; 0.8);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      assertTrue(avgPercentAllItemsConsidered.getResult() &lt; 0.09);
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      assertTrue(avgPercentTopRecsConsidered.getResult() &gt; 0.85);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      assertTrue(avgNDCG.getResult() &gt; 0.85);
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      assertTrue(avgPercentAllItemsConsidered.getResult() &lt; 0.1);
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>    }
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">double</strong>[] doTestRandomVecs(LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; Y, <strong class="jxr_keyword">float</strong>[] userVec) {
