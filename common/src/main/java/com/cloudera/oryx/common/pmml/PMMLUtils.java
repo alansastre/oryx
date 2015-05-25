@@ -120,7 +120,7 @@ public final class PMMLUtils {
     Collection<Integer> ids = inboundSettings.getIdColumns();
     Collection<Integer> numeric = inboundSettings.getNumericColumns();
     Collection<Integer> categorical = inboundSettings.getCategoricalColumns();
-    Collection<MiningField> miningFields = Lists.newArrayList();
+    List<MiningField> miningFields = Lists.newArrayList();
     for (int col = 0; col < columnNames.size(); col++) {
       if (ignored.contains(col) || ids.contains(col)) {
         continue;
@@ -142,6 +142,6 @@ public final class PMMLUtils {
       }
       miningFields.add(field);
     }
-    return new MiningSchema().withMiningFields(miningFields);
+    return new MiningSchema(miningFields);
   }
 }

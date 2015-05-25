@@ -301,7 +301,7 @@
       <dependency>
         <groupId>org.jpmml</groupId>
         <artifactId>pmml-model</artifactId>
-        <version>1.1.15</version>
+        <version>1.2.1</version>
         <exclusions>
           <exclusion>
             <artifactId>com.sun.xml.bind</artifactId>
@@ -374,10 +374,9 @@
     <javadoc.version>1.7</javadoc.version>
     <slf4j.version>1.7.12</slf4j.version>
     <tomcat.version>7.0.62</tomcat.version>
-    <!-- Don't update to 1.7.5+ until Hadoop uses Jackson 1.9+ -->
     <avro.version>1.7.7</avro.version>
     <hadoop.version>2.6.0</hadoop.version>
-    <crunch.version>0.11.0-hadoop2</crunch.version>
+    <crunch.version>0.12.0-hadoop2</crunch.version>
     <!-- our custom props -->
     <module.jspx.package>override-me</module.jspx.package>
   </properties>
@@ -1006,25 +1005,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <!-- Separate profile for older Hadoop because they require a recompile, due to protobuf 2.4-to-2.5
-      difference, among others. For example this configures for the latest Hadoop 2.0.x-based CDH 4.6: -->
-    <profile>
-      <id>hadoop200</id>
-      <properties>
-        <hadoop.version>2.0.0-cdh4.7.1</hadoop.version>
-      </properties>
-    </profile>
-    <profile>
-      <id>jacoco</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>

@@ -147,10 +147,10 @@ public final class RDFDistributedGenerationRunner extends DistributedGenerationR
             miningModel.setFunctionName(currentModel.getFunctionName());
             MiningSchema cloneSchema = new MiningSchema();
             for (MiningField field : currentModel.getMiningSchema().getMiningFields()) {
-              cloneSchema.getMiningFields().add(
-                  new MiningField(field.getName())
-                      .withOpType(field.getOpType()
-                      ).withImportance(field.getImportance()));
+              MiningField miningFieldCopy = new MiningField(field.getName());
+              miningFieldCopy.setOpType(field.getOpType());
+              miningFieldCopy.setImportance(field.getImportance());
+              cloneSchema.getMiningFields().add(miningFieldCopy);
             }
             miningModel.setMiningSchema(cloneSchema);
 

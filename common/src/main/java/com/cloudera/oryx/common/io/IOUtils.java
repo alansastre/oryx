@@ -38,8 +38,6 @@ import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.PatternFilenameFilter;
 
-import com.cloudera.oryx.common.ClassUtils;
-
 /**
  * Simple utility methods related to I/O.
  *
@@ -159,20 +157,10 @@ public final class IOUtils {
 
   /**
    * @param delegate {@link OutputStream} to wrap
-   * @return a {@link GZIPOutputStream} wrapping the given {@link OutputStream}. It attempts to use the new 
-   *  Java 7 version that actually responds to {@link OutputStream#flush()} as expected. If not available,
-   *  uses the previous version ({@link GZIPOutputStream#GZIPOutputStream(OutputStream)})
+   * @return a {@link GZIPOutputStream} wrapping the given {@link OutputStream}
    */
   public static GZIPOutputStream buildGZIPOutputStream(OutputStream delegate) throws IOException {
-    // In Java 7, GZIPOutputStream's flush() behavior can be made more as expected. Use it if possible
-    // but fall back if not to the usual version
-    try {
-      return ClassUtils.loadInstanceOf(GZIPOutputStream.class, 
-                                       new Class<?>[] {OutputStream.class, boolean.class},
-                                       new Object[] {delegate, true});
-    } catch (IllegalStateException ignored) {
-      return new GZIPOutputStream(delegate);
-    } 
+    return new GZIPOutputStream(delegate, true);
   }
 
   /**

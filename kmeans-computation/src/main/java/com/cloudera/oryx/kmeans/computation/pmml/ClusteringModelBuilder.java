@@ -74,12 +74,14 @@ public final class ClusteringModelBuilder {
     for (int i = 0; i < centers.size(); i++) {
       clusters.add(toCluster(centers.get(i), i));
     }
+    ComparisonMeasure measure = new ComparisonMeasure(ComparisonMeasure.Kind.DISTANCE);
+    measure.setMeasure(new SquaredEuclidean());
     ClusteringModel model = new ClusteringModel(
         MiningFunctionType.CLUSTERING,
         ClusteringModel.ModelClass.CENTER_BASED,
         centers.size(),
         miningSchema,
-        new ComparisonMeasure(ComparisonMeasure.Kind.DISTANCE).withMeasure(new SquaredEuclidean()),
+        measure,
         clusteringFields,
         clusters);
     model.setModelName(modelName);
@@ -108,7 +110,9 @@ public final class ClusteringModelBuilder {
                   new LinearNorm(ss.max(), 1.0));
               e = new NormContinuous(baseName, norms);
             } else if (t == Transform.LOG) {
-              e = new Apply("ln").withExpressions(new FieldRef(baseName));
+              Apply apply = new Apply("ln");
+              apply.addExpressions(new FieldRef(baseName));
+              e = apply;
             } else if (t == Transform.Z) {
               List<LinearNorm> norms = Arrays.asList(
                   new LinearNorm(0.0, -ss.mean()/ss.stdDev()),

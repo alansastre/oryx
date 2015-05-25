@@ -127,8 +127,6 @@ public final class LocationSensitiveHashIT extends OryxTest {
   }
 
   private static List<Long> findTopRecommendations(LongObjectMap<float[]> Y, float[] userVec) {
-    // SortedMap<Double,Long> allScores = Maps.newTreeMap(Collections.reverseOrder());
-    // Above triggers some weird OpenJDK 1.6.0_30 compiler bug. Use equivalent:
     SortedMap<Double,Long> allScores = new TreeMap<>(Collections.reverseOrder());
     for (LongObjectMap.MapEntry<float[]> entry : Y.entrySet()) {
       double dot = SimpleVectorMath.dot(entry.getValue(), userVec);
