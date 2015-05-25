@@ -54,7 +54,8 @@ public final class ALSGenerationManager extends GenerationManager {
     recentlyActiveUsers = new LongSet();
     recentlyActiveItems = new LongSet();
     Config config = ConfigUtils.getDefaultConfig();
-    loader = new GenerationLoader(config.getString("model.instance-dir"), recentlyActiveUsers, recentlyActiveItems, this);
+    loader = new GenerationLoader(
+        config.getString("model.instance-dir"), recentlyActiveUsers, recentlyActiveItems, this);
     disableWriteUpdates = config.getBoolean("serving-layer.disable-write-updates");
   }
 

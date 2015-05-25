@@ -26,17 +26,17 @@ import java.io.File;
  */
 public final class ConfigUtils {
 
-  private static Config DEFAULT_CONFIG = null;
+  private static Config defaultConfig;
 
   /**
    * Returns the default {@code Config} object for this app, based on config in the JAR file
    * or otherwise specified to the library.
    */
   public static synchronized Config getDefaultConfig() {
-    if (DEFAULT_CONFIG == null) {
-      DEFAULT_CONFIG = ConfigFactory.load();
+    if (defaultConfig == null) {
+      defaultConfig = ConfigFactory.load();
     }
-    return DEFAULT_CONFIG;
+    return defaultConfig;
   }
 
   /**
@@ -45,21 +45,23 @@ public final class ConfigUtils {
    * Do NOT use this from user code.  Only to be used in test code.
    */
   public static synchronized void loadUserConfig(String userConfig) {
-    if (DEFAULT_CONFIG == null) {
-      DEFAULT_CONFIG = ConfigFactory.load(userConfig);
+    if (defaultConfig == null) {
+      defaultConfig = ConfigFactory.load(userConfig);
     }
   }
 
   public static synchronized void overlayConfigOnDefault(File configFile) {
     if (configFile.exists()) {
-      Preconditions.checkArgument(!configFile.isDirectory(), "Cannot handle directories of config files %s", configFile);
-      DEFAULT_CONFIG = ConfigFactory.parseFileAnySyntax(configFile).resolve().withFallback(getDefaultConfig());
+      Preconditions.checkArgument(!configFile.isDirectory(),
+                                  "Cannot handle directories of config files %s", configFile);
+      defaultConfig = ConfigFactory.parseFileAnySyntax(configFile)
+          .resolve().withFallback(getDefaultConfig());
     }
   }
 
   public static synchronized void overlayConfigOnDefault(String config) {
     if (config != null) {
-      DEFAULT_CONFIG = ConfigFactory.parseString(config).resolve().withFallback(getDefaultConfig());
+      defaultConfig = ConfigFactory.parseString(config).resolve().withFallback(getDefaultConfig());
     }
   }
 

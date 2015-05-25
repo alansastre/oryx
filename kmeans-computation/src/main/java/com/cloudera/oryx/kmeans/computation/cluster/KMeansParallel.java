@@ -79,7 +79,9 @@ public final class KMeansParallel {
     return centers;
   }
   
-  private static final class LloydsMapFn<V extends RealVector> extends DoFn<V, Pair<Pair<Integer, Integer>, Pair<V, Long>>> {
+  private static final class LloydsMapFn<V extends RealVector>
+      extends DoFn<V, Pair<Pair<Integer, Integer>, Pair<V, Long>>> {
+
     private final KSketchIndex centers;
     private final boolean approx;
     
@@ -98,7 +100,8 @@ public final class KMeansParallel {
     }
   }
   
-  private static final class LloydsCenters<V extends RealVector> extends PObjectImpl<Pair<Pair<Integer, Integer>, Pair<V, Long>>, List<Centers>> {
+  private static final class LloydsCenters<V extends RealVector>
+      extends PObjectImpl<Pair<Pair<Integer, Integer>, Pair<V, Long>>, List<Centers>> {
 
     private final int numCenters;
     

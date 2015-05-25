@@ -1,6 +1,14 @@
+------
+
 # Development has moved to [Oryx 2](https://github.com/OryxProject/oryx)!
 
-This site contains the current stable 1.x version of Oryx.
+Now that a [first release](https://github.com/OryxProject/oryx/releases) of [Oryx 2](https://github.com/OryxProject/oryx) is available, developers are encouraged to instead test and migrate to the new version.  
+
+This site contains the previous  1.x version of Oryx, which is stable and will remain available. Only maintenance releases will be made for 1.x from here on.
+
+# Really! Try [Oryx 2](https://github.com/OryxProject/oryx)
+
+------
 
 # Summary
 
@@ -188,6 +196,7 @@ model.local-computation=true
 model.local-data=true
 model.features=25
 model.lambda=0.065
+test.integration=true
 ```
 
 The Computation Layer and Serving Layer consoles are available at `http://[host]:8080` and `http://[host]`
@@ -230,6 +239,7 @@ inbound.column-names=["Elevation", "Aspect", "Slope", "Horizontal_Distance_To_Hy
   "Soil_Type26", "Soil_Type27", "Soil_Type28", "Soil_Type29", "Soil_Type30", "Soil_Type31", "Soil_Type32",
   "Soil_Type33", "Soil_Type34", "Soil_Type35", "Soil_Type36", "Soil_Type37", "Soil_Type38", "Soil_Type39",
   "Soil_Type40", "Cover_Type"]
+test.integration=true
 ```
 
 Copy the data in manually, and start the servers, as above.
@@ -274,6 +284,7 @@ inbound.column-names=[duration, protocol_type, service, flag, src_bytes, dst_byt
 inbound.categorical-columns=[protocol_type, service, flag, logged_in, is_host_login,
   is_guest_login, category]
 inbound.id-columns=[category]
+test.integration=true
 ```
 
 Copy the data in manually, and start the servers, as above.
@@ -298,4 +309,5 @@ a new line of CSV data that does not contain a value for the identifier column. 
 # [API Endpoint Reference](https://github.com/cloudera/oryx/wiki/API-Endpoint-Reference)
 
 [![Build Status](https://travis-ci.org/cloudera/oryx.png?branch=master)](https://travis-ci.org/cloudera/oryx)
+[![Coverity](https://scan.coverity.com/projects/1925/badge.svg)](https://scan.coverity.com/projects/1925)
 [![codecov.io](https://codecov.io/github/cloudera/oryx/coverage.svg?branch=master)](https://codecov.io/github/cloudera/oryx?branch=master)

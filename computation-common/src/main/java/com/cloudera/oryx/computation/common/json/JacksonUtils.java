@@ -28,7 +28,7 @@ public final class JacksonUtils {
 
   static {
     SerializationConfig config = INSTANCE.getSerializationConfig();
-    config.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+    config = config.withSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
     INSTANCE.setVisibilityChecker(config.getDefaultVisibilityChecker()
         .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
         .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)

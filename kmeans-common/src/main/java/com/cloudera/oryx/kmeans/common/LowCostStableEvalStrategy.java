@@ -36,11 +36,8 @@ public final class LowCostStableEvalStrategy implements KMeansEvalStrategy {
       if (cvs.getK() == 1) {
         continue;
       }
-      if (useVariationOfInformation && cvs.getVariationOfInformation() < threshold) {
-        if (best == null || best.getTotalCost() > cvs.getTotalCost()) {
-          best = cvs;
-        }
-      } else if (!useVariationOfInformation && cvs.getVanDongen() < threshold) {
+      if ((useVariationOfInformation && cvs.getVariationOfInformation() < threshold) ||
+          (!useVariationOfInformation && cvs.getVanDongen() < threshold)) {
         if (best == null || best.getTotalCost() > cvs.getTotalCost()) {
           best = cvs;
         }

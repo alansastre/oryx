@@ -21,7 +21,6 @@ import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-import org.apache.commons.math3.linear.SingularMatrixException;
 import org.apache.commons.math3.util.FastMath;
 
 /*
@@ -242,7 +241,8 @@ public class RRQRDecomposition extends QRDecomposition {
     }
 
     /**
-     * @throws SingularMatrixException if the decomposed matrix is singular.
+     * @throws org.apache.commons.math3.linear.SingularMatrixException
+     *   if the decomposed matrix is singular.
      */
     @Override
     public RealMatrix getInverse() {

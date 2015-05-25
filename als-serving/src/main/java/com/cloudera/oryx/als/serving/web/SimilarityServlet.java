@@ -33,7 +33,8 @@ import com.cloudera.oryx.als.common.rescorer.PairRescorer;
 import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
 
 /**
- * <p>Responds to a GET request to {@code /similarity/[itemID1](/[itemID2]/...)(?howMany=n)(&offset=o)(&rescorerParams=...)},
+ * <p>Responds to a GET request to
+ * {@code /similarity/[itemID1](/[itemID2]/...)(?howMany=n)(&offset=o)(&rescorerParams=...)},
  * and in turn calls {@link OryxRecommender#mostSimilarItems(String[], int)} with the supplied values.
  * {@code offset} is an offset into the entire list of results; {@code howMany} is the desired
  * number of results to return from there. For example, {@code offset=30} and {@code howMany=5}

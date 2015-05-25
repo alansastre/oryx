@@ -38,7 +38,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathArithmeticException;
 import org.apache.commons.math3.exception.NotPositiveException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
@@ -256,7 +255,8 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
    *
    * @param v Vector to add.
    * @return the sum of {@code this} and {@code v}.
-   * @throws DimensionMismatchException if the dimensions do not match.
+   * @throws org.apache.commons.math3.exception.DimensionMismatchException
+   *   if the dimensions do not match.
    */
   public OpenMapRealVector add(OpenMapRealVector v) {
     checkVectorDimensions(v.getDimension());
@@ -396,7 +396,8 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
    *
    * @param v Vector to compute distance to.
    * @return the distance from {@code this} and {@code v}.
-   * @throws DimensionMismatchException if the dimensions do not match.
+   * @throws org.apache.commons.math3.exception.DimensionMismatchException
+   *   if the dimensions do not match.
    */
   public double getDistance(OpenMapRealVector v) {
     checkVectorDimensions(v.getDimension());
@@ -444,7 +445,8 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
    *
    * @param v Vector to which distance is requested.
    * @return distance between this vector and {@code v}.
-   * @throws DimensionMismatchException if the dimensions do not match.
+   * @throws org.apache.commons.math3.exception.DimensionMismatchException
+   *   if the dimensions do not match.
    */
   public double getL1Distance(OpenMapRealVector v) {
     checkVectorDimensions(v.getDimension());
@@ -482,7 +484,8 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
    *
    * @param v Vector to compute distance from.
    * @return the LInfDistance.
-   * @throws DimensionMismatchException if the dimensions do not match.
+   * @throws org.apache.commons.math3.exception.DimensionMismatchException
+   *   if the dimensions do not match.
    */
   private double getLInfDistance(OpenMapRealVector v) {
     checkVectorDimensions(v.getDimension());
@@ -589,7 +592,8 @@ public final class OpenMapRealVector extends SparseRealVector implements Seriali
    *
    * @param v Vector to subtract from {@code this}.
    * @return the difference of {@code this} and {@code v}.
-   * @throws DimensionMismatchException if the dimensions do not match.
+   * @throws org.apache.commons.math3.exception.DimensionMismatchException
+   *   if the dimensions do not match.
    */
   public OpenMapRealVector subtract(OpenMapRealVector v) {
     checkVectorDimensions(v.getDimension());

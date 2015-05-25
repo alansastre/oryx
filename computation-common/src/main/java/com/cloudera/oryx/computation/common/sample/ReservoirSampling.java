@@ -36,9 +36,8 @@ import com.cloudera.oryx.common.random.RandomManager;
 
 /**
  * Generates a weighted random sample of N items from a distributed data set using the reservoir
- * algorithm described in <a href="http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf">Efraimidis
- * and Spirakis (2005)</a>.
- * 
+ * algorithm described in
+ * <a href="http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf">Efraimidis and Spirakis (2005)</a>.
  */
 public final class ReservoirSampling {
 
@@ -60,7 +59,9 @@ public final class ReservoirSampling {
     return weightedSample(
         input.parallelDo(new MapFn<T, Pair<T, Integer>>() {
           @Override
-          public Pair<T, Integer> map(T t) { return Pair.of(t, 1); }
+          public Pair<T, Integer> map(T t) {
+            return Pair.of(t, 1);
+          }
         }, ptype),
         sampleSize,
         random);
@@ -109,7 +110,8 @@ public final class ReservoirSampling {
         new SampleFn<K, T, N>(sampleSize, random, ttype), ptt);
 
     // pare down to just a single reservoir with sampleSize vectors
-    PTable<K, Pair<Double, T>> reservoir = samples.groupByKey(1).combineValues(new WRSCombineFn<K, T>(sampleSize, ttype));
+    PTable<K, Pair<Double, T>> reservoir =
+        samples.groupByKey(1).combineValues(new WRSCombineFn<K, T>(sampleSize, ttype));
 
     // strip the weights off the final sampled reservoir and return
     return reservoir.parallelDo("strippingSamplingWeights", new MapFn<Pair<K, Pair<Double, T>>, Pair<K, T>>() {

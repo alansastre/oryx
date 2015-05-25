@@ -34,7 +34,9 @@ import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
 
 /**
  * <p>Responds to a GET request to
- * {@code /recommendToAnonymous/[itemID1(=value1)](/[itemID2(=value2)]/...)(?howMany=n)(&offset=o)(&rescorerParams=...)},
+ * {@code
+ * /recommendToAnonymous/[itemID1(=value1)](/[itemID2(=value2)]/...)(?howMany=n)(&offset=o)(&rescorerParams=...)
+ * },
  * and in turn calls {@link OryxRecommender#recommendToAnonymous(String[], float[], int, Rescorer)}
  * with the supplied values. That is, 1 or more item IDs are supplied, which may each optionally correspond to
  * a value or else default to 1.
@@ -49,7 +51,8 @@ import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
  *
  * <p>Outputs item/score pairs like {@link RecommendServlet} does.</p>
  *
- * <p>This does something slightly different from {@link com.cloudera.oryx.als.serving.web.SimilarityServlet};
+ * <p>This does something slightly different from
+ * {@link com.cloudera.oryx.als.serving.web.SimilarityServlet};
  * see {@link OryxRecommender#recommendToAnonymous(String[], float[], int)}.</p>
  *
  * @author Sean Owen

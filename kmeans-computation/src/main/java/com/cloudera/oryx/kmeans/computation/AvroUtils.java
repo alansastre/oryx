@@ -44,7 +44,9 @@ public final class AvroUtils {
     ByteArrayInputStream bais = new ByteArrayInputStream(bytes.array(), bytes.position(), bytes.limit());
     ObjectInputStream ois = new ObjectInputStream(bais);
     try {
-      return (T) ois.readObject();
+      @SuppressWarnings("unchecked")
+      T t = (T) ois.readObject();
+      return t;
     } catch (ClassNotFoundException cnfe) {
       throw new IllegalStateException(cnfe);
     } finally {

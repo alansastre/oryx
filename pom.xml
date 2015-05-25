@@ -295,13 +295,13 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-math3</artifactId>
-        <version>3.3</version>
+        <version>3.4.1</version>
       </dependency>
 
       <dependency>
         <groupId>org.jpmml</groupId>
         <artifactId>pmml-model</artifactId>
-        <version>1.1.9</version>
+        <version>1.1.15</version>
         <exclusions>
           <exclusion>
             <artifactId>com.sun.xml.bind</artifactId>
@@ -370,11 +370,12 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <dependency.details.enabled>false</dependency.details.enabled>
+    <maven.version.min>3.2.1</maven.version.min>
     <!-- Dependency versions -->
     <java.version>1.6</java.version>
     <javadoc.version>1.7</javadoc.version>
-    <slf4j.version>1.7.7</slf4j.version>
-    <tomcat.version>7.0.57</tomcat.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <tomcat.version>7.0.62</tomcat.version>
     <!-- Don't update to 1.7.5+ until Hadoop uses Jackson 1.9+ -->
     <avro.version>1.7.4</avro.version>
     <hadoop.version>2.5.0-mr1-cdh5.2.1</hadoop.version>
@@ -406,13 +407,21 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.3.1</version>
+          <version>1.4</version>
           <executions>
             <execution>
               <id>enforce</id>
@@ -420,7 +429,7 @@
                 <rules>
                   <dependencyConvergence />
                   <requireMavenVersion>
-                    <version>3.1.1</version>
+                    <version>${maven.version.min}</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
                     <version>${java.version}</version>
@@ -436,7 +445,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.2</version>
+          <version>3.3</version>
           <configuration>
             <optimize>true</optimize>
             <showDeprecation>true</showDeprecation>
@@ -466,7 +475,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.1</version>
+          <version>2.10.3</version>
           <configuration>
             <javadocVersion>${javadoc.version}</javadocVersion>
           </configuration>
@@ -482,12 +491,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.5.1</version>
+          <version>2.5.2</version>
           <dependencies>
             <dependency>
               <groupId>org.apache.maven.scm</groupId>
               <artifactId>maven-scm-provider-gitexe</artifactId>
-              <version>1.9.2</version>
+              <version>1.9.4</version>
             </dependency>
           </dependencies>
           <configuration>
@@ -499,7 +508,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.5</version>
+          <version>1.6</version>
           <executions>
             <execution>
               <id>sign-artifacts</id>
@@ -517,7 +526,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.18</version>
+          <version>2.18.1</version>
           <configuration>
             <reuseForks>false</reuseForks>
           </configuration>
@@ -525,12 +534,15 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>2.5.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
+          <configuration>
+            <createChecksum>true</createChecksum>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -545,7 +557,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
-          <version>1.9.2</version>
+          <version>1.9.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -555,7 +567,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>2.7</version>
+          <version>2.8</version>
           <configuration>
             <!-- Try to reduce impact of ERROR: Unable to determine if... plugin bug -->
             <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
@@ -568,12 +580,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.10</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.5</version>
+          <version>2.6</version>
           <configuration>
             <skipIfEmpty>true</skipIfEmpty>
           </configuration>
@@ -588,7 +600,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.7</version>
+          <version>1.8</version>
           <dependencies>
             <dependency>
               <groupId>org.apache.tomcat</groupId>
@@ -674,7 +686,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.18</version>
+          <version>2.18.1</version>
           <configuration>
             <reuseForks>false</reuseForks>
             <testSourceDirectory>${basedir}/src/it/java</testSourceDirectory>
@@ -703,29 +715,69 @@
           </executions>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.15</version>
+          <configuration>
+            <configLocation>src/checkstyle/checkstyle.xml</configLocation>
+            <excludes>**/*_jspx.java,**/avro/*.java</excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <id>validate</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <version>0.11</version>
           <configuration>
             <excludes>
-              <exclude>.travis.yml</exclude>
               <exclude>**/*.conf</exclude>
               <exclude>**/*.iml</exclude>
               <exclude>**/*.md</exclude>
+              <exclude>**/*.properties</exclude>
               <exclude>**/*.txt</exclude>
-              <exclude>**/MANIFEST.in</exclude>
+              <exclude>**/*.fragment</exclude>
+              <exclude>**/*.csv</exclude>
               <exclude>**/gen/**</exclude>
-              <exclude>**/resources/**</exclude>
               <exclude>**/target/**</exclude>
               <exclude>**/dependency-reduced-pom.xml</exclude>
-              <excludeSubProjects>false</excludeSubProjects>
+              <exclude>.travis.yml</exclude>
             </excludes>
           </configuration>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <!-- workaround for Xerces warnings -->
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-core</artifactId>
+              <version>1.6</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>xerces</groupId>
+                  <artifactId>xercesImpl</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -735,7 +787,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.1</version>
+          <version>2.2</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -757,16 +809,32 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.7.2.201409121644</version>
+          <version>0.7.4.201502262128</version>
           <executions>
             <execution>
+              <id>jacoco-prepare-agent</id>
               <goals>
                 <goal>prepare-agent</goal>
               </goals>
+              <!-- Append since we don't reuse JVM forks -->
+              <configuration>
+                <append>true</append>
+              </configuration>
             </execution>
             <execution>
-              <id>report</id>
-              <phase>test</phase>
+              <id>jacoco-prepare-agent-integration</id>
+              <goals>
+                <goal>prepare-agent-integration</goal>
+              </goals>
+              <configuration>
+                <append>true</append>
+                <!-- matches default of prepare-agent goal; intended to append -->
+                <destFile>${project.build.directory}/jacoco.exec</destFile>
+              </configuration>
+            </execution>
+            <execution>
+              <id>jacoco-report</id>
+              <phase>verify</phase>
               <goals>
                 <goal>report</goal>
               </goals>
@@ -783,7 +851,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>2.7</version>
+        <version>2.8</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -810,8 +878,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>2.9.1</version>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
@@ -825,8 +891,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>3.0.0</version>
         <configuration>
           <threshold>Normal</threshold>
           <effort>Max</effort>
@@ -838,8 +902,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>2.4</version>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
@@ -849,12 +911,6 @@
             </reports>
           </reportSet>
         </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>emma-maven-plugin</artifactId>
-        <!-- duplicates version above to work around bogus Maven 3.0.x warning -->
-        <version>1.0-alpha-3</version>
       </plugin>
     </plugins>
     <excludeDefaults>true</excludeDefaults>
@@ -905,17 +961,10 @@
   </scm>
   
   <prerequisites>
-    <maven>3.1.1</maven>
+    <maven>${maven.version.min}</maven>
   </prerequisites>
 
   <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo1.maven.org/maven2</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
     <repository>
       <id>oryx.repo</id>
       <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
@@ -924,31 +973,10 @@
         <enabled>true</enabled>
       </releases>
       <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>oryx.snapshots.repo</id>
-      <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
-      <name>Cloudera Snapshots Repository</name>
-      <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
     </repository>
   </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <url>https://repo1.maven.org/maven2</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-
 
   <distributionManagement>
     <repository>
@@ -980,18 +1008,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <keyname>Sean Owen (Cloudera) &lt;sowen@cloudera.com&gt;</keyname>
-            </configuration>
           </plugin>
         </plugins>
       </build>

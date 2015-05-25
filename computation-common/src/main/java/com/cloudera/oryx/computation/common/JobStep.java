@@ -32,7 +32,6 @@ import org.apache.crunch.impl.mr.MRPipelineExecution;
 import org.apache.crunch.io.From;
 import org.apache.crunch.io.To;
 import org.apache.crunch.types.PType;
-import org.apache.crunch.types.avro.AvroType;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.RawComparator;
@@ -276,6 +275,8 @@ public abstract class JobStep extends Configured implements Tool, HasState {
 
     Config appConfig = ConfigUtils.getDefaultConfig();
 
+    conf.set("crunch.tmp.dir", appConfig.getString("computation-layer.tmp-dir"));
+
     int mapMemoryMB = appConfig.getInt("computation-layer.mapper-memory-mb");
     log.info("Mapper memory: {}", mapMemoryMB);
     int mapHeapMB = (int) (mapMemoryMB / 1.3); // Matches Hadoop's default
@@ -363,7 +364,7 @@ public abstract class JobStep extends Configured implements Tool, HasState {
   }
 
   protected final <T> Source<T> avroInput(String inputPathKey, PType<T> avroType) {
-    return From.avroFile(Namespaces.toPath(inputPathKey), (AvroType<T>) avroType);
+    return From.avroFile(Namespaces.toPath(inputPathKey), avroType);
   }
 
   protected final Source<String> textInput(String inputPathKey) {

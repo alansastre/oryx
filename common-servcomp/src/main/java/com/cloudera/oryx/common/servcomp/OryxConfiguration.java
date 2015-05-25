@@ -24,13 +24,10 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import com.typesafe.config.Config;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cloudera.oryx.common.settings.ConfigUtils;
 
 /**
  * {@link Configuration} subclass which 'patches' the Hadoop default with a few adjustments to
@@ -61,15 +58,7 @@ public final class OryxConfiguration {
   }
 
   private static void configure(Configuration conf) {
-    Config config = ConfigUtils.getDefaultConfig();
-    boolean localComputation;
-    if (config.hasPath("model.local")) {
-      log.warn("model.local is deprecated; use model.local-computation");
-      localComputation = config.getBoolean("model.local");
-    } else {
-      localComputation = config.getBoolean("model.local-computation");
-    }
-    if (!localComputation) {
+    if (!Namespaces.isLocalComputation() || !Namespaces.isLocalData()) {
       File hadoopConfDir = findHadoopConfDir();
       addResource(hadoopConfDir, "core-site.xml", conf);
       addResource(hadoopConfDir, "hdfs-site.xml", conf);
@@ -119,7 +108,7 @@ public final class OryxConfiguration {
     String codecsProperty = conf.get("io.compression.codecs");
     if (codecsProperty != null && codecsProperty.contains(".lzo.Lzo")) {
       List<String> codecs = Lists.newArrayList(Splitter.on(',').split(codecsProperty));
-      for (Iterator<String> it = codecs.iterator(); it.hasNext(); ) {
+      for (Iterator<String> it = codecs.iterator(); it.hasNext();) {
         if (it.next().contains(".lzo.Lzo")) {
           it.remove();
         }

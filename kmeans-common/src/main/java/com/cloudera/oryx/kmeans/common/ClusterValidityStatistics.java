@@ -155,7 +155,7 @@ public final class ClusterValidityStatistics implements Serializable {
       final double[] colSums,
       final double n) {
     double den = n * (entropy(rowSums, n) + entropy(colSums, n));
-    if (den == 0) {
+    if (den == 0.0) {
       return Double.NaN;
     }
 

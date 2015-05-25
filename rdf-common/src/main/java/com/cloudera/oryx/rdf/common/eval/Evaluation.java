@@ -38,7 +38,8 @@ public final class Evaluation {
   }
 
   /**
-   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier} (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest})
+   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier}
+   * (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest})
    *  trained on data with a numeric target
    * @param testSet test set to evaluate on
    * @return root mean squared error over the test set square root of mean squared difference between actual
@@ -69,7 +70,8 @@ public final class Evaluation {
   }
 
   /**
-   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier} (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest})
+   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier}
+   * (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest})
    *  trained on data with a numeric target
    * @param testSet test set to evaluate on
    * @return fraction of test examples whose categorical target value was correctly predicted by the classifier
@@ -88,37 +90,9 @@ public final class Evaluation {
     return (double) correct / total;
   }
 
-  /*
-  public static double[] correctlyClassifiedFractionWithoutFeature(Classifier classifier, ExampleSet testSet) {
-    int numFeatures = testSet.getNumFeatures();
-    double[] correctFraction = new double[numFeatures];
-    for (int omitFeature = 0; omitFeature < numFeatures; omitFeature++) {
-      int correct = 0;
-      int total = 0;
-      RandomGenerator random = RandomManager.getRandom();
-      List<Example> examples = testSet.getExamples();
-      for (Example test : testSet.getExamples()) {
-        Example randomOtherExample = examples.get(random.nextInt(examples.size()));
-        Feature[] copiedFeatures = new Feature[test.getNumFeatures()];
-        for (int i = 0; i < copiedFeatures.length; i++) {
-          copiedFeatures[i] = i == omitFeature ? randomOtherExample.getFeature(i) : test.getFeature(i);
-        }
-        CategoricalFeature actual = (CategoricalFeature) test.getTarget();
-        CategoricalPrediction prediction =
-            (CategoricalPrediction) classifier.classify(new Example(actual, copiedFeatures));
-        if (actual.getValueID() == prediction.getMostProbableCategoryID()) {
-          correct++;
-        }
-        total++;
-      }
-      correctFraction[omitFeature] = (double) correct / total;
-    }
-    return correctFraction;
-  }
-   */
-
   /**
-   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier} (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest}) whose
+   * @param classifier a {@link com.cloudera.oryx.rdf.common.tree.TreeBasedClassifier}
+   * (e.g. {@link com.cloudera.oryx.rdf.common.tree.DecisionForest}) whose
    *  weights are to be determined from performance on a test set
    * @param testSet test set to evaluate on
    * @return a {@code double[]} containing two values. The first is a weight for the classifier; the meaning depends

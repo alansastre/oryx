@@ -15,18 +15,17 @@
 
 package com.cloudera.oryx.als.serving.web;
 
+import com.cloudera.oryx.als.common.NotReadyException;
+import com.cloudera.oryx.als.common.OryxRecommender;
+
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cloudera.oryx.als.common.rescorer.Rescorer;
-import com.cloudera.oryx.als.common.NotReadyException;
-import com.cloudera.oryx.als.common.OryxRecommender;
-import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
-
 /**
- * <p>Responds to a GET request to {@code /mostPopularItems(?howMany=n)(&offset=o)}
- * and in turn calls {@link OryxRecommender#mostPopularItems(int)}.
+ * <p>Responds to a GET request to {@code /mostActiveUsers(?howMany=n)(&offset=o)}
+ * and in turn calls {@link OryxRecommender#getMostActiveUsers(int)}.
  * {@code offset} is an offset into the entire list of results; {@code howMany} is the desired
  * number of results to return from there. For example, {@code offset=30} and {@code howMany=5}
  * will cause the implementation to retrieve 35 results internally and output the last 5.
@@ -34,19 +33,16 @@ import com.cloudera.oryx.als.common.rescorer.RescorerProvider;
  * {@code offset} defaults to 0.</p>
  *
  * <p>Output is as in {@link RecommendServlet}.</p>
- *
- * @author Sean Owen
+ * <p>CSV output contains one user per line, and each line is of the form {@code userID, strength},
+ * like {@code oryx, 2.0}. Strength is the number of items the user has interacted with.</p>
  */
-public final class MostPopularItemsServlet extends AbstractALSServlet {
+public final class MostActiveUsersServlet extends AbstractALSServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     OryxRecommender recommender = getRecommender();
-    RescorerProvider rescorerProvider = getRescorerProvider();
     try {
-      Rescorer rescorer = rescorerProvider == null ? null :
-          rescorerProvider.getMostPopularItemsRescorer(recommender, getRescorerParams(request));
-      outputALSResult(request, response, recommender.mostPopularItems(getNumResultsToFetch(request), rescorer));
+      outputALSResult(request, response, recommender.getMostActiveUsers(getNumResultsToFetch(request)));
     } catch (NotReadyException nre) {
       response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, nre.toString());
     } catch (IllegalArgumentException iae) {

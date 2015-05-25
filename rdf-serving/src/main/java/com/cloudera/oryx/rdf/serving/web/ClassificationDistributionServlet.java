@@ -49,19 +49,22 @@ public final class ClassificationDistributionServlet extends AbstractRDFServlet 
   @Override
   protected void doGet(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-    CharSequence pathInfo = request.getPathInfo();
+    String pathInfo = request.getPathInfo();
     if (pathInfo == null) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "No path");
       return;
     }
-    String line = pathInfo.subSequence(1, pathInfo.length()).toString();
-    doClassificationDistribution(line, response);
+    doClassificationDistribution(pathInfo.substring(1), response);
   }
 
   @Override
   protected void doPost(HttpServletRequest request,
                         HttpServletResponse response) throws IOException {
     String line = request.getReader().readLine();
+    if (line == null) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "No body");
+      return;
+    }
     doClassificationDistribution(line, response);
   }
 
