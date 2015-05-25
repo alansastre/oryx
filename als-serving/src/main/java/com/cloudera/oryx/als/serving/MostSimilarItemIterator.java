@@ -24,8 +24,6 @@ import com.cloudera.oryx.als.common.rescorer.PairRescorer;
 import com.cloudera.oryx.als.common.StringLongMapping;
 import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.math.SimpleVectorMath;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
 
 /**
  * An {@link Iterator} that generates and iterates over all possible candidate items in computation
@@ -91,12 +89,12 @@ final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
       }
       double similarity = SimpleVectorMath.dot(candidateFeatures, itemFeatures[i]) / 
           (candidateFeaturesNorm * itemFeatureNorms[i]);
-      if (!Doubles.isFinite(similarity)) {
+      if (Double.isNaN(similarity) || Double.isInfinite(similarity)) {
         return null;
       }
       if (rescorer1 != null) {
         similarity = rescorer1.rescore(idMapping.toString(itemID), idMapping.toString(toItemID), similarity);
-        if (!Doubles.isFinite(similarity)) {
+        if (Double.isNaN(similarity) || Double.isInfinite(similarity)) {
           return null;
         }
       }
@@ -104,7 +102,7 @@ final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
     }
 
     float result = (float) (total / length);
-    Preconditions.checkState(Floats.isFinite(result), "Bad similarity value");
+    Preconditions.checkState(!Float.isNaN(result) && !Float.isInfinite(result), "Bad similarity value");
     delegate.set(itemID, result);
     return delegate;
   }

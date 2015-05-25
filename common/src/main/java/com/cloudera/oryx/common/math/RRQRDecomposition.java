@@ -21,7 +21,6 @@ import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-import org.apache.commons.math3.util.FastMath;
 
 /*
  * This is copied directly from Commons Math 3.3. We are manually "shading" a copy
@@ -177,7 +176,7 @@ public class RRQRDecomposition extends QRDecomposition {
     int rank        = 1;
     double lastNorm = r.getFrobeniusNorm();
     double rNorm    = lastNorm;
-    while (rank < FastMath.min(rows, columns)) {
+    while (rank < Math.min(rows, columns)) {
       double thisNorm = r.getSubMatrix(rank, rows - 1, rank, columns - 1).getFrobeniusNorm();
       if (thisNorm == 0 || (thisNorm / lastNorm) * rNorm < dropThreshold) {
         break;

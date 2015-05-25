@@ -24,7 +24,6 @@ import com.cloudera.oryx.computation.common.fn.OryxReduceMapFn;
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.crunch.Pair;
 
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public final class InitialYReduceFn extends OryxReduceMapFn<Long, float[], Matri
           System.arraycopy(maybeFeatureVector, 0, featureVector, 0, maybeLength);
         }
         for (int i = maybeLength; i < featureVector.length; i++) {
-          featureVector[i] = FastMath.abs((float) random.nextGaussian());
+          featureVector[i] = Math.abs((float) random.nextGaussian());
         }
         SimpleVectorMath.normalize(featureVector);
       }

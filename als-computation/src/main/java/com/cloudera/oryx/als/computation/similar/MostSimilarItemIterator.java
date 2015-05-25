@@ -21,8 +21,6 @@ import com.cloudera.oryx.als.common.NumericIDValue;
 import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.math.SimpleVectorMath;
 
-import com.google.common.primitives.Doubles;
-
 public final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
 
   private final NumericIDValue delegate;
@@ -57,7 +55,7 @@ public final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
     double candidateFeaturesNorm = SimpleVectorMath.norm(candidateFeatures);
     double similarity =
         SimpleVectorMath.dot(itemFeatures, candidateFeatures) / (itemFeaturesNorm * candidateFeaturesNorm);
-    if (!Doubles.isFinite(similarity)) {
+    if (Double.isNaN(similarity) || Double.isInfinite(similarity)) {
       return null;
     }
     delegate.set(itemID, (float) similarity);

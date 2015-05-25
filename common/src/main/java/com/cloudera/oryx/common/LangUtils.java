@@ -16,8 +16,6 @@
 package com.cloudera.oryx.common;
 
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
 
 /**
  * General utility methods related to the language, or primitives.
@@ -41,7 +39,7 @@ public final class LangUtils {
    */
   public static float parseFloat(String s) {
     float value = Float.parseFloat(s);
-    Preconditions.checkArgument(Floats.isFinite(value), "Bad value: %s", value);
+    Preconditions.checkArgument(!Float.isNaN(value) && !Float.isInfinite(value), "Bad value: %s", value);
     return value;
   }
 
@@ -52,12 +50,13 @@ public final class LangUtils {
    */
   public static double parseDouble(String s) {
     double value = Double.parseDouble(s);
-    Preconditions.checkArgument(Doubles.isFinite(value), "Bad value: %s", value);
+    Preconditions.checkArgument(!Double.isNaN(value) && !Double.isInfinite(value), "Bad value: %s", value);
     return value;
   }
 
   /**
-   * Like {@link Doubles#hashCode(double)} but avoids creating a whole new object!
+   * Like {@link com.google.common.primitives.Doubles#hashCode(double)} but avoids
+   * creating a whole new object!
    *
    * @param d double to hash
    * @return the same value produced by {@link Double#hashCode()}

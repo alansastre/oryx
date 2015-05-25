@@ -21,7 +21,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomDataGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.Pair;
 import org.slf4j.Logger;
@@ -72,7 +71,7 @@ public final class BuildTreeFn extends OryxReduceDoFn<Integer, Iterable<String>,
     Config config = ConfigUtils.getDefaultConfig();
     int numTrees = config.getInt("model.num-trees");
     // Bump this up to as least 2x reducers
-    numTrees = FastMath.max(numTrees, 2 * numReducers);
+    numTrees = Math.max(numTrees, 2 * numReducers);
     // Make it a multiple of # reducers
     while ((numTrees % numReducers) != 0) {
       numTrees++;
@@ -88,7 +87,7 @@ public final class BuildTreeFn extends OryxReduceDoFn<Integer, Iterable<String>,
     Preconditions.checkArgument(sampleRate > 0.0 && sampleRate <= 1.0);
 
     // Arbitrarily use about 90% for training, locally
-    trainingFoldsPerTree = FastMath.min(numLocalTrees - 1, (int) (0.9 * numLocalTrees));
+    trainingFoldsPerTree = Math.min(numLocalTrees - 1, (int) (0.9 * numLocalTrees));
 
     log.info("{} training folds per tree", trainingFoldsPerTree);
   }

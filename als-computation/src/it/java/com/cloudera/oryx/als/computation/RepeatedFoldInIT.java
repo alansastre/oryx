@@ -15,7 +15,6 @@
 
 package com.cloudera.oryx.als.computation;
 
-import com.google.common.primitives.Floats;
 import org.junit.Test;
 
 import java.io.File;
@@ -43,13 +42,17 @@ public final class RepeatedFoldInIT extends AbstractComputationIT {
     for (int i = 0; i < 10000; i++) {
       client.setPreference(Integer.toString(i % 5), Integer.toString(i % 3), 100.0f);
     }
-    assertTrue(Floats.isFinite(client.estimatePreference("0", "0")));
-    assertTrue(Floats.isFinite(client.estimatePreference("0", "1")));
+    assertFinite(client.estimatePreference("0", "0"));
+    assertFinite(client.estimatePreference("0", "1"));
     assertEquals(5, client.recommend("1", 5).size());
     client.refresh();
-    assertTrue(Floats.isFinite(client.estimatePreference("0", "0")));
-    assertTrue(Floats.isFinite(client.estimatePreference("0", "1")));
+    assertFinite(client.estimatePreference("0", "0"));
+    assertFinite(client.estimatePreference("0", "1"));
     assertEquals(5, client.recommend("1", 5).size());
+  }
+
+  private static void assertFinite(float f) {
+    assertTrue(!Float.isNaN(f) && !Float.isInfinite(f));
   }
 
 }

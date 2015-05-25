@@ -16,7 +16,6 @@
 package com.cloudera.oryx.rdf.common.information;
 
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 import org.junit.Test;
 
@@ -75,7 +74,7 @@ public final class NumericInformationTest extends OryxTest {
   }
 
   private static double differentialEntropy(StandardDeviation stdev) {
-    return FastMath.log(stdev.getResult() * FastMath.sqrt(2.0 * FastMath.PI * FastMath.E));
+    return Math.log(stdev.getResult() * Math.sqrt(2.0 * Math.PI * Math.E));
   }
 
   private static ExampleSet examplesForValuesForCategories(float[][] valuesForCategories) {

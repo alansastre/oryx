@@ -26,7 +26,6 @@ import com.google.common.collect.Iterables;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.crunch.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +98,7 @@ public final class RowReduceFn extends OryxReduceMapFn<Long, Iterable<LongFloatM
           YTCupu[row] += xu * vector[row];
         }
       } else {
-        double cu = 1.0 + alpha * FastMath.abs(xu);
+        double cu = 1.0 + alpha * Math.abs(xu);
         for (int row = 0; row < features; row++) {
           float vectorAtRow = vector[row];
           double rowValue = vectorAtRow * (cu - 1.0);

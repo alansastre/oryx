@@ -17,7 +17,6 @@ package com.cloudera.oryx.rdf.common.eval;
 
 import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import org.apache.commons.math3.util.FastMath;
 
 import com.cloudera.oryx.rdf.common.example.CategoricalFeature;
 import com.cloudera.oryx.rdf.common.example.Example;
@@ -53,7 +52,7 @@ public final class Evaluation {
       double diff = actual.getValue() - prediction.getPrediction();
       mse.increment(diff * diff);
     }
-    return FastMath.sqrt(mse.getResult());
+    return Math.sqrt(mse.getResult());
   }
 
   /**
@@ -64,7 +63,7 @@ public final class Evaluation {
     StorelessUnivariateStatistic mean = new Mean();
     for (Example test : testSet) {
       NumericFeature actual = (NumericFeature) test.getTarget();
-      mean.increment(FastMath.abs(actual.getValue()));
+      mean.increment(Math.abs(actual.getValue()));
     }
     return mean.getResult();
   }
@@ -113,7 +112,7 @@ public final class Evaluation {
   
   private static double[] numericTargetWeight(TreeBasedClassifier classifier, Iterable<Example> testSet) {
     double rmse = rootMeanSquaredError(classifier, testSet);
-    double aSmallBit = 0.0000001 * FastMath.max(1.0, meanAbs(testSet));
+    double aSmallBit = 0.0000001 * Math.max(1.0, meanAbs(testSet));
     return new double[] { 1.0 / (aSmallBit + rmse), rmse };
   }
 

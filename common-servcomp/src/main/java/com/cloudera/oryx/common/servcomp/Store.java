@@ -22,13 +22,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
@@ -161,7 +161,7 @@ public final class Store {
    * @throws IOException if an error occurs, like the file doesn't exist
    */
   public BufferedReader readFrom(String key) throws IOException {
-    return new BufferedReader(new InputStreamReader(streamFrom(key), Charsets.UTF_8), 1 << 20); // ~1MB
+    return new BufferedReader(new InputStreamReader(streamFrom(key), StandardCharsets.UTF_8), 1 << 20); // ~1MB
   }
 
   private void makeParentDirs(Path path) throws IOException {

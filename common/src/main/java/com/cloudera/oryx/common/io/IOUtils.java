@@ -28,13 +28,13 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipInputStream;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.PatternFilenameFilter;
 
@@ -121,7 +121,7 @@ public final class IOUtils {
    * @see #openMaybeDecompressing(File)
    */
   public static Reader openReaderMaybeDecompressing(File file) throws IOException {
-    return new InputStreamReader(openMaybeDecompressing(file), Charsets.UTF_8);
+    return new InputStreamReader(openMaybeDecompressing(file), StandardCharsets.UTF_8);
   }
 
   /**
@@ -169,7 +169,7 @@ public final class IOUtils {
    *  using UTF-8 encoding
    */
   public static Writer buildGZIPWriter(OutputStream delegate) throws IOException {
-    return new OutputStreamWriter(buildGZIPOutputStream(delegate), Charsets.UTF_8);
+    return new OutputStreamWriter(buildGZIPOutputStream(delegate), StandardCharsets.UTF_8);
   }
 
   /**

@@ -18,7 +18,6 @@ package com.cloudera.oryx.rdf.common.tree;
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.Collection;
@@ -55,7 +54,7 @@ public final class DecisionTree implements TreeBasedClassifier {
     Config config = ConfigUtils.getDefaultConfig();
     int numFeatures = exampleSet.getNumFeatures();
     double fractionOfFeaturesToTry = config.getDouble("model.fraction-features-to-try");
-    int featuresToTry = FastMath.max(1, (int) (fractionOfFeaturesToTry * numFeatures));
+    int featuresToTry = Math.max(1, (int) (fractionOfFeaturesToTry * numFeatures));
     int minNodeSize = config.getInt("model.min-node-size");
     double minInfoGainNats = config.getDouble("model.min-info-gain-nats");
     int suggestedMaxSplitCandidates = config.getInt("model.max-split-candidates");
@@ -189,7 +188,7 @@ public final class DecisionTree implements TreeBasedClassifier {
                                                   int numFeatures,
                                                   RandomGenerator random) {
     Collection<Integer> features = new HashSet<>(featuresToTry);
-    int max = FastMath.min(numFeatures, featuresToTry);
+    int max = Math.min(numFeatures, featuresToTry);
     int attempts = 0;
     while (features.size() < max && attempts < 2 * featuresToTry) {
       int featureNumber = random.nextInt(numFeatures);
@@ -241,7 +240,7 @@ public final class DecisionTree implements TreeBasedClassifier {
     for (int i = 0; i < numFeatures; i++) {
       double gain = totalGains[i];
       Preconditions.checkState(gain >= 0.0);
-      maxGain = FastMath.max(maxGain, gain);
+      maxGain = Math.max(maxGain, gain);
     }
     if (maxGain > 0.0) {
       for (int i = 0; i < numFeatures; i++) {

@@ -26,9 +26,6 @@ import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.collection.LongSet;
 import com.cloudera.oryx.common.math.SimpleVectorMath;
 
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
-
 /**
  * An {@link Iterator} that generates and iterates over all possible candidate items to recommend.
  * It is used to generate recommendations. The items with top values are taken as recommendations.
@@ -94,13 +91,14 @@ final class RecommendIterator implements Iterator<NumericIDValue> {
     
     if (rescorer != null) {
       sum = rescorer.rescore(idMapping.toString(itemID), sum);
-      if (!Doubles.isFinite(sum)) {
+      if (Double.isNaN(sum) || Double.isInfinite(sum)) {
         return null;
       }
     }
 
     float result = (float) (sum / count);
-    Preconditions.checkState(Floats.isFinite(result), "Bad recommendation value");
+    Preconditions.checkState(!Float.isNaN(result) && !Float.isInfinite(result),
+                             "Bad recommendation value");
     delegate.set(itemID, result);
     return delegate;
   }

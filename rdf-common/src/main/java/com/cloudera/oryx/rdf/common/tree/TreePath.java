@@ -18,7 +18,6 @@ package com.cloudera.oryx.rdf.common.tree;
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Booleans;
 import com.google.common.primitives.Longs;
-import org.apache.commons.math3.util.FastMath;
 
 /**
  * Encapsulates a path from root to a node in the tree.
@@ -80,7 +79,7 @@ final class TreePath implements Comparable<TreePath> {
 
   @Override
   public int compareTo(TreePath o) {
-    int maxLength = FastMath.max(pathLength, o.pathLength);
+    int maxLength = Math.max(pathLength, o.pathLength);
     for (int i = 0; i < maxLength; i++) {
       if (i < pathLength) {
         boolean thisLeft = isLeftAt(i);

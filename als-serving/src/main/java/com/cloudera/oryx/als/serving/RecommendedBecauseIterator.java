@@ -20,7 +20,6 @@ import java.util.Iterator;
 import com.cloudera.oryx.als.common.NumericIDValue;
 import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.math.SimpleVectorMath;
-import com.google.common.primitives.Doubles;
 
 /**
  * An {@link Iterator} that generates and iterates over all possible candidate items in computation
@@ -57,7 +56,7 @@ final class RecommendedBecauseIterator implements Iterator<NumericIDValue> {
     float[] candidateFeatures = entry.getValue();
     double candidateFeaturesNorm = SimpleVectorMath.norm(candidateFeatures);
     double estimate = SimpleVectorMath.dot(candidateFeatures, features) / (candidateFeaturesNorm * featuresNorm);
-    if (!Doubles.isFinite(estimate)) {
+    if (Double.isNaN(estimate) || Double.isInfinite(estimate)) {
       return null;
     }
     delegate.set(itemID, (float) estimate);

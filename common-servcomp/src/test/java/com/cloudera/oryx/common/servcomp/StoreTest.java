@@ -18,11 +18,11 @@ package com.cloudera.oryx.common.servcomp;
 import com.cloudera.oryx.common.OryxTest;
 import com.cloudera.oryx.common.io.IOUtils;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Tests {@link Store}.
@@ -35,7 +35,7 @@ public final class StoreTest extends OryxTest {
   public void testSize() throws Exception {
     File file = File.createTempFile("testSize", ".txt");
     file.deleteOnExit();
-    Files.write("Hello.", file, Charsets.UTF_8);
+    Files.write("Hello.", file, StandardCharsets.UTF_8);
     assertEquals(6, Store.get().getSize(file.toString()));
   }
 
@@ -47,8 +47,8 @@ public final class StoreTest extends OryxTest {
     assertTrue(subDir.mkdir());
     File file1 = new File(dir, "testDU1.txt");
     File file2 = new File(subDir, "testDU2.txt");
-    Files.write("Hello.", file1, Charsets.UTF_8);
-    Files.write("Shalom.", file2, Charsets.UTF_8);
+    Files.write("Hello.", file1, StandardCharsets.UTF_8);
+    Files.write("Shalom.", file2, StandardCharsets.UTF_8);
     Store store = Store.get();
     assertEquals(6, store.getSizeRecursive(file1.toString()));
     assertEquals(7, store.getSizeRecursive(file2.toString()));

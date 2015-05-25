@@ -16,7 +16,6 @@
 package com.cloudera.oryx.rdf.common.example;
 
 import com.google.common.base.Preconditions;
-import org.apache.commons.math3.util.FastMath;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,12 +73,12 @@ public final class ExampleSet implements Iterable<Example> {
         if (featureTypes[i] == FeatureType.CATEGORICAL) {
           CategoricalFeature feature = (CategoricalFeature) example.getFeature(i);
           if (feature != null) {
-            categoryCounts[i] = FastMath.max(categoryCounts[i], feature.getValueID() + 1);
+            categoryCounts[i] = Math.max(categoryCounts[i], feature.getValueID() + 1);
           }
         }
       }
       if (targetType == FeatureType.CATEGORICAL) {
-        theTargetCategoryCount = FastMath.max(theTargetCategoryCount,
+        theTargetCategoryCount = Math.max(theTargetCategoryCount,
                                               ((CategoricalFeature) example.getTarget()).getValueID() + 1);
       }
     }
@@ -106,12 +105,12 @@ public final class ExampleSet implements Iterable<Example> {
         if (featureTypes[i] == FeatureType.CATEGORICAL) {
           CategoricalFeature feature = (CategoricalFeature) example.getFeature(i);
           if (feature != null) {
-            categoryCounts[i] = FastMath.max(categoryCounts[i], feature.getValueID() + 1);
+            categoryCounts[i] = Math.max(categoryCounts[i], feature.getValueID() + 1);
           }
         }
       }
       if (targetType == FeatureType.CATEGORICAL) {
-        theTargetCategoryCount = FastMath.max(theTargetCategoryCount,
+        theTargetCategoryCount = Math.max(theTargetCategoryCount,
                                               ((CategoricalFeature) example.getTarget()).getValueID() + 1);
       }
     }

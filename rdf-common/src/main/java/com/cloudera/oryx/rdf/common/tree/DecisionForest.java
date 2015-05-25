@@ -20,7 +20,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.math.IntMath;
 import com.typesafe.config.Config;
-import org.apache.commons.math3.util.FastMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,7 +88,7 @@ public final class DecisionForest implements Iterable<DecisionTree>, TreeBasedCl
     Preconditions.checkArgument(numTrees > 1);
     final int numFeatures = examples.getNumFeatures();
     Preconditions.checkArgument(fractionOfFeaturesToTry > 0.0 && fractionOfFeaturesToTry <= 1.0);
-    final int featuresToTry = FastMath.max(1, (int) (fractionOfFeaturesToTry * numFeatures));
+    final int featuresToTry = Math.max(1, (int) (fractionOfFeaturesToTry * numFeatures));
     Preconditions.checkArgument(numFeatures >= 1);
     Preconditions.checkArgument(minNodeSize >= 1);
     Preconditions.checkArgument(minInfoGainNats >= 0.0);
@@ -104,10 +103,10 @@ public final class DecisionForest implements Iterable<DecisionTree>, TreeBasedCl
     final double[][] perTreeFeatureImportances = new double[numTrees][];
 
     // Going to set an arbitrary upper bound on the training size of about 90%
-    int maxFolds = FastMath.min(numTrees - 1, (int) (0.9 * numTrees));
+    int maxFolds = Math.min(numTrees - 1, (int) (0.9 * numTrees));
     // Going to set an arbitrary lower bound on the CV size of about 10%
-    int minFolds = FastMath.max(1, (int) (0.1 * numTrees));
-    final int folds = FastMath.min(maxFolds, FastMath.max(minFolds, (int) (sampleRate * numTrees)));
+    int minFolds = Math.max(1, (int) (0.1 * numTrees));
+    final int folds = Math.min(maxFolds, Math.max(minFolds, (int) (sampleRate * numTrees)));
 
     trees = new DecisionTree[numTrees];
 

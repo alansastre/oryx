@@ -19,10 +19,8 @@ import java.util.List;
 
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.google.common.primitives.Doubles;
 import org.apache.commons.math3.primes.Primes;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.util.FastMath;
 
 import com.cloudera.oryx.common.collection.LongSet;
 import com.cloudera.oryx.common.collection.SamplingLongPrimitiveIterator;
@@ -64,7 +62,7 @@ public final class RandomUtils {
       vector[i] = (float) d;
       total += d * d;
     }
-    float normalization = (float) FastMath.sqrt(total);
+    float normalization = (float) Math.sqrt(total);
     for (int i = 0; i < dimensions; i++) {
       vector[i] /= normalization;
     }
@@ -82,7 +80,7 @@ public final class RandomUtils {
                                                 List<float[]> farFrom,
                                                 RandomGenerator random) {
     int size = farFrom.size();
-    int numSamples = FastMath.min(100, size);
+    int numSamples = Math.min(100, size);
     float[] vector = new float[dimensions];
     boolean accepted = false;
     while (!accepted) {
@@ -92,13 +90,17 @@ public final class RandomUtils {
         float[] other = farFrom.get(size == numSamples ? sample : random.nextInt(size));
         // dot is the cosine here since both are unit vectors
         double distSquared = 2.0 - 2.0 * SimpleVectorMath.dot(vector, other);
-        if (Doubles.isFinite(distSquared) && distSquared < smallestDistSquared) {
+        if (!Double.isNaN(distSquared) &&
+            !Double.isInfinite(distSquared) &&
+            distSquared < smallestDistSquared) {
           smallestDistSquared = distSquared;
         }
       }
       // Second condition covers 1-D case, where there are only 2 distinct unit vectors. If both have
       // been generated, keep accepting either of them.
-      if (Doubles.isFinite(smallestDistSquared) && !(dimensions == 1 && smallestDistSquared == 0.0)) {
+      if (!Double.isNaN(smallestDistSquared) &&
+          !Double.isInfinite(smallestDistSquared) &&
+          !(dimensions == 1 && smallestDistSquared == 0.0)) {
         // Choose with probability proportional to squared distance, a la kmeans++ centroid selection
         double acceptProbability = smallestDistSquared / 4.0; // dist squared is in [0,4]
         accepted = random.nextDouble() < acceptProbability;

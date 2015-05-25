@@ -34,10 +34,8 @@ import com.cloudera.oryx.common.iterator.FileLineIterable;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Doubles;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.util.FastMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -324,7 +322,7 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
         // Weight, simplistically, by newValue to emphasize effect of good recommendations.
         // But that only makes sense where newValue > 0
         if (estimate > 0.0f) {
-          averageAbsoluteEstimateDiff.increment(FastMath.abs(estimate - previousEstimate), estimate);
+          averageAbsoluteEstimateDiff.increment(Math.abs(estimate - previousEstimate), estimate);
         }
       }
     }
@@ -333,13 +331,13 @@ public final class ALSDistributedGenerationRunner extends DistributedGenerationR
     double convergenceValue;
     if (numSamples == 0) {
       // Fake value to cover corner case
-      convergenceValue = FastMath.pow(2.0, -(iterationNumber + 1));
+      convergenceValue = Math.pow(2.0, -(iterationNumber + 1));
       log.info("No samples for convergence; using artificial convergence value: {}", convergenceValue);
     } else {
       convergenceValue = averageAbsoluteEstimateDiff.getResult();
       log.info("Avg absolute difference in estimate vs prior iteration over {} samples: {}",
                numSamples, convergenceValue);
-      if (!Doubles.isFinite(convergenceValue)) {
+      if (Double.isNaN(convergenceValue) || Double.isInfinite(convergenceValue)) {
         log.warn("Invalid convergence value, aborting iteration! {}", convergenceValue);
         return true;
       }

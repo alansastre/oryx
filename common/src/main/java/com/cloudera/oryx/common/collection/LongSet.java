@@ -38,7 +38,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.google.common.base.Preconditions;
-import org.apache.commons.math3.util.FastMath;
 
 import com.cloudera.oryx.common.iterator.AbstractLongPrimitiveIterator;
 import com.cloudera.oryx.common.iterator.LongPrimitiveIterator;
@@ -327,7 +326,7 @@ public final class LongSet implements Serializable, Cloneable, Iterable<Long> {
     long[] otherKeys = otherMap.keys;
     int length = keys.length;
     int otherLength = otherKeys.length;
-    int max = FastMath.min(length, otherLength);
+    int max = Math.min(length, otherLength);
 
     int i = 0;
     while (i < max) {

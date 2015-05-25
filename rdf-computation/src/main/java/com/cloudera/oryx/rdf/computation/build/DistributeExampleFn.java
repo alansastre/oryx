@@ -18,7 +18,6 @@ package com.cloudera.oryx.rdf.computation.build;
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomDataGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.Pair;
 import org.slf4j.Logger;
@@ -45,7 +44,7 @@ public final class DistributeExampleFn extends OryxDoFn<String,Pair<Integer,Stri
     Config config = ConfigUtils.getDefaultConfig();
     int numTrees = config.getInt("model.num-trees");
     // Bump this up to as least 2x reducers
-    numTrees = FastMath.max(numTrees, 2 * numReducers);
+    numTrees = Math.max(numTrees, 2 * numReducers);
     // Make it a multiple of # reducers
     while ((numTrees % numReducers) != 0) {
       numTrees++;
@@ -54,7 +53,7 @@ public final class DistributeExampleFn extends OryxDoFn<String,Pair<Integer,Stri
 
     double sampleRate = config.getDouble("model.sample-rate");
     Preconditions.checkArgument(sampleRate > 0.0 && sampleRate <= 1.0);
-    reducersPerDatum = FastMath.max(1, (int) FastMath.ceil(numReducers * sampleRate));
+    reducersPerDatum = Math.max(1, (int) Math.ceil(numReducers * sampleRate));
     Preconditions.checkArgument(reducersPerDatum >= 1 && reducersPerDatum <= numReducers);
     log.info("{} reducers per datum", reducersPerDatum);
   }

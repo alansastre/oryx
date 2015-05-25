@@ -17,11 +17,11 @@ package com.cloudera.oryx.als.computation.iterate.row;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import com.cloudera.oryx.als.computation.types.ALSTypes;
 import com.cloudera.oryx.als.computation.types.MatrixRow;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.crunch.GroupingOptions;
@@ -140,7 +140,7 @@ public final class RowStep extends IterationStep {
 
       File tempMAPFile = File.createTempFile("MAP", ".txt");
       tempMAPFile.deleteOnExit();
-      Files.write(Double.toString(meanAveragePrecision.getResult()), tempMAPFile, Charsets.UTF_8);
+      Files.write(Double.toString(meanAveragePrecision.getResult()), tempMAPFile, StandardCharsets.UTF_8);
       store.upload(iterationKey + "MAP", tempMAPFile, false);
       IOUtils.delete(tempMAPFile);
     }

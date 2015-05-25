@@ -22,8 +22,6 @@ import com.cloudera.oryx.als.common.rescorer.Rescorer;
 import com.cloudera.oryx.als.common.StringLongMapping;
 import com.cloudera.oryx.common.collection.LongFloatMap;
 
-import com.google.common.primitives.Doubles;
-
 /**
  * Used by {@link com.cloudera.oryx.als.common.OryxRecommender#mostPopularItems(int)}.
  *
@@ -62,7 +60,7 @@ final class MostPopularItemsIterator implements Iterator<NumericIDValue> {
         return null;
       }
       value = (float) theRescorer.rescore(stringID, value);
-      if (!Doubles.isFinite(value)) {
+      if (Double.isNaN(value) || Double.isInfinite(value)) {
         return null;
       }
     }

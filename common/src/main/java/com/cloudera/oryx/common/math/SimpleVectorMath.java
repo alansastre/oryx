@@ -15,8 +15,6 @@
 
 package com.cloudera.oryx.common.math;
 
-import org.apache.commons.math3.util.FastMath;
-
 /**
  * Simple utility methods related to vectors represented as simple {@code float[]}s.
  * 
@@ -46,7 +44,7 @@ public final class SimpleVectorMath {
     for (float f : x) {
       total += f * f;
     }
-    return FastMath.sqrt(total);
+    return Math.sqrt(total);
   }
 
   /**

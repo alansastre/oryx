@@ -17,7 +17,6 @@ package com.cloudera.oryx.als.computation.local;
 
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
-import org.apache.commons.math3.util.FastMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,7 +155,7 @@ final class ReadInputs implements Callable<Object> {
     for (LongObjectMap.MapEntry<LongFloatMap> entry : matrix.entrySet()) {
       for (Iterator<LongFloatMap.MapEntry> it = entry.getValue().entrySet().iterator(); it.hasNext();) {
         LongFloatMap.MapEntry entry2 = it.next();
-        if (FastMath.abs(entry2.getValue()) < zeroThreshold) {
+        if (Math.abs(entry2.getValue()) < zeroThreshold) {
           it.remove();
         }
       }

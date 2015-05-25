@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 import com.google.common.base.Preconditions;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.util.CombinatoricsUtils;
-import org.apache.commons.math3.util.FastMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +89,7 @@ public final class LocationSensitiveHash {
 
     // This follows from the binomial distribution:
     double cumulativeProbability = 0.0;
-    double denominator = FastMath.pow(2.0, numHashes);
+    double denominator = Math.pow(2.0, numHashes);
     int bitsDiffering = -1;
     while (bitsDiffering < numHashes && cumulativeProbability < lshSampleRatio) {
       bitsDiffering++;
@@ -130,7 +129,7 @@ public final class LocationSensitiveHash {
           newIDs[i] = ids[i];
         }
         newIDs[length] = entry.getKey();
-        maxBucketSize = FastMath.max(maxBucketSize, newIDs.length);
+        maxBucketSize = Math.max(maxBucketSize, newIDs.length);
         buckets.put(signature, newIDs);
       }
       if (++count % 1000000 == 0) {

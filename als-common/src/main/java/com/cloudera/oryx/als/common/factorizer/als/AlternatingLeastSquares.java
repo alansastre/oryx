@@ -24,12 +24,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Doubles;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -221,7 +219,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
             // Weight, simplistically, by newValue to emphasize effect of good recommendations.
             // But that only makes sense where newValue > 0
             if (newValue > 0.0f) {
-              averageAbsoluteEstimateDiff.increment(FastMath.abs(newValue - oldValue), newValue);
+              averageAbsoluteEstimateDiff.increment(Math.abs(newValue - oldValue), newValue);
             }
           }
         }
@@ -237,7 +235,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
         double convergenceValue = averageAbsoluteEstimateDiff.getResult();
         log.info("Avg absolute difference in estimate vs prior iteration over {} samples: {}",
                  numSamples, convergenceValue);
-        if (!Doubles.isFinite(convergenceValue)) {
+        if (Double.isNaN(convergenceValue) || Double.isInfinite(convergenceValue)) {
           log.warn("Invalid convergence value, aborting iteration! {}", convergenceValue);
           break;
         }
@@ -287,7 +285,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
           System.arraycopy(oldSmallerVector, 0, newLargerVector, 0, oldSmallerVector.length);
           // Fill in new dimensions with random values
           for (int i = oldSmallerVector.length; i < newLargerVector.length; i++) {
-            newLargerVector[i] = FastMath.abs((float) random.nextGaussian());
+            newLargerVector[i] = Math.abs((float) random.nextGaussian());
           }
           SimpleVectorMath.normalize(newLargerVector);
           randomY.put(entry.getKey(), newLargerVector);
@@ -472,7 +470,7 @@ public final class AlternatingLeastSquares implements MatrixFactorizer {
               YTCupu[row] += xu * vector[row];
             }
           } else {
-            double cu = 1.0 + alpha * FastMath.abs(xu);            
+            double cu = 1.0 + alpha * Math.abs(xu);
             for (int row = 0; row < features; row++) {
               float vectorAtRow = vector[row];
               double rowValue = vectorAtRow * (cu - 1.0);

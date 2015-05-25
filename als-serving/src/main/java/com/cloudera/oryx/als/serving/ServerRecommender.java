@@ -33,9 +33,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
-import org.apache.commons.math3.util.FastMath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -277,7 +274,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
         candidateFilter.getCandidateIterator(userFeatures);
 
     int numIterators = candidateIterators.size();
-    int parallelism = FastMath.min(numCores, numIterators);
+    int parallelism = Math.min(numCores, numIterators);
 
     final Queue<NumericIDValue> topN = TopN.initialQueue(howMany);
 
@@ -609,7 +606,7 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
         float[] itemFeatures = Y.get(StringLongMapping.toLong(itemID));
         if (itemFeatures != null) {
           float value = (float) SimpleVectorMath.dot(itemFeatures, userFeatures);
-          Preconditions.checkState(Floats.isFinite(value), "Bad estimate");
+          Preconditions.checkState(!Float.isNaN(value) && !Float.isInfinite(value), "Bad estimate");
           result[i] = value;
         } // else leave value at 0.0f
       }
@@ -777,14 +774,14 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
     if (itemFoldIn != null) {
       for (int i = 0; i < itemFeatures.length; i++) {
         double delta = signedFoldInWeight * itemFoldIn[i];
-        Preconditions.checkState(Doubles.isFinite(delta));
+        Preconditions.checkState(!Double.isNaN(delta) && !Double.isInfinite(delta));
         itemFeatures[i] += (float) delta;
       }
     }
     if (userFoldIn != null) {
       for (int i = 0; i < userFeatures.length; i++) {
         double delta = signedFoldInWeight * userFoldIn[i];
-        Preconditions.checkState(Doubles.isFinite(delta));
+        Preconditions.checkState(!Double.isNaN(delta) && !Double.isInfinite(delta));
         userFeatures[i] += (float) delta;
       }
     }
@@ -804,13 +801,13 @@ public final class ServerRecommender implements OryxRecommender, Closeable {
    * distance towards 1, or 0.
    */
   private static double foldInWeight(double estimate, float value) {
-    Preconditions.checkState(Doubles.isFinite(estimate));
+    Preconditions.checkState(!Double.isNaN(estimate) && !Double.isInfinite(estimate));
     double signedFoldInWeight;
     if (value > 0.0f && estimate < 1.0) {
-      double multiplier = 1.0 - FastMath.max(0.0, estimate);
+      double multiplier = 1.0 - Math.max(0.0, estimate);
       signedFoldInWeight = (1.0 - 1.0 / (1.0 + value)) * multiplier;
     } else if (value < 0.0f && estimate > 0.0) {
-      double multiplier = -FastMath.min(1.0, estimate);
+      double multiplier = -Math.min(1.0, estimate);
       signedFoldInWeight = (1.0 - 1.0 / (1.0 - value)) * multiplier;
     } else {
       signedFoldInWeight = 0.0;

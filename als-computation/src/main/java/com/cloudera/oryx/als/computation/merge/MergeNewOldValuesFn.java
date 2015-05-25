@@ -24,7 +24,6 @@ import com.cloudera.oryx.computation.common.fn.OryxReduceDoFn;
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.Pair;
 
@@ -160,7 +159,7 @@ public final class MergeNewOldValuesFn extends OryxReduceDoFn<Pair<Long, Integer
         }
 
         if ((removedItemIDs == null || !removedItemIDs.contains(itemID)) &&
-            FastMath.abs(sum) > zeroThreshold) {
+            Math.abs(sum) > zeroThreshold) {
           emitter.emit(Pair.of(userID, new NumericIDValue(itemID, sum)));
         }
       }
@@ -173,7 +172,7 @@ public final class MergeNewOldValuesFn extends OryxReduceDoFn<Pair<Long, Integer
         if (oldPrefs == null || !oldPrefs.containsKey(itemID)) {
           // It wasn't already written. If it exists in newPrefs, it's also not removed
           float newPrefValue = entry.getValue();
-          if (FastMath.abs(newPrefValue) > zeroThreshold) {
+          if (Math.abs(newPrefValue) > zeroThreshold) {
             emitter.emit(Pair.of(userID, new NumericIDValue(itemID, newPrefValue)));
           }
         }

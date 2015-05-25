@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.zip.GZIPInputStream;
@@ -30,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.common.base.Charsets;
 import com.google.common.net.HttpHeaders;
 
 import com.cloudera.oryx.als.common.OryxRecommender;
@@ -69,17 +69,16 @@ public final class IngestServlet extends AbstractALSServlet {
       InputStream in = part.getInputStream();
       if ("application/zip".equals(partContentType)) {
         in = new ZipInputStream(in);
-      } else if ("application/gzip".equals(partContentType)) {
-        in = new GZIPInputStream(in);
-      } else if ("application/x-gzip".equals(partContentType)) {
+      } else if ("application/gzip".equals(partContentType) ||
+                 "application/x-gzip".equals(partContentType)) {
         in = new GZIPInputStream(in);
       }
-      reader = new InputStreamReader(in, Charsets.UTF_8);
+      reader = new InputStreamReader(in, StandardCharsets.UTF_8);
 
     } else {
 
       String charEncodingName = request.getCharacterEncoding();
-      Charset charEncoding = charEncodingName == null ? Charsets.UTF_8 : Charset.forName(charEncodingName);
+      Charset charEncoding = charEncodingName == null ? StandardCharsets.UTF_8 : Charset.forName(charEncodingName);
       String contentEncoding = request.getHeader(HttpHeaders.CONTENT_ENCODING);
       if (contentEncoding == null) {
         reader = request.getReader();

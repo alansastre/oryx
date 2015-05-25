@@ -28,7 +28,7 @@ import com.cloudera.oryx.kmeans.common.pmml.KMeansPMML;
 import com.cloudera.oryx.kmeans.computation.evaluate.EvaluationSettings;
 import com.cloudera.oryx.kmeans.computation.evaluate.KMeansEvaluationData;
 import com.cloudera.oryx.kmeans.computation.pmml.ClusteringModelBuilder;
-import com.google.common.base.Charsets;
+
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
@@ -41,6 +41,7 @@ import org.dmg.pmml.Model;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,13 +100,17 @@ public final class KMeansLocalGenerationRunner extends LocalGenerationRunner {
         }
       }
 
-      Files.write(Joiner.on("\n").join(stats) + '\n', new File(tempOutDir, "cluster_stats.csv"), Charsets.UTF_8);
+      Files.write(Joiner.on("\n").join(stats) + '\n',
+                  new File(tempOutDir, "cluster_stats.csv"),
+                  StandardCharsets.UTF_8);
       KMeansPMML.write(new File(tempOutDir, "model.pmml.gz"), dictionary, models);
       List<String> assignments = new Assignment(foldVecs, evalData).call();
       if (!assignments.isEmpty()) {
         File outlierDir = new File(tempOutDir, "outliers");
         IOUtils.mkdirs(outlierDir);
-        Files.write(Joiner.on("\n").join(assignments) + '\n', new File(outlierDir, "data.csv"), Charsets.UTF_8);
+        Files.write(Joiner.on("\n").join(assignments) + '\n',
+                    new File(outlierDir, "data.csv"),
+                    StandardCharsets.UTF_8);
       }
       store.uploadDirectory(generationPrefix, tempOutDir, false);
     } finally {

@@ -18,7 +18,6 @@ package com.cloudera.oryx.rdf.common.rule;
 import com.google.common.base.Preconditions;
 import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 
 import java.io.Serializable;
@@ -299,7 +298,7 @@ public final class CategoricalDecision extends Decision {
     // The vital condition here is that if decision n decides an example is positive, then all subsequent
     // decisions in the list will also find it positive. Here we create decisions with sets of categories that
     // are always supersets of previous ones.
-    int numDecisions = FastMath.min(sorted.size(), suggestedMaxSplitCandidates);
+    int numDecisions = Math.min(sorted.size(), suggestedMaxSplitCandidates);
     // Going to take the decisions based on earlier splits, if we need to cut it down.
     // These are decisions that partition the data into a low-entropy subset, and everything else.
     // These are likely to be the best.

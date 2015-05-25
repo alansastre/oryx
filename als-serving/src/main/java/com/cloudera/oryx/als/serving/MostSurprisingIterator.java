@@ -18,7 +18,6 @@ package com.cloudera.oryx.als.serving;
 import java.util.Iterator;
 
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Floats;
 
 import com.cloudera.oryx.als.common.NumericIDValue;
 import com.cloudera.oryx.common.collection.LongObjectMap;
@@ -58,7 +57,8 @@ final class MostSurprisingIterator implements Iterator<NumericIDValue> {
     long itemID = knownItemIDs.nextLong();
     float[] itemFeatures = Y.get(itemID);
     float result = (float) (1.0 - SimpleVectorMath.dot(itemFeatures, features));
-    Preconditions.checkState(Floats.isFinite(result), "Bad recommendation value");
+    Preconditions.checkState(!Float.isNaN(result) && !Float.isInfinite(result),
+                             "Bad recommendation value");
     delegate.set(itemID, result);
     return delegate;
   }

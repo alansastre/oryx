@@ -16,7 +16,7 @@
 package com.cloudera.oryx.computation.common;
 
 import com.cloudera.oryx.computation.common.json.JacksonUtils;
-import com.google.common.base.Charsets;
+
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigRenderOptions;
@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -247,7 +248,7 @@ public abstract class GenerationRunner implements Callable<Object> {
     private void storeConfig(Config config) throws IOException {
     String outputKey = Namespaces.getInstanceGenerationPrefix(instanceDir, generationID) + "computation.conf";
     String configString = config.root().render(ConfigRenderOptions.concise());
-      try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8)) {
+      try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), StandardCharsets.UTF_8)) {
         writer.write(configString);
       }
   }
@@ -268,7 +269,7 @@ public abstract class GenerationRunner implements Callable<Object> {
     ObjectMapper mapper = JacksonUtils.getObjectMapper();
     String statsString = mapper.writeValueAsString(stats);
     String outputKey = Namespaces.getInstanceGenerationPrefix(instanceDir, generationID) + "stats.json";
-    try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), Charsets.UTF_8)) {
+    try (Writer writer = new OutputStreamWriter(Store.get().streamTo(outputKey), StandardCharsets.UTF_8)) {
       writer.write(statsString);
     }
   }
