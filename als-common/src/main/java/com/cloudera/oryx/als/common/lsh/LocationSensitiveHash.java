@@ -16,6 +16,7 @@
 package com.cloudera.oryx.als.common.lsh;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -115,11 +116,17 @@ public final class LocationSensitiveHash {
     buckets = new LongObjectMap<>();
     int count = 0;
     int maxBucketSize = 0;
+    long maxBucketSignature = Long.MIN_VALUE;
+    long sampleIDFromMax = Long.MIN_VALUE;
+    float[] sampleFeatureVectorFromMax = null;
+
     for (LongObjectMap.MapEntry<float[]> entry : Y.entrySet()) {
-      long signature = toBitSignature(entry.getValue());
+      long id = entry.getKey();
+      float[] featureVector = entry.getValue();
+      long signature = toBitSignature(featureVector);
       long[] ids = buckets.get(signature);
       if (ids == null) {
-        buckets.put(signature, new long[] {entry.getKey()});
+        buckets.put(signature, new long[] { id });
       } else {
         int length = ids.length;
         // Large majority of arrays will be length 1; all are short.
@@ -128,8 +135,13 @@ public final class LocationSensitiveHash {
         for (int i = 0; i < length; i++) {
           newIDs[i] = ids[i];
         }
-        newIDs[length] = entry.getKey();
-        maxBucketSize = Math.max(maxBucketSize, newIDs.length);
+        newIDs[length] = id;
+        if (newIDs.length > maxBucketSize) {
+          maxBucketSize = newIDs.length;
+          maxBucketSignature = signature;
+          sampleIDFromMax = id;
+          sampleFeatureVectorFromMax = featureVector;
+        }
         buckets.put(signature, newIDs);
       }
       if (++count % 1000000 == 0) {
@@ -137,8 +149,12 @@ public final class LocationSensitiveHash {
       }
     }
 
-    log.info("Max bucket size {}", maxBucketSize);
     log.info("Put {} items into {} buckets", Y.size(), buckets.size());
+    log.info("Largest bucket contains {} entries, with signature {}, with entries like {} : {}",
+             maxBucketSize,
+             Long.toBinaryString(maxBucketSignature),
+             sampleIDFromMax,
+             Arrays.toString(sampleFeatureVectorFromMax));
     // A separate bucket for new items, which will always be considered
     newItems = new LongSet();
   }
