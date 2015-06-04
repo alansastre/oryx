@@ -18,8 +18,11 @@ package com.cloudera.oryx.als.common.candidate;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.typesafe.config.Config;
+
 import com.cloudera.oryx.als.common.lsh.LocationSensitiveHash;
 import com.cloudera.oryx.common.collection.LongObjectMap;
+import com.cloudera.oryx.common.settings.ConfigUtils;
 
 /**
  * A {@link CandidateFilter} based on location-sensitive hashing, which chooses a set of candidate items
@@ -31,7 +34,10 @@ public final class LocationSensitiveHashFilter implements CandidateFilter {
 
   private final LocationSensitiveHash delegate;
 
-  public LocationSensitiveHashFilter(LongObjectMap<float[]> Y, double lshSampleRatio, int numHashes) {
+  public LocationSensitiveHashFilter(LongObjectMap<float[]> Y) {
+    Config config = ConfigUtils.getDefaultConfig();
+    double lshSampleRatio = config.getDouble("model.lsh.sample-ratio");
+    int numHashes = config.getInt("model.lsh.num-hashes");
     delegate = new LocationSensitiveHash(Y, lshSampleRatio, numHashes);
   }
 

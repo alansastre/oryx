@@ -38,14 +38,10 @@ import com.cloudera.oryx.common.settings.ConfigUtils;
  */
 public final class CandidateFilterFactory {
 
-  private final double lshSampleRatio;
-  private final int numHashes;
   private final String candidateFilterClassName;
 
   public CandidateFilterFactory() {
     Config config = ConfigUtils.getDefaultConfig();
-    lshSampleRatio = config.getDouble("model.lsh.sample-ratio");
-    numHashes = config.getInt("model.lsh.num-hashes");
     candidateFilterClassName =
         config.hasPath("serving-layer.candidate-filter-class") ?
         config.getString("serving-layer.candidate-filter-class") : null;
@@ -67,10 +63,6 @@ public final class CandidateFilterFactory {
                                            CandidateFilter.class,
                                            new Class<?>[]{LongObjectMap.class},
                                            new Object[]{Y});
-        }
-        // LSH is a bit of a special case, handled here
-        if (lshSampleRatio < 1.0) {
-          return new LocationSensitiveHashFilter(Y, lshSampleRatio, numHashes);
         }
       } finally {
         yReadLock.unlock();
