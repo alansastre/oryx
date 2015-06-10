@@ -40,25 +40,23 @@ public final class ConvergenceSampleFn extends OryxReduceDoFn<Long, float[], Str
   public void initialize() {
     super.initialize();
     convergenceSamplingModulus = getConfiguration().getInt(RowStep.CONVERGENCE_SAMPLING_MODULUS_KEY, -1);
-    if (convergenceSamplingModulus >= 0) {
-      Preconditions.checkArgument(convergenceSamplingModulus >= 0,
-          "Not specified: %s",
-          RowStep.CONVERGENCE_SAMPLING_MODULUS_KEY);
-      log.info("Sampling for convergence where user/item ID == 0 % {}", convergenceSamplingModulus);
-    }
+    Preconditions.checkArgument(convergenceSamplingModulus >= 0,
+        "Not specified: %s",
+        RowStep.CONVERGENCE_SAMPLING_MODULUS_KEY);
+    log.info("Sampling for convergence where user/item ID == 0 % {}", convergenceSamplingModulus);
     yState.initialize(getContext(), getPartition(), getNumPartitions());
   }
 
   @Override
   public void process(Pair<Long, float[]> input, Emitter<String> emitter) {
-    if (input.first() % convergenceSamplingModulus == 0) {
-      String userID = input.first().toString();
+    String userIDString = input.first().toString();
+    if (userIDString.hashCode() % convergenceSamplingModulus == 0) {
       float[] xu = input.second();
       for (LongObjectMap.MapEntry<float[]> entry : yState.getY().entrySet()) {
         long itemID = entry.getKey();
-        if (itemID % convergenceSamplingModulus == 0) {
+        if (Long.toString(itemID).hashCode() % convergenceSamplingModulus == 0) {
           float estimate = (float) SimpleVectorMath.dot(xu, entry.getValue());
-          emitter.emit(DelimitedDataUtils.encode(',', userID, itemID, estimate));
+          emitter.emit(DelimitedDataUtils.encode(',', userIDString, itemID, estimate));
         }
       }
     }
