@@ -15,11 +15,14 @@
 
 package com.cloudera.oryx.als.computation.merge;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import com.cloudera.oryx.als.common.NumericIDValue;
 import com.cloudera.oryx.als.computation.types.ALSTypes;
 import com.google.common.base.Preconditions;
+import com.google.common.io.Files;
 import org.apache.crunch.GroupingOptions;
 import org.apache.crunch.PCollection;
 import org.apache.crunch.PTable;
@@ -30,6 +33,7 @@ import org.apache.crunch.types.PTableType;
 import org.apache.crunch.types.avro.Avros;
 
 import com.cloudera.oryx.als.computation.ALSJobStep;
+import com.cloudera.oryx.common.io.IOUtils;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.cloudera.oryx.computation.common.JobStepConfig;
 import com.cloudera.oryx.common.servcomp.Namespaces;
@@ -89,6 +93,14 @@ public final class MergeNewOldStep extends ALSJobStep {
         train = train.union(joinTestSetBefore);
       }
     }
+
+    // Save input size for later
+    long trainSize = train.length().getValue();
+    File trainSizeFile = File.createTempFile("trainSize", ".txt");
+    trainSizeFile.deleteOnExit();
+    Files.write(Long.toString(trainSize), trainSizeFile, StandardCharsets.UTF_8);
+    Store.get().upload(Namespaces.getTempPrefix(instanceDir, generationID) + "trainSize.txt", trainSizeFile, false);
+    IOUtils.delete(trainSizeFile);
 
     GroupingOptions groupingOptions = GroupingOptions.builder()
         .partitionerClass(JoinUtils.getPartitionerClass(train.getTypeFamily()))
