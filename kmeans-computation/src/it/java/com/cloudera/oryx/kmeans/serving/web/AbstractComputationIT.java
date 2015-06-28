@@ -57,9 +57,11 @@ public abstract class AbstractComputationIT extends OryxTest {
     log.info("Copying files to {}", TEST_TEMP_INBOUND_DIR);
 
     File[] srcDataFiles = testDataDir.listFiles(IOUtils.NOT_HIDDEN);
-    for (File srcDataFile : srcDataFiles) {
-      File destFile = new File(TEST_TEMP_INBOUND_DIR, srcDataFile.getName());
-      Files.copy(srcDataFile, destFile);
+    if (srcDataFiles != null) {
+      for (File srcDataFile : srcDataFiles) {
+        File destFile = new File(TEST_TEMP_INBOUND_DIR, srcDataFile.getName());
+        Files.copy(srcDataFile, destFile);
+      }
     }
 
     ConfigUtils.overlayConfigOnDefault(getResourceAsFile(getClass().getSimpleName() + ".conf"));

@@ -69,12 +69,15 @@ public final class LoadRunner implements Callable<Object> {
     log.info("Reading IDs...");    
     Set<String> userIDsSet = new HashSet<>();
     Set<String> itemIDsSet = new HashSet<>();
-    for (File f : dataDirectory.listFiles(IOUtils.NOT_HIDDEN)) {
-      if (!f.getName().contains("oryx-append")) {
-        for (CharSequence line : new FileLineIterable(f)) {
-          String[] columns = DelimitedDataUtils.decode(line);
-          userIDsSet.add(columns[0]);
-          itemIDsSet.add(columns[1]);
+    File[] files = dataDirectory.listFiles(IOUtils.NOT_HIDDEN);
+    if (files != null) {
+      for (File f : files) {
+        if (!f.getName().contains("oryx-append")) {
+          for (CharSequence line : new FileLineIterable(f)) {
+            String[] columns = DelimitedDataUtils.decode(line);
+            userIDsSet.add(columns[0]);
+            itemIDsSet.add(columns[1]);
+          }
         }
       }
     }
