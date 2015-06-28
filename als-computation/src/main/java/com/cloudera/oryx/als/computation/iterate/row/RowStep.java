@@ -15,6 +15,7 @@
 
 package com.cloudera.oryx.als.computation.iterate.row;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +39,6 @@ import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.cloudera.oryx.computation.common.JobStepConfig;
 import com.cloudera.oryx.als.computation.iterate.IterationState;
 import com.cloudera.oryx.als.computation.iterate.IterationStep;
-import com.cloudera.oryx.common.random.RandomUtils;
 import com.cloudera.oryx.common.servcomp.Namespaces;
 import com.cloudera.oryx.common.servcomp.Store;
 
@@ -90,7 +90,8 @@ public final class RowStep extends IterationStep {
     }
 
     String xKey = iterationKey + (x ? "X/" : "Y/");
-    String rKey = Namespaces.getTempPrefix(instanceDir, generationID) + (x ? "userVectors/" : "itemVectors/");
+    String tempKey = Namespaces.getTempPrefix(instanceDir, generationID);
+    String rKey = tempKey + (x ? "userVectors/" : "itemVectors/");
 
     if (!validOutputPath(xKey)) {
       return null;
@@ -100,7 +101,6 @@ public final class RowStep extends IterationStep {
     Configuration conf = p.getConfiguration();
     conf.set(Y_KEY_KEY, yKey);
 
-    String tempKey = Namespaces.getTempPrefix(instanceDir, generationID);
     String popularKey = tempKey + (x ? "popularItemsByUserPartition/" : "popularUsersByItemPartition/");
     conf.set(POPULAR_KEY, popularKey);
 
@@ -116,8 +116,14 @@ public final class RowStep extends IterationStep {
         .write(output(xKey));
 
     if (!x) {
+
+      long trainSize;
+      try (BufferedReader in = store.readFrom(tempKey + "trainSize.txt")) {
+        trainSize = Long.parseLong(in.readLine());
+      }
+      // Target about 1000 samples per reducer
+      int modulus = (int) Math.max(trainSize / (1000L * opts.getNumReducers()), 1);
       // Configure and perform convergence sampling
-      int modulus = chooseConvergenceSamplingModulus(opts);
       conf.setInt(CONVERGENCE_SAMPLING_MODULUS_KEY, modulus);
 
       matrix
@@ -146,14 +152,6 @@ public final class RowStep extends IterationStep {
     }
 
     return p;
-  }
-  
-  private static int chooseConvergenceSamplingModulus(GroupingOptions opts) {
-    // Kind of arbitrary formula, determined empirically.
-    int modulus = RandomUtils.nextTwinPrime(4 * opts.getNumReducers() * opts.getNumReducers());
-    log.info("Using convergence sampling modulus {} to sample about {}% of all user-item pairs for convergence",
-             modulus, 100.0f / modulus / modulus);
-    return modulus;
   }
 
   @Override
