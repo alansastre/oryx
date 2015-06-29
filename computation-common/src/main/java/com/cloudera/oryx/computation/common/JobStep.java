@@ -308,9 +308,6 @@ public abstract class JobStep extends Configured implements Tool, HasState {
     // -Xmx appended to opts above, which is at worst redundant
     conf.setInt("mapreduce.reduce.java.opts.max.heap", reduceHeapMB);
 
-    conf.setInt("yarn.scheduler.capacity.minimum-allocation-mb", 128);
-    conf.setInt("yarn.app.mapreduce.am.resource.mb", 384);
-
     // Pass total config state
     conf.set(CONFIG_SERIALIZATION_KEY, ConfigUtils.getDefaultConfig().root().render());
 
