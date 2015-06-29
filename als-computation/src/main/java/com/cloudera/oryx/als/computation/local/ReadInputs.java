@@ -152,12 +152,16 @@ final class ReadInputs implements Callable<Object> {
   }
 
   private void removeSmall(LongObjectMap<LongFloatMap> matrix) {
-    for (LongObjectMap.MapEntry<LongFloatMap> entry : matrix.entrySet()) {
-      for (Iterator<LongFloatMap.MapEntry> it = entry.getValue().entrySet().iterator(); it.hasNext();) {
-        LongFloatMap.MapEntry entry2 = it.next();
+    for (Iterator<LongObjectMap.MapEntry<LongFloatMap>> it = matrix.entrySet().iterator(); it.hasNext();) {
+      LongFloatMap rowCol = it.next().getValue();
+      for (Iterator<LongFloatMap.MapEntry> it2 = rowCol.entrySet().iterator(); it2.hasNext();) {
+        LongFloatMap.MapEntry entry2 = it2.next();
         if (Math.abs(entry2.getValue()) < zeroThreshold) {
-          it.remove();
+          it2.remove();
         }
+      }
+      if (rowCol.isEmpty()) {
+        it.remove();
       }
     }
   }
