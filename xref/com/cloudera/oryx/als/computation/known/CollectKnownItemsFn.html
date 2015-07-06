@@ -28,9 +28,9 @@
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.DelimitedDataUtils;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.fn.OryxMapFn;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.Pair;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.Pair;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/cloudera/oryx/als/computation/known/CollectKnownItemsFn.html">CollectKnownItemsFn</a> <strong class="jxr_keyword">extends</strong> OryxMapFn&lt;Pair&lt;Long, LongFloatMap&gt;, String&gt; {
@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String setToString(<a href="../../../../../../com/cloudera/oryx/common/collection/LongFloatMap.html">LongFloatMap</a> map) {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      <a href="../../../../../../com/cloudera/oryx/common/iterator/LongPrimitiveIterator.html">LongPrimitiveIterator</a> it = map.keySetIterator();
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      Collection&lt;String&gt; keyStrings = Lists.newArrayListWithCapacity(map.size());
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      Collection&lt;String&gt; keyStrings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(map.size());
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">while</strong> (it.hasNext()) {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>        keyStrings.add(Long.toString(it.nextLong()));
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      }

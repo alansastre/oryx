@@ -29,15 +29,15 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.Distance;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.WeightedRealVector;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.evaluate.ClosestSketchVectorData;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Sets;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVector;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.random.RandomGenerator;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.BitSet;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> java.util.SortedSet;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVector;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.random.RandomGenerator;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.BitSet;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.util.SortedSet;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> java.util.TreeSet;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * An internal data structure that manages the locations of the current centers during</em>
@@ -58,12 +58,12 @@
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>    
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>    <strong class="jxr_keyword">public</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/KSketchIndex.html">KSketchIndex</a>(<strong class="jxr_keyword">int</strong> numFolds, <strong class="jxr_keyword">int</strong> dimensions, <strong class="jxr_keyword">int</strong> projectionBits, <strong class="jxr_keyword">int</strong> projectionSamples, <strong class="jxr_keyword">long</strong> seed) {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">this</strong>.pointsPerFold = <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">int</strong>[numFolds];
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">this</strong>.indices = Lists.newArrayList();
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">this</strong>.points = Lists.newArrayList();
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">this</strong>.lengthSquared = Lists.newArrayList();
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">this</strong>.indices = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">this</strong>.points = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">this</strong>.lengthSquared = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; numFolds; i++) {
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>        points.add(Lists.&lt;RealVector&gt;newArrayList());
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>        lengthSquared.add(Lists.&lt;Double&gt;newArrayList());
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>        points.add(<strong class="jxr_keyword">new</strong> ArrayList&lt;RealVector&gt;());
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>        lengthSquared.add(<strong class="jxr_keyword">new</strong> ArrayList&lt;Double&gt;());
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">this</strong>.dimensions = dimensions;
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">this</strong>.projectionBits = projectionBits;
@@ -102,7 +102,7 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      indices.clear();
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">for</strong> (List&lt;RealVector&gt; px : points) {
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>        List&lt;BitSet&gt; indx = Lists.newArrayList();
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>        List&lt;BitSet&gt; indx = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>        <strong class="jxr_keyword">for</strong> (RealVector aPx : px) {
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          indx.add(index(aPx));
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>       }
@@ -158,7 +158,7 @@
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> 
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>       BitSet q = index(vec);
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>       List&lt;BitSet&gt; index = indices.get(id);
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>       SortedSet&lt;Idx&gt; lookup = Sets.newTreeSet();
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>       SortedSet&lt;Idx&gt; lookup = <strong class="jxr_keyword">new</strong> TreeSet&lt;&gt;();
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; j &lt; index.size(); j++) {
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>         <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/KSketchIndex.html">Idx</a> idx = <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/KSketchIndex.html">Idx</a>(hammingDistance(q, index.get(j)), j);
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>         <strong class="jxr_keyword">if</strong> (lookup.size() &lt; projectionSamples) {
@@ -245,7 +245,7 @@
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>   }
 <a class="jxr_linenumber" name="L238" href="#L238">238</a> 
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>   <strong class="jxr_keyword">public</strong> List&lt;WeightedRealVector&gt; getWeightedVectorsForFold(<strong class="jxr_keyword">int</strong> foldId, <strong class="jxr_keyword">long</strong>[] weights) {
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>     List&lt;WeightedRealVector&gt; ret = Lists.newArrayList();
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>     List&lt;WeightedRealVector&gt; ret = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L241" href="#L241">241</a>     <strong class="jxr_keyword">int</strong> i = 0;
 <a class="jxr_linenumber" name="L242" href="#L242">242</a>     <strong class="jxr_keyword">for</strong> (RealVector vec : points.get(foldId)) {
 <a class="jxr_linenumber" name="L243" href="#L243">243</a>       ret.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/WeightedRealVector.html">WeightedRealVector</a>(vec, weights[i]));
@@ -255,10 +255,10 @@
 <a class="jxr_linenumber" name="L247" href="#L247">247</a>   }
 <a class="jxr_linenumber" name="L248" href="#L248">248</a> 
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>   <strong class="jxr_keyword">public</strong> List&lt;List&lt;WeightedRealVector&gt;&gt; getWeightedVectors(<a href="../../../../../../com/cloudera/oryx/kmeans/computation/evaluate/ClosestSketchVectorData.html">ClosestSketchVectorData</a> data) {
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>     List&lt;List&lt;WeightedRealVector&gt;&gt; ret = Lists.newArrayList();
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>     List&lt;List&lt;WeightedRealVector&gt;&gt; ret = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; data.getNumFolds(); i++) {
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>       List&lt;RealVector&gt; p = points.get(i);
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>       List&lt;WeightedRealVector&gt; weighted = Lists.newArrayList();
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>       List&lt;WeightedRealVector&gt; weighted = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; j &lt; p.size(); j++) { <em class="jxr_comment">// TODO: Assume static? Or fold specific? Or something?</em>
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>         weighted.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/WeightedRealVector.html">WeightedRealVector</a>(p.get(j), data.get(i, j)));
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>       }

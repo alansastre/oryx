@@ -46,24 +46,21 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> &lt;T <strong class="jxr_keyword">extends</strong> Serializable&gt; T readSerialized(String key, Configuration conf) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      String firstFileKey = Store.get().list(key, <strong class="jxr_keyword">true</strong>).get(0);
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      FsInput fsInput = <strong class="jxr_keyword">new</strong> FsInput(Namespaces.toPath(firstFileKey), conf);
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      DatumReader&lt;ByteBuffer&gt; dr = <strong class="jxr_keyword">new</strong> GenericDatumReader&lt;ByteBuffer&gt;(BYTES_SCHEMA);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      DataFileReader&lt;ByteBuffer&gt; dfr = <strong class="jxr_keyword">new</strong> DataFileReader&lt;ByteBuffer&gt;(fsInput, dr);
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      DatumReader&lt;ByteBuffer&gt; dr = <strong class="jxr_keyword">new</strong> GenericDatumReader&lt;&gt;(BYTES_SCHEMA);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      DataFileReader&lt;ByteBuffer&gt; dfr = <strong class="jxr_keyword">new</strong> DataFileReader&lt;&gt;(fsInput, dr);
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      ByteBuffer bytes = dfr.next();
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      ByteArrayInputStream bais = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(bytes.array(), bytes.position(), bytes.limit());
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      ObjectInputStream ois = <strong class="jxr_keyword">new</strong> ObjectInputStream(bais);
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>        @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>        T t = (T) ois.readObject();
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>        <strong class="jxr_keyword">return</strong> t;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      } <strong class="jxr_keyword">catch</strong> (ClassNotFoundException cnfe) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(cnfe);
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>        ois.close();
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      }
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>    }
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>    <strong class="jxr_keyword">private</strong> <a href="../../../../../com/cloudera/oryx/kmeans/computation/AvroUtils.html">AvroUtils</a>() {}
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  }
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">try</strong> (ObjectInputStream ois = <strong class="jxr_keyword">new</strong> ObjectInputStream(bais)) {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>        @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>        T t = (T) ois.readObject();
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>        <strong class="jxr_keyword">return</strong> t;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      } <strong class="jxr_keyword">catch</strong> (ClassNotFoundException cnfe) {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(cnfe);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>    }
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>    <strong class="jxr_keyword">private</strong> <a href="../../../../../com/cloudera/oryx/kmeans/computation/AvroUtils.html">AvroUtils</a>() {}
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

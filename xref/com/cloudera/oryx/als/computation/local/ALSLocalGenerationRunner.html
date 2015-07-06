@@ -88,8 +88,8 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>        <strong class="jxr_keyword">boolean</strong> noKnownItems = config.getBoolean(<span class="jxr_string">"model.no-known-items"</span>);
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>        LongObjectMap&lt;LongSet&gt; knownItemIDs = noKnownItems ? <strong class="jxr_keyword">null</strong> : <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongSet&gt;();
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>        LongObjectMap&lt;LongFloatMap&gt; RbyRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>        LongObjectMap&lt;LongFloatMap&gt; RbyColumn = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>        LongObjectMap&lt;LongFloatMap&gt; RbyRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>        LongObjectMap&lt;LongFloatMap&gt; RbyColumn = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>        <a href="../../../../../../com/cloudera/oryx/als/common/StringLongMapping.html">StringLongMapping</a> idMapping = <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/als/common/StringLongMapping.html">StringLongMapping</a>();
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>        <strong class="jxr_keyword">if</strong> (lastGenerationID &gt;= 0) {

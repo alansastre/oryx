@@ -69,12 +69,12 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/UpdateIndexFn.html">UpdateIndexFn</a> updateIndexFn;
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">if</strong> (iteration == 1) { <em class="jxr_comment">// Iteration 1 is the first real iteration; iteration 0 contains initial state</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>        <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/KSketchIndex.html">KSketchIndex</a> index = createInitialIndex(settings, in);
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>        distanceToClosestFn = <strong class="jxr_keyword">new</strong> DistanceToClosestFn&lt;RealVector&gt;(index);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>        distanceToClosestFn = <strong class="jxr_keyword">new</strong> DistanceToClosestFn&lt;&gt;(index);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>        updateIndexFn = <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/UpdateIndexFn.html">UpdateIndexFn</a>(index);
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>        <em class="jxr_comment">// Get the index location from the previous iteration</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>        String previousIndexKey = prefix + String.format(<span class="jxr_string">"sketch/%d/"</span>, iteration - 1);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>        distanceToClosestFn = <strong class="jxr_keyword">new</strong> DistanceToClosestFn&lt;RealVector&gt;(previousIndexKey);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>        distanceToClosestFn = <strong class="jxr_keyword">new</strong> DistanceToClosestFn&lt;&gt;(previousIndexKey);
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>        updateIndexFn = <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/cluster/UpdateIndexFn.html">UpdateIndexFn</a>(previousIndexKey);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  

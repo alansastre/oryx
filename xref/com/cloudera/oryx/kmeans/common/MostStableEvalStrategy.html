@@ -23,13 +23,13 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">package</strong> com.cloudera.oryx.kmeans.common;
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.ImmutableList;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Maps;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
@@ -52,8 +52,8 @@
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>    @Override
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>    <strong class="jxr_keyword">public</strong> List&lt;ClusterValidityStatistics&gt; evaluate(List&lt;ClusterValidityStatistics&gt; stats) {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      Map&lt;Integer, ClusterValidityStatistics&gt; bestPerK = Maps.newHashMap();
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      Map&lt;Integer, List&lt;Double&gt;&gt; metrics = Maps.newHashMap();
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      Map&lt;Integer, ClusterValidityStatistics&gt; bestPerK = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      Map&lt;Integer, List&lt;Double&gt;&gt; metrics = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">for</strong> (ClusterValidityStatistics stat : stats) {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>        <strong class="jxr_keyword">if</strong> (stat.getK() &gt; 1) {
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          <a href="../../../../../com/cloudera/oryx/kmeans/common/ClusterValidityStatistics.html">ClusterValidityStatistics</a> best = bestPerK.get(stat.getK());
@@ -62,7 +62,7 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          }
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          List&lt;Double&gt; m = metrics.get(stat.getK());
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          <strong class="jxr_keyword">if</strong> (m == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>            m = Lists.newArrayList();
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>            m = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>            metrics.put(stat.getK(), m);
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          }
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          m.add(useVariationOfInformation ? stat.getVariationOfInformation() : stat.getVanDongen());
@@ -73,7 +73,7 @@
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <a href="../../../../../com/cloudera/oryx/kmeans/common/ClusterValidityStatistics.html">ClusterValidityStatistics</a> cvs = bestPerK.get(bestK);
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">if</strong> (cvs == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>        log.warn(<span class="jxr_string">"No ClusterValidityStatistics found for best k, returning"</span>);
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>        <strong class="jxr_keyword">return</strong> ImmutableList.of();
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>        <strong class="jxr_keyword">return</strong> Collections.emptyList();
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>        <strong class="jxr_keyword">return</strong> ImmutableList.of(cvs);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }

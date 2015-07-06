@@ -24,20 +24,20 @@
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> com.cloudera.oryx.kmeans.computation;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> java.text.NumberFormat;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.AbstractRealVectorPreservingVisitor;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.NamedRealVector;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.OpenMapRealVector;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.Vectors;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.DelimitedDataUtils;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.WeightedRealVector;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.avro.MLVector;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.avro.MLWeightedVector;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.ImmutableList;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.AbstractRealVectorPreservingVisitor;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.NamedRealVector;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.OpenMapRealVector;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.Vectors;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.DelimitedDataUtils;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.WeightedRealVector;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.avro.MLVector;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.avro.MLWeightedVector;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.ArrayRealVector;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVector;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVectorFormat;
@@ -78,17 +78,17 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>    }
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>    
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> MLVector fromVector(RealVector input) {
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">final</strong> List&lt;Double&gt; values = Lists.newArrayList();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">final</strong> List&lt;Double&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      MLVector.Builder vb = MLVector.newBuilder()
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          .setSize(input.getDimension())
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          .setValues(values);
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">if</strong> (input instanceof ArrayRealVector) {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>        vb.setIndices(ImmutableList.&lt;Integer&gt;of());
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>        vb.setIndices(Collections.&lt;Integer&gt;emptyList());
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>        <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; input.getDimension(); i++) {
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          values.add(input.getEntry(i));
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>        }
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>        <strong class="jxr_keyword">final</strong> List&lt;Integer&gt; indices = Lists.newArrayList();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>        <strong class="jxr_keyword">final</strong> List&lt;Integer&gt; indices = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>        vb.setIndices(indices);
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>        input.walkInDefaultOrder(<strong class="jxr_keyword">new</strong> <a href="../../../../../com/cloudera/oryx/common/math/AbstractRealVectorPreservingVisitor.html">AbstractRealVectorPreservingVisitor</a>() {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          @Override

@@ -28,9 +28,9 @@
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.ClusterValidityStatistics;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.KMeans;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.WeightedRealVector;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/evaluate/KMeansEvaluationData.html">KMeansEvaluationData</a> <strong class="jxr_keyword">implements</strong> Serializable {
@@ -55,7 +55,7 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> compute() {
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <a href="../../../../../../com/cloudera/oryx/kmeans/common/KMeans.html">KMeans</a> kmeans = <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/KMeans.html">KMeans</a>(settings.getInitStrategy(), settings.getUpdateStrategy());
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      List&lt;Centers&gt; centers = Lists.newArrayList();
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      List&lt;Centers&gt; centers = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">for</strong> (List&lt;WeightedRealVector&gt; sketchPoint : sketchPoints) {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>        centers.add(kmeans.compute(sketchPoint, k, RandomManager.getSeededRandom(replica + 31L * k)));
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      }

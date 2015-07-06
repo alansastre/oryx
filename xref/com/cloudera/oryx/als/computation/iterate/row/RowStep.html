@@ -23,30 +23,30 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> com.cloudera.oryx.als.computation.iterate.row;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.types.ALSTypes;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.types.MatrixRow;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.google.common.base.Charsets;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.google.common.io.Files;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.stat.descriptive.moment.Mean;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.GroupingOptions;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.PCollection;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.impl.mr.MRPipeline;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.lib.PTables;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.avro.Avros;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.hadoop.conf.Configuration;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.IOUtils;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.settings.ConfigUtils;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.JobStepConfig;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.iterate.IterationState;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.iterate.IterationStep;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.random.RandomUtils;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> java.io.BufferedReader;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.types.ALSTypes;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.types.MatrixRow;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.google.common.io.Files;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.stat.descriptive.moment.Mean;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.GroupingOptions;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.PCollection;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.impl.mr.MRPipeline;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.lib.PTables;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.avro.Avros;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.hadoop.conf.Configuration;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.IOUtils;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.settings.ConfigUtils;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.JobStepConfig;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.iterate.IterationState;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.als.computation.iterate.IterationStep;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.servcomp.Namespaces;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.servcomp.Store;
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
@@ -98,17 +98,17 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      String xKey = iterationKey + (x ? <span class="jxr_string">"X/"</span> : <span class="jxr_string">"Y/"</span>);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      String rKey = Namespaces.getTempPrefix(instanceDir, generationID) + (x ? <span class="jxr_string">"userVectors/"</span> : <span class="jxr_string">"itemVectors/"</span>);
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">if</strong> (!validOutputPath(xKey)) {
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      }
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>  
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      MRPipeline p = createBasicPipeline(RowReduceFn.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>     Configuration conf = p.getConfiguration();
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>     conf.set(Y_KEY_KEY, yKey);
-<a class="jxr_linenumber" name="L102" href="#L102">102</a> 
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>     String tempKey = Namespaces.getTempPrefix(instanceDir, generationID);
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      String tempKey = Namespaces.getTempPrefix(instanceDir, generationID);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      String rKey = tempKey + (x ? <span class="jxr_string">"userVectors/"</span> : <span class="jxr_string">"itemVectors/"</span>);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">if</strong> (!validOutputPath(xKey)) {
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     MRPipeline p = createBasicPipeline(RowReduceFn.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>     Configuration conf = p.getConfiguration();
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     conf.set(Y_KEY_KEY, yKey);
+<a class="jxr_linenumber" name="L103" href="#L103">103</a> 
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>     String popularKey = tempKey + (x ? <span class="jxr_string">"popularItemsByUserPartition/"</span> : <span class="jxr_string">"popularUsersByItemPartition/"</span>);
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>     conf.set(POPULAR_KEY, popularKey);
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> 
@@ -124,56 +124,54 @@
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         .write(output(xKey));
 <a class="jxr_linenumber" name="L117" href="#L117">117</a> 
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>     <strong class="jxr_keyword">if</strong> (!x) {
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>       <em class="jxr_comment">// Configure and perform convergence sampling</em>
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>       <strong class="jxr_keyword">int</strong> modulus = chooseConvergenceSamplingModulus(opts);
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>       conf.setInt(CONVERGENCE_SAMPLING_MODULUS_KEY, modulus);
-<a class="jxr_linenumber" name="L122" href="#L122">122</a> 
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>       matrix
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>           .parallelDo(<span class="jxr_string">"asPair"</span>, MatrixRow.AS_PAIR, Avros.tableOf(Avros.longs(), ALSTypes.FLOAT_ARRAY))
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>           .parallelDo(<span class="jxr_string">"convergenceSample"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/ConvergenceSampleFn.html">ConvergenceSampleFn</a>(yState), Avros.strings())
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>           .write(compressedTextOutput(p.getConfiguration(), iterationKey + <span class="jxr_string">"Yconvergence"</span>));
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>     }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>       <strong class="jxr_keyword">long</strong> trainSize;
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>       <strong class="jxr_keyword">try</strong> (BufferedReader in = store.readFrom(tempKey + <span class="jxr_string">"trainSize.txt"</span>)) {
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         trainSize = Long.parseLong(in.readLine());
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>       }
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>       <em class="jxr_comment">// Target about 1000 samples per reducer</em>
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>       <strong class="jxr_keyword">int</strong> modulus = (<strong class="jxr_keyword">int</strong>) Math.max(trainSize / (1000L * opts.getNumReducers()), 1);
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>       <em class="jxr_comment">// Configure and perform convergence sampling</em>
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>       conf.setInt(CONVERGENCE_SAMPLING_MODULUS_KEY, modulus);
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> 
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>     <strong class="jxr_keyword">if</strong> (x &amp;&amp;
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         ConfigUtils.getDefaultConfig().getDouble(<span class="jxr_string">"model.test-set-fraction"</span>) &gt; 0.0 &amp;&amp;
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>         store.exists(testPrefix, false)) {
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>       PCollection&lt;Double&gt; aps = matrix
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>           .parallelDo(<span class="jxr_string">"asPair"</span>, MatrixRow.AS_PAIR, Avros.tableOf(Avros.longs(), ALSTypes.FLOAT_ARRAY))
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>           .parallelDo(<span class="jxr_string">"computeAP"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/ComputeUserAPFn.html">ComputeUserAPFn</a>(yState), Avros.doubles());
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>       Mean meanAveragePrecision = <strong class="jxr_keyword">new</strong> Mean();
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">double</strong> ap : aps.materialize()) {
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>         meanAveragePrecision.increment(ap);
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>       }
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>       log.info(<span class="jxr_string">"Mean average precision: {}"</span>, meanAveragePrecision.getResult());
-<a class="jxr_linenumber" name="L140" href="#L140">140</a> 
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>       File tempMAPFile = File.createTempFile(<span class="jxr_string">"MAP"</span>, <span class="jxr_string">".txt"</span>);
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>       tempMAPFile.deleteOnExit();
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>       Files.write(Double.toString(meanAveragePrecision.getResult()), tempMAPFile, Charsets.UTF_8);
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>       store.upload(iterationKey + <span class="jxr_string">"MAP"</span>, tempMAPFile, false);
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>       IOUtils.delete(tempMAPFile);
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>     }
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> 
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>     <strong class="jxr_keyword">return</strong> p;
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>   }
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>   
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>   <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> chooseConvergenceSamplingModulus(GroupingOptions opts) {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>     <em class="jxr_comment">// Kind of arbitrary formula, determined empirically.</em>
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>     <strong class="jxr_keyword">int</strong> modulus = RandomUtils.nextTwinPrime(4 * opts.getNumReducers() * opts.getNumReducers());
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>     log.info(<span class="jxr_string">"Using convergence sampling modulus {} to sample about {}% of all user-item pairs for convergence"</span>,
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>              modulus, 100.0f / modulus / modulus);
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">return</strong> modulus;
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>   }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a> 
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>   @Override
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>   <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> isHighMemoryStep() {
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>   }
-<a class="jxr_linenumber" name="L163" href="#L163">163</a> 
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>     run(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/RowStep.html">RowStep</a>(), args);
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>   }
-<a class="jxr_linenumber" name="L167" href="#L167">167</a> 
-<a class="jxr_linenumber" name="L168" href="#L168">168</a> }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>       matrix
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>           .parallelDo(<span class="jxr_string">"asPair"</span>, MatrixRow.AS_PAIR, Avros.tableOf(Avros.longs(), ALSTypes.FLOAT_ARRAY))
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>           .parallelDo(<span class="jxr_string">"convergenceSample"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/ConvergenceSampleFn.html">ConvergenceSampleFn</a>(yState), Avros.strings())
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>           .write(compressedTextOutput(p.getConfiguration(), iterationKey + <span class="jxr_string">"Yconvergence"</span>));
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>     }
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> 
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">if</strong> (x &amp;&amp;
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         ConfigUtils.getDefaultConfig().getDouble(<span class="jxr_string">"model.test-set-fraction"</span>) &gt; 0.0 &amp;&amp;
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         store.exists(testPrefix, false)) {
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>       PCollection&lt;Double&gt; aps = matrix
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>           .parallelDo(<span class="jxr_string">"asPair"</span>, MatrixRow.AS_PAIR, Avros.tableOf(Avros.longs(), ALSTypes.FLOAT_ARRAY))
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>           .parallelDo(<span class="jxr_string">"computeAP"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/ComputeUserAPFn.html">ComputeUserAPFn</a>(yState), Avros.doubles());
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>       Mean meanAveragePrecision = <strong class="jxr_keyword">new</strong> Mean();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">double</strong> ap : aps.materialize()) {
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         meanAveragePrecision.increment(ap);
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>       }
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>       log.info(<span class="jxr_string">"Mean average precision: {}"</span>, meanAveragePrecision.getResult());
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> 
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>       File tempMAPFile = File.createTempFile(<span class="jxr_string">"MAP"</span>, <span class="jxr_string">".txt"</span>);
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>       tempMAPFile.deleteOnExit();
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>       Files.write(Double.toString(meanAveragePrecision.getResult()), tempMAPFile, StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>       store.upload(iterationKey + <span class="jxr_string">"MAP"</span>, tempMAPFile, false);
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>       IOUtils.delete(tempMAPFile);
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>     }
+<a class="jxr_linenumber" name="L153" href="#L153">153</a> 
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>     <strong class="jxr_keyword">return</strong> p;
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>   }
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> 
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>   @Override
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>   <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> isHighMemoryStep() {
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>   }
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> 
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     run(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../com/cloudera/oryx/als/computation/iterate/row/RowStep.html">RowStep</a>(), args);
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>   }
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> 
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

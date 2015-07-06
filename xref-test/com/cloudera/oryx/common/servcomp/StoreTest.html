@@ -26,11 +26,11 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.OryxTest;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.IOUtils;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.google.common.base.Charsets;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.google.common.io.Files;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.google.common.io.Files;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * Tests {@link Store}.</em>
@@ -43,7 +43,7 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSize() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      File file = File.createTempFile(<span class="jxr_string">"testSize"</span>, <span class="jxr_string">".txt"</span>);
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      file.deleteOnExit();
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      Files.write(<span class="jxr_string">"Hello."</span>, file, Charsets.UTF_8);
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      Files.write(<span class="jxr_string">"Hello."</span>, file, StandardCharsets.UTF_8);
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      assertEquals(6, Store.get().getSize(file.toString()));
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>    }
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
@@ -55,8 +55,8 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      assertTrue(subDir.mkdir());
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      File file1 = <strong class="jxr_keyword">new</strong> File(dir, <span class="jxr_string">"testDU1.txt"</span>);
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      File file2 = <strong class="jxr_keyword">new</strong> File(subDir, <span class="jxr_string">"testDU2.txt"</span>);
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      Files.write(<span class="jxr_string">"Hello."</span>, file1, Charsets.UTF_8);
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      Files.write(<span class="jxr_string">"Shalom."</span>, file2, Charsets.UTF_8);
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      Files.write(<span class="jxr_string">"Hello."</span>, file1, StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      Files.write(<span class="jxr_string">"Shalom."</span>, file2, StandardCharsets.UTF_8);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>      Store store = Store.get();
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      assertEquals(6, store.getSizeRecursive(file1.toString()));
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      assertEquals(7, store.getSizeRecursive(file2.toString()));

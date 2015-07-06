@@ -68,28 +68,27 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      PTable&lt;Long, <strong class="jxr_keyword">float</strong>[]&gt; userFeatures = p.read(input(iterationKey + <span class="jxr_string">"X/"</span>, ALSTypes.DENSE_ROW_MATRIX))
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          .parallelDo(<span class="jxr_string">"asPair"</span>, MatrixRow.AS_PAIR, Avros.tableOf(Avros.longs(), ALSTypes.FLOAT_ARRAY));
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      JoinStrategy&lt;Long, <strong class="jxr_keyword">float</strong>[], LongSet&gt; joinStrategy = <strong class="jxr_keyword">new</strong> DefaultJoinStrategy&lt;Long, <strong class="jxr_keyword">float</strong>[], LongSet&gt;(
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          getNumReducers());
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      PTable&lt;Long, Pair&lt;<strong class="jxr_keyword">float</strong>[], LongSet&gt;&gt; joined = joinStrategy.join(userFeatures, knownItems, JoinType.INNER_JOIN);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      joined.parallelDo(
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <span class="jxr_string">"distribute"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/als/computation/recommend/DistributeRecommendWorkFn.html">DistributeRecommendWorkFn</a>(), ALSTypes.REC_TYPE)
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          .write(output(outputPathKey));
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">return</strong> p;
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>    }
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>    @Override
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>    <strong class="jxr_keyword">protected</strong> String getCustomJobName() {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">return</strong> defaultCustomJobName();
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>    }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      JoinStrategy&lt;Long, <strong class="jxr_keyword">float</strong>[], LongSet&gt; joinStrategy = <strong class="jxr_keyword">new</strong> DefaultJoinStrategy&lt;&gt;(getNumReducers());
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      PTable&lt;Long, Pair&lt;<strong class="jxr_keyword">float</strong>[], LongSet&gt;&gt; joined = joinStrategy.join(userFeatures, knownItems, JoinType.INNER_JOIN);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      joined.parallelDo(
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <span class="jxr_string">"distribute"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/als/computation/recommend/DistributeRecommendWorkFn.html">DistributeRecommendWorkFn</a>(), ALSTypes.REC_TYPE)
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          .write(output(outputPathKey));
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">return</strong> p;
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>    }
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>    @Override
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>    <strong class="jxr_keyword">protected</strong> String getCustomJobName() {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">return</strong> defaultCustomJobName();
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>    }
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      run(<strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/als/computation/recommend/DistributeRecommendWorkStep.html">DistributeRecommendWorkStep</a>(), args);
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>    }
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      run(<strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/als/computation/recommend/DistributeRecommendWorkStep.html">DistributeRecommendWorkStep</a>(), args);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>    }
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

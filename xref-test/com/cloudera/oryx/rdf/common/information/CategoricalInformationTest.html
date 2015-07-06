@@ -23,10 +23,10 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> com.cloudera.oryx.rdf.common.information;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.util.Pair;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.util.Pair;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.OryxTest;
@@ -112,7 +112,7 @@
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>   }
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> 
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>   <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> ExampleSet examplesForCategoryCounts(<strong class="jxr_keyword">int</strong>[][] categoryCountsByCatFeatureValue) {
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     List&lt;Example&gt; examples = Lists.newArrayList();
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     List&lt;Example&gt; examples = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> featureValue = 0; featureValue &lt; categoryCountsByCatFeatureValue.length; featureValue++) {
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>       <strong class="jxr_keyword">int</strong>[] categoryCounts = categoryCountsByCatFeatureValue[featureValue];
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> category = 0; category &lt; categoryCounts.length; category++) {
@@ -147,7 +147,7 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>   }
 <a class="jxr_linenumber" name="L140" href="#L140">140</a> 
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>   <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> ExampleSet examplesForNumericValues(<strong class="jxr_keyword">float</strong>[][] valuesForCategoryValue) {
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>     List&lt;Example&gt; examples = Lists.newArrayList();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>     List&lt;Example&gt; examples = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> category = 0; category &lt; valuesForCategoryValue.length; category++) {
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>       <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">float</strong> value : valuesForCategoryValue[category]) {
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         examples.add(<strong class="jxr_keyword">new</strong> Example(CategoricalFeature.forValue(category), NumericFeature.forValue(value)));

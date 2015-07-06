@@ -38,24 +38,24 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.WeightedRealVector;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.computation.types.KMeansTypes;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.ImmutableList;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> com.typesafe.config.Config;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.PCollection;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.Pair;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.impl.mr.MRPipeline;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.PType;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.avro.Avros;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.DataDictionary;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Model;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.PMML;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> javax.xml.bind.JAXBException;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> com.typesafe.config.Config;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.PCollection;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.Pair;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.impl.mr.MRPipeline;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.PType;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.crunch.types.avro.Avros;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.DataDictionary;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Model;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.PMML;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> javax.xml.bind.JAXBException;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/evaluate/ClusteringStep.html">ClusteringStep</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/computation/KMeansJobStep.html">KMeansJobStep</a> {
@@ -126,7 +126,7 @@
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>   <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;ClusterValidityStatistics&gt; findBest(String replicaStatsKey) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>     <a href="../../../../../../com/cloudera/oryx/kmeans/common/KMeansEvalStrategy.html">KMeansEvalStrategy</a> evalStrategy = EvaluationSettings.create(ConfigUtils.getDefaultConfig()).getEvalStrategy();
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>     <a href="../../../../../../com/cloudera/oryx/common/servcomp/Store.html">Store</a> store = Store.get();
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>     List&lt;ClusterValidityStatistics&gt; stats = Lists.newArrayList();
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     List&lt;ClusterValidityStatistics&gt; stats = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">for</strong> (String statsKey : store.list(replicaStatsKey, <strong class="jxr_keyword">true</strong>)) {
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>       <strong class="jxr_keyword">for</strong> (String line : <strong class="jxr_keyword">new</strong> FileLineIterable(store.readFrom(statsKey))) {
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>         <a href="../../../../../../com/cloudera/oryx/kmeans/common/ClusterValidityStatistics.html">ClusterValidityStatistics</a> cvs = ClusterValidityStatistics.parse(line);
@@ -141,7 +141,7 @@
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>                                     String replicaCentersKey,
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>                                     List&lt;ClusterValidityStatistics&gt; bestStats) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>     <a href="../../../../../../com/cloudera/oryx/common/servcomp/Store.html">Store</a> store = Store.get();
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>     List&lt;Model&gt; models = Lists.newArrayList();
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>     List&lt;Model&gt; models = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L137" href="#L137">137</a>     String bestName = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">if</strong> (bestStats.size() == 1) {
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>       <a href="../../../../../../com/cloudera/oryx/kmeans/common/ClusterValidityStatistics.html">ClusterValidityStatistics</a> cvs = bestStats.get(0);
@@ -153,41 +153,36 @@
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>     <strong class="jxr_keyword">for</strong> (String modelKey : store.list(replicaCentersKey, <strong class="jxr_keyword">true</strong>)) {
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>       <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>         PMML pmml;
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>         InputStream in = store.streamFrom(modelKey);
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>           pmml = KMeansPMML.read(in);
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>           in.close();
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         }
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         log.info(<span class="jxr_string">"Read {} from key = {}"</span>, pmml.getModels().size(), modelKey);
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <strong class="jxr_keyword">if</strong> (dictionary == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>           dictionary = pmml.getDataDictionary();
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>         }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>         <strong class="jxr_keyword">if</strong> (bestName == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>           models.addAll(pmml.getModels());
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>           <strong class="jxr_keyword">for</strong> (Model m : pmml.getModels()) {
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>             <strong class="jxr_keyword">if</strong> (bestName.equals(m.getModelName())) {
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>               models = ImmutableList.of(m);
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>               <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>             }
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>           }
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         }
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>       } <strong class="jxr_keyword">catch</strong> (JAXBException e) {
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         log.error(<span class="jxr_string">"Serialization error"</span>, e);
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>       } <strong class="jxr_keyword">catch</strong> (SAXException e) {
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>         log.error(<span class="jxr_string">"Serialization error"</span>, e);
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>       }
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>     }
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> 
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>     File keptModels = File.createTempFile(<span class="jxr_string">"model"</span>, <span class="jxr_string">".pmml.gz"</span>);
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>     keptModels.deleteOnExit();
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>     log.info(<span class="jxr_string">"Writing {} models to model.pmml.gz..."</span>, models.size());
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>     KMeansPMML.write(keptModels, dictionary, models);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>     store.upload(prefix + <span class="jxr_string">"model.pmml.gz"</span>, keptModels, <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>     IOUtils.delete(keptModels);
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>   }
-<a class="jxr_linenumber" name="L182" href="#L182">182</a> }
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         <strong class="jxr_keyword">try</strong> (InputStream in = store.streamFrom(modelKey)) {
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>           pmml = KMeansPMML.read(in);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         }
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         log.info(<span class="jxr_string">"Read {} from key = {}"</span>, pmml.getModels().size(), modelKey);
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">if</strong> (dictionary == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>           dictionary = pmml.getDataDictionary();
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         }
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         <strong class="jxr_keyword">if</strong> (bestName == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>           models.addAll(pmml.getModels());
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>           <strong class="jxr_keyword">for</strong> (Model m : pmml.getModels()) {
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>             <strong class="jxr_keyword">if</strong> (bestName.equals(m.getModelName())) {
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>               models = ImmutableList.of(m);
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>               <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>             }
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>           }
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         }
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>       } <strong class="jxr_keyword">catch</strong> (JAXBException | SAXException e) {
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         log.error(<span class="jxr_string">"Serialization error"</span>, e);
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>       }
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     }
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> 
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>     File keptModels = File.createTempFile(<span class="jxr_string">"model"</span>, <span class="jxr_string">".pmml.gz"</span>);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     keptModels.deleteOnExit();
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>     log.info(<span class="jxr_string">"Writing {} models to model.pmml.gz..."</span>, models.size());
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>     KMeansPMML.write(keptModels, dictionary, models);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>     store.upload(prefix + <span class="jxr_string">"model.pmml.gz"</span>, keptModels, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     IOUtils.delete(keptModels);
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>   }
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

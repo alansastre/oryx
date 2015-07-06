@@ -65,8 +65,8 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>                                                    <strong class="jxr_keyword">int</strong> numPartitions,
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>                                                    String prefix,
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>                                                    Configuration conf) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; result = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt;();
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      AvroFileSource&lt;MatrixRow&gt; records = <strong class="jxr_keyword">new</strong> AvroFileSource&lt;MatrixRow&gt;(
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; result = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      AvroFileSource&lt;MatrixRow&gt; records = <strong class="jxr_keyword">new</strong> AvroFileSource&lt;&gt;(
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          Namespaces.toPath(prefix),
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          (AvroType&lt;MatrixRow&gt;) ALSTypes.DENSE_ROW_MATRIX);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">for</strong> (MatrixRow record : records.read(conf)) {
@@ -114,7 +114,7 @@
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>                                            Configuration conf) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     <a href="../../../../../com/cloudera/oryx/common/collection/LongSet.html">LongSet</a> ids = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/cloudera/oryx/common/collection/LongSet.html">LongSet</a>();
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">long</strong> count = 0;
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">long</strong> id : <strong class="jxr_keyword">new</strong> AvroFileSource&lt;Long&gt;(Namespaces.toPath(key), Avros.longs()).read(conf)) {
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">long</strong> id : <strong class="jxr_keyword">new</strong> AvroFileSource&lt;&gt;(Namespaces.toPath(key), Avros.longs()).read(conf)) {
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>       ids.add(id);
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>       <strong class="jxr_keyword">if</strong> (++count % 10000 == 0) {
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         progressable.progress();

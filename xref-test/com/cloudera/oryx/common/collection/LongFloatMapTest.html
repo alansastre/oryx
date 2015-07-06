@@ -40,10 +40,10 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">package</strong> com.cloudera.oryx.common.collection;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.OryxTest;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Maps;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.OryxTest;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.random.RandomGenerator;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
@@ -117,7 +117,7 @@
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>   @Test
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testVersusHashMap() {
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>     LongFloatMap actual = <strong class="jxr_keyword">new</strong> LongFloatMap();
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>     Map&lt;Long,Float&gt; expected = Maps.newHashMap();
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>     Map&lt;Long,Float&gt; expected = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>     RandomGenerator r = RandomManager.getRandom();
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; 1000000; i++) {
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>       <strong class="jxr_keyword">double</strong> d = r.nextDouble();

@@ -53,11 +53,11 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>    @Test
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAddTo() {
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      LongObjectMap&lt;LongFloatMap&gt; byRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      LongObjectMap&lt;LongFloatMap&gt; byRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      assertNull(byRow.get(0L));
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      assertNull(byRow.get(1L));
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      assertNull(byRow.get(4L));
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      LongObjectMap&lt;LongFloatMap&gt; byCol = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      LongObjectMap&lt;LongFloatMap&gt; byCol = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      MatrixUtils.addTo(0L, 0L, -1.0f, byRow, byCol);
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      MatrixUtils.addTo(4L, 1L, 2.0f, byRow, byCol);
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      assertEquals(-1.0f, byRow.get(0L).get(0L));
@@ -70,8 +70,8 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>    @Test
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRemove() {
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      LongObjectMap&lt;LongFloatMap&gt; byRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      LongObjectMap&lt;LongFloatMap&gt; byCol = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongFloatMap&gt;();
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      LongObjectMap&lt;LongFloatMap&gt; byRow = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      LongObjectMap&lt;LongFloatMap&gt; byCol = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      MatrixUtils.addTo(0L, 0L, -1.0f, byRow, byCol);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      MatrixUtils.addTo(4L, 1L, 2.0f, byRow, byCol);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      MatrixUtils.remove(0L, 0L, byRow, byCol);
@@ -82,7 +82,7 @@
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>    @Test
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTransposeTimesSelf() {
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; M = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt;();
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; M = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      M.put(1L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {4.0f, -1.0f, -5.0f});
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      M.put(2L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {2.0f, 0.0f, 3.0f});
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      RealMatrix MTM = MatrixUtils.transposeTimesSelf(M);
@@ -93,10 +93,10 @@
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>    @Test
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMultiplyXYT() {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; X = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt;();
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; X = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      X.put(0L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {2.0f, 3.5f});
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      X.put(1L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {-1.0f, 0.0f});
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; Y = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt;();
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      LongObjectMap&lt;<strong class="jxr_keyword">float</strong>[]&gt; Y = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      Y.put(0L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {0.0f, -3.0f});
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>      Y.put(1L, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">float</strong>[] {-0.5f, 1.5f});
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      RealMatrix product = multiplyXYT(X, Y);

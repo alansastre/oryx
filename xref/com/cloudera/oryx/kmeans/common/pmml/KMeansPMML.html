@@ -26,26 +26,26 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.math.Vectors;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.kmeans.common.Centers;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.google.common.base.Splitter;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVector;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Array;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Cluster;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.ClusteringModel;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.DataDictionary;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Model;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.PMML;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.jpmml.model.ImportFilter;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.jpmml.model.JAXBUtil;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.InputSource;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> javax.xml.bind.JAXBException;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> javax.xml.transform.stream.StreamResult;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> java.io.FileOutputStream;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStream;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.math3.linear.RealVector;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Array;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Cluster;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.ClusteringModel;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.DataDictionary;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.Model;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.dmg.pmml.PMML;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.jpmml.model.ImportFilter;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.jpmml.model.JAXBUtil;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.InputSource;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> javax.xml.bind.JAXBException;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> javax.xml.transform.stream.StreamResult;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> java.io.FileOutputStream;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStream;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.common.io.IOUtils;
@@ -62,70 +62,62 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>    }
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> PMML read(File f) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      InputStream in = IOUtils.openMaybeDecompressing(f);
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>        <strong class="jxr_keyword">return</strong> read(in);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      } <strong class="jxr_keyword">catch</strong> (JAXBException jaxbe) {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(jaxbe);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      } <strong class="jxr_keyword">catch</strong> (SAXException saxe) {
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(saxe);
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>        in.close();
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>    }
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> PMML read(InputStream in) <strong class="jxr_keyword">throws</strong> JAXBException, SAXException {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">return</strong> JAXBUtil.unmarshalPMML(ImportFilter.apply(<strong class="jxr_keyword">new</strong> InputSource(in)));
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>    }
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> write(File f, DataDictionary dictionary, List&lt;? <strong class="jxr_keyword">extends</strong> Model&gt; models) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      OutputStream out = IOUtils.buildGZIPOutputStream(<strong class="jxr_keyword">new</strong> FileOutputStream(f));
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>        write(out, dictionary, models);
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      } <strong class="jxr_keyword">catch</strong> (JAXBException jaxbe) {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(jaxbe);
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>        out.close();
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>    }
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/Centers.html">Centers</a> toCenters(ClusteringModel cm) {
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">int</strong> dims = cm.getClusteringFields().size();
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      <strong class="jxr_keyword">boolean</strong> sparse = cm.getMiningSchema().getMiningFields().size() * 2 &lt; dims;
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      List&lt;RealVector&gt; vecs = Lists.newArrayListWithExpectedSize(cm.getClusters().size());
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      <strong class="jxr_keyword">for</strong> (Cluster c : cm.getClusters()) {
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>        vecs.add(createCenter(c.getArray(), sparse, dims));
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/Centers.html">Centers</a>(vecs);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>    }
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> RealVector createCenter(Array array, <strong class="jxr_keyword">boolean</strong> sparse, <strong class="jxr_keyword">int</strong> fieldCount) {
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">if</strong> (array.getN() != fieldCount) {
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      }
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      RealVector v = sparse ? Vectors.sparse(fieldCount) : Vectors.dense(fieldCount);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">int</strong> i = 0;
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>     <strong class="jxr_keyword">for</strong> (String token : SPACE.split(array.getValue())) {
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>       <strong class="jxr_keyword">double</strong> t = Double.parseDouble(token);
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>       <strong class="jxr_keyword">if</strong> (t != 0.0) {
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         v.setEntry(i, t);
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>       }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>       i++;
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     }
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">return</strong> v;
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>   }
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
-<a class="jxr_linenumber" name="L110" href="#L110">110</a> 
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> write(
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>       OutputStream out,
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>       DataDictionary dictionary,
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>       List&lt;? <strong class="jxr_keyword">extends</strong> Model&gt; models) <strong class="jxr_keyword">throws</strong> JAXBException {
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     PMML pmml = <strong class="jxr_keyword">new</strong> PMML(<span class="jxr_string">"4.2.1"</span>, <strong class="jxr_keyword">null</strong>, dictionary);
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>     pmml.getModels().addAll(models);
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     JAXBUtil.marshalPMML(pmml, <strong class="jxr_keyword">new</strong> StreamResult(out));
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>   }
-<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
-<a class="jxr_linenumber" name="L120" href="#L120">120</a> }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">try</strong> (InputStream in = IOUtils.openMaybeDecompressing(f)) {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>        <strong class="jxr_keyword">return</strong> read(in);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      } <strong class="jxr_keyword">catch</strong> (JAXBException | SAXException e) {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(e);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>    }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> PMML read(InputStream in) <strong class="jxr_keyword">throws</strong> JAXBException, SAXException {
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">return</strong> JAXBUtil.unmarshalPMML(ImportFilter.apply(<strong class="jxr_keyword">new</strong> InputSource(in)));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>    }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> write(File f, DataDictionary dictionary, List&lt;? <strong class="jxr_keyword">extends</strong> Model&gt; models) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">try</strong> (OutputStream out = IOUtils.buildGZIPOutputStream(<strong class="jxr_keyword">new</strong> FileOutputStream(f))) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>        write(out, dictionary, models);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      } <strong class="jxr_keyword">catch</strong> (JAXBException jaxbe) {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>        <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(jaxbe);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>    }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/Centers.html">Centers</a> toCenters(ClusteringModel cm) {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">int</strong> dims = cm.getClusteringFields().size();
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">boolean</strong> sparse = cm.getMiningSchema().getMiningFields().size() * 2 &lt; dims;
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      List&lt;RealVector&gt; vecs = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(cm.getClusters().size());
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">for</strong> (Cluster c : cm.getClusters()) {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>        vecs.add(createCenter(c.getArray(), sparse, dims));
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/kmeans/common/Centers.html">Centers</a>(vecs);
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>    }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> RealVector createCenter(Array array, <strong class="jxr_keyword">boolean</strong> sparse, <strong class="jxr_keyword">int</strong> fieldCount) {
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">if</strong> (array.getN() != fieldCount) {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      RealVector v = sparse ? Vectors.sparse(fieldCount) : Vectors.dense(fieldCount);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">int</strong> i = 0;
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">for</strong> (String token : SPACE.split(array.getValue())) {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>        <strong class="jxr_keyword">double</strong> t = Double.parseDouble(token);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>        <strong class="jxr_keyword">if</strong> (t != 0.0) {
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          v.setEntry(i, t);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>        }
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>        i++;
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <strong class="jxr_keyword">return</strong> v;
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>   }
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> 
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> write(
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>       OutputStream out,
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>       DataDictionary dictionary,
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>       List&lt;? <strong class="jxr_keyword">extends</strong> Model&gt; models) <strong class="jxr_keyword">throws</strong> JAXBException {
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     PMML pmml = <strong class="jxr_keyword">new</strong> PMML(<span class="jxr_string">"4.2.1"</span>, <strong class="jxr_keyword">null</strong>, dictionary);
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     pmml.getModels().addAll(models);
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     JAXBUtil.marshalPMML(pmml, <strong class="jxr_keyword">new</strong> StreamResult(out));
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>   }
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> 
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2013&#x2013;2015. All rights reserved.</div>

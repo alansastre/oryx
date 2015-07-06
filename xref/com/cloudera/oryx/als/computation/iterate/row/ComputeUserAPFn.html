@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialize() {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">super</strong>.initialize();
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <a href="../../../../../../../com/cloudera/oryx/common/servcomp/Store.html">Store</a> store = Store.get();
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      testData = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;LongSet&gt;();
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      testData = <strong class="jxr_keyword">new</strong> LongObjectMap&lt;&gt;();
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      String prefix = getConfiguration().get(RowStep.MAP_KEY);
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>        <strong class="jxr_keyword">for</strong> (String filePrefix : store.list(prefix, <strong class="jxr_keyword">true</strong>)) {

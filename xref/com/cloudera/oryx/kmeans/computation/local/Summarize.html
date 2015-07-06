@@ -31,12 +31,12 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.summary.InternalStats;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.summary.Summary;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.cloudera.oryx.computation.common.summary.SummaryStats;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.google.common.collect.Lists;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.Callable;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
@@ -61,7 +61,7 @@
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <a href="../../../../../../com/cloudera/oryx/common/settings/InboundSettings.html">InboundSettings</a> inboundSettings = InboundSettings.create(ConfigUtils.getDefaultConfig());
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">int</strong> numFeatures = inboundSettings.getColumnNames().size();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      List&lt;InternalStats&gt; internalStats = Lists.newArrayListWithExpectedSize(numFeatures);
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      List&lt;InternalStats&gt; internalStats = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(numFeatures);
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> col = 0; col &lt; numFeatures; col++) {
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>        <strong class="jxr_keyword">if</strong> (inboundSettings.isCategorical(col) || inboundSettings.isNumeric(col)) {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          internalStats.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../../com/cloudera/oryx/computation/common/summary/InternalStats.html">InternalStats</a>());
@@ -91,7 +91,7 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>        }
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      List&lt;SummaryStats&gt; stats = Lists.newArrayListWithExpectedSize(numFeatures);
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>      List&lt;SummaryStats&gt; stats = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(numFeatures);
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> col = 0; col &lt; numFeatures; col++) {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>        <a href="../../../../../../com/cloudera/oryx/computation/common/summary/InternalStats.html">InternalStats</a> internal = internalStats.get(col);
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>        <strong class="jxr_keyword">if</strong> (internal != <strong class="jxr_keyword">null</strong>) {
