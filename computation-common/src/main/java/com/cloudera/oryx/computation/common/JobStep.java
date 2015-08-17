@@ -382,21 +382,22 @@ public abstract class JobStep extends Configured implements Tool, HasState {
     return groupWithComparator(null);
   }
 
-  protected final GroupingOptions groupWithComparator(
-      Class<? extends RawComparator<?>> comparator) {
-    return groupingOptions(HashPartitioner.class, comparator);
+  @SuppressWarnings("unchecked")
+  protected final <K,V> GroupingOptions groupWithComparator(
+      Class<? extends RawComparator<K>> comparator) {
+    return groupingOptions((Class<? extends Partitioner<K,V>>) (Class<?>) HashPartitioner.class, comparator);
   }
 
-  protected final GroupingOptions groupingOptions(
-      Class<? extends Partitioner> partitionerClass,
-      Class<? extends RawComparator<?>> comparator) {
+  protected final <K,V> GroupingOptions groupingOptions(
+      Class<? extends Partitioner<K,V>> partitionerClass,
+      Class<? extends RawComparator<K>> comparator) {
     return groupingOptions(partitionerClass, comparator, comparator);
   }
 
-  protected final GroupingOptions groupingOptions(
-      Class<? extends Partitioner> partitionerClass,
-      Class<? extends RawComparator<?>> groupingComparator,
-      Class<? extends RawComparator<?>> sortComparator) {
+  protected final <K,V> GroupingOptions groupingOptions(
+      Class<? extends Partitioner<K,V>> partitionerClass,
+      Class<? extends RawComparator<K>> groupingComparator,
+      Class<? extends RawComparator<K>> sortComparator) {
     GroupingOptions.Builder b = GroupingOptions.builder()
         .partitionerClass(partitionerClass)
         .numReducers(getNumReducers());

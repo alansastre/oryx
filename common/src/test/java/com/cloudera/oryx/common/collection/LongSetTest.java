@@ -153,7 +153,7 @@ public final class LongSetTest extends OryxTest {
   @Test
   public void testVersusHashSet() {
     LongSet actual = new LongSet(1);
-    Collection<Integer> expected = new HashSet();
+    Collection<Integer> expected = new HashSet<>();
     RandomGenerator r = RandomManager.getRandom();
     for (int i = 0; i < 1000000; i++) {
       double d = r.nextDouble();
