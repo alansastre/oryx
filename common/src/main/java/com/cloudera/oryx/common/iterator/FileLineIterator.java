@@ -17,9 +17,11 @@ package com.cloudera.oryx.common.iterator;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.AbstractIterator;
 
 import com.cloudera.oryx.common.io.IOUtils;
@@ -34,17 +36,40 @@ import com.cloudera.oryx.common.io.IOUtils;
  */
 final class FileLineIterator extends AbstractIterator<String> implements Closeable {
 
-  private final BufferedReader reader;
+  private final File file;
+  private final Reader reader;
+  private BufferedReader bufferedReader;
+  private boolean closed;
+
+  FileLineIterator(File file) {
+    this.file = file;
+    this.reader = null;
+  }
   
   FileLineIterator(Reader reader) {
-    this.reader = IOUtils.buffer(reader);
+    this.file = null;
+    this.reader = reader;
+  }
+
+  private void ensureReaderReady() throws IOException {
+    if (bufferedReader == null) {
+      Reader underlyingReader;
+      if (file == null) {
+        underlyingReader = reader;
+      } else {
+        underlyingReader = IOUtils.openReaderMaybeDecompressing(file);
+      }
+      bufferedReader = IOUtils.buffer(underlyingReader);
+    }
   }
 
   @Override
   protected String computeNext() {
+    Preconditions.checkState(!closed, "Already closed");
     String line;
     try {
-      line = reader.readLine();
+      ensureReaderReady();
+      line = bufferedReader.readLine();
     } catch (IOException ioe) {
       try {
         close();
@@ -53,13 +78,32 @@ final class FileLineIterator extends AbstractIterator<String> implements Closeab
       }
       throw new IllegalStateException(ioe);
     }
-    return line == null ? endOfData() : line;
+    if (line == null) {
+      try {
+        close();
+      } catch (IOException ioe) {
+        throw new IllegalStateException(ioe);
+      }
+      return null;
+    }
+    return line;
   }
 
   @Override
   public void close() throws IOException {
-    endOfData();
-    reader.close();
+    if (!closed) {
+      closed = true;
+      endOfData();
+      if (bufferedReader != null) {
+        bufferedReader.close();
+      }
+    }
+  }
+
+  @Override
+  protected void finalize() throws Throwable {
+    close();
+    super.finalize();
   }
   
 }

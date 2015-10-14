@@ -16,11 +16,9 @@
 package com.cloudera.oryx.common.iterator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Reader;
 import java.util.Iterator;
-
-import com.cloudera.oryx.common.io.IOUtils;
+import java.util.Objects;
 
 /**
  * Iterable representing the lines of a text file. It can produce an {@link Iterator} over those lines. This
@@ -33,13 +31,15 @@ import com.cloudera.oryx.common.io.IOUtils;
  */
 public final class FileLineIterable implements Iterable<String> {
 
-  private final Reader reader;
+  private final File file;
+  private Reader reader;
 
   /** 
    * Creates a {@code FileLineIterable} over a given {@link File}, assuming a UTF-8 encoding.
    */
-  public FileLineIterable(File file) throws IOException {
-    this.reader = IOUtils.openReaderMaybeDecompressing(file);
+  public FileLineIterable(File file) {
+    this.file = file;
+    this.reader = null;
   }
 
   /**
@@ -47,12 +47,20 @@ public final class FileLineIterable implements Iterable<String> {
    * assuming a UTF-8 encoding.
    */
   public FileLineIterable(Reader reader) {
+    this.file = null;
     this.reader = reader;
   }
   
   @Override
   public Iterator<String> iterator() {
-    return new FileLineIterator(reader);
+    if (file == null) {
+      Objects.requireNonNull(reader, "Reader has already been consumed");
+      Reader theReader = reader;
+      reader = null;
+      return new FileLineIterator(theReader);
+    } else {
+      return new FileLineIterator(file);
+    }
   }
   
 }
