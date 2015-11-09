@@ -84,8 +84,15 @@ final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
     int length = itemFeatures.length;
     for (int i = 0; i < length; i++) {
       long toItemID = toItemIDs[i];
-      if (rescorer1 != null && rescorer1.isFiltered(idMapping.toString(itemID), idMapping.toString(toItemID))) {
-        return null;
+      String stringItemID = null;
+      String stringToItemID = null;
+      if (rescorer1 != null) {
+        // Save this lookup for block below
+        stringItemID = idMapping.toString(itemID);
+        stringToItemID = idMapping.toString(toItemID);
+        if (rescorer1.isFiltered(stringItemID, stringToItemID)) {
+          return null;
+        }
       }
       double similarity = SimpleVectorMath.dot(candidateFeatures, itemFeatures[i]) / 
           (candidateFeaturesNorm * itemFeatureNorms[i]);
@@ -93,7 +100,7 @@ final class MostSimilarItemIterator implements Iterator<NumericIDValue> {
         return null;
       }
       if (rescorer1 != null) {
-        similarity = rescorer1.rescore(idMapping.toString(itemID), idMapping.toString(toItemID), similarity);
+        similarity = rescorer1.rescore(stringItemID, stringToItemID, similarity);
         if (Double.isNaN(similarity) || Double.isInfinite(similarity)) {
           return null;
         }

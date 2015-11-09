@@ -77,8 +77,13 @@ final class RecommendIterator implements Iterator<NumericIDValue> {
     }
 
     Rescorer rescorer = this.rescorer;
-    if (rescorer != null&& rescorer.isFiltered(idMapping.toString(itemID))) {
-      return null;
+    String stringID = null;
+    if (rescorer != null) {
+      // Save this lookup for block below
+      stringID = idMapping.toString(itemID);
+      if (rescorer.isFiltered(stringID)) {
+        return null;
+      }
     }
 
     float[] itemFeatures = entry.getValue();
@@ -90,7 +95,7 @@ final class RecommendIterator implements Iterator<NumericIDValue> {
     }
     
     if (rescorer != null) {
-      sum = rescorer.rescore(idMapping.toString(itemID), sum);
+      sum = rescorer.rescore(stringID, sum);
       if (Double.isNaN(sum) || Double.isInfinite(sum)) {
         return null;
       }
