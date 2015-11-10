@@ -75,7 +75,7 @@ public final class Generation {
   public void recomputeState() {
     XTXsolver = recomputeSolver(X, xLock.readLock());
     YTYsolver = recomputeSolver(Y, yLock.readLock());
-    candidateFilter = new CandidateFilterFactory().buildCandidateFilter(Y, yLock.readLock());
+    candidateFilter = new CandidateFilterFactory(this.idMapping).buildCandidateFilter(Y, yLock.readLock());
   }
 
   private static Solver recomputeSolver(LongObjectMap<float[]> M, Lock readLock) {
