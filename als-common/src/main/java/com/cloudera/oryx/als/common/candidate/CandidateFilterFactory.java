@@ -17,10 +17,11 @@ package com.cloudera.oryx.als.common.candidate;
 
 import java.util.concurrent.locks.Lock;
 
-import com.cloudera.oryx.common.ClassUtils;
 import com.google.common.base.Preconditions;
 import com.typesafe.config.Config;
 
+import com.cloudera.oryx.als.common.StringLongMapping;
+import com.cloudera.oryx.common.ClassUtils;
 import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 
@@ -39,12 +40,15 @@ import com.cloudera.oryx.common.settings.ConfigUtils;
 public final class CandidateFilterFactory {
 
   private final String candidateFilterClassName;
+  private final StringLongMapping idMapping;
 
-  public CandidateFilterFactory() {
+  public CandidateFilterFactory(StringLongMapping idMapping) {
     Config config = ConfigUtils.getDefaultConfig();
     candidateFilterClassName =
         config.hasPath("serving-layer.candidate-filter-class") ?
         config.getString("serving-layer.candidate-filter-class") : null;
+    
+    this.idMapping = idMapping;
   }
 
   /**
@@ -55,15 +59,18 @@ public final class CandidateFilterFactory {
    */
   public CandidateFilter buildCandidateFilter(LongObjectMap<float[]> Y, Lock yReadLock) {
     Preconditions.checkNotNull(Y);
-    if (!Y.isEmpty()) {
+    if (!Y.isEmpty() && candidateFilterClassName != null) {
       yReadLock.lock();
       try {
-        if (candidateFilterClassName != null) {
-          return ClassUtils.loadInstanceOf(candidateFilterClassName,
-                                           CandidateFilter.class,
-                                           new Class<?>[]{LongObjectMap.class},
-                                           new Object[]{Y});
-        }
+        return ClassUtils.loadInstanceOf(candidateFilterClassName,
+                                         CandidateFilter.class,
+                                         new Class<?>[]{LongObjectMap.class, StringLongMapping.class},
+                                         new Object[]{Y, idMapping});
+      } catch (IllegalStateException e) {
+        return ClassUtils.loadInstanceOf(candidateFilterClassName,
+                                         CandidateFilter.class,
+                                         new Class<?>[]{LongObjectMap.class},
+                                         new Object[]{Y});
       } finally {
         yReadLock.unlock();
       }
